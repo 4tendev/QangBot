@@ -1,5 +1,6 @@
 {
 
-    "WebSiteName" : {"en" : "QangBot" , "fa" :"کنگ بات"}
+    "WebSiteName" : {"en" : "QangBot" , "fa" :"کنگ بات"},
+    "WebSiteDis" : {"en" : "A platform for automated trading" , "fa" :"بستری برای ترید خودکار"}
 
 }

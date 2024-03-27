@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local"
-import "./globals.css";
-import getdir from "@/commonTsServer/getDir";
+
 import getlanguage from "@/commonTsServer/getLanguage";
 import getTheme from "@/commonTsServer/getTheme";
+import "./globals.css";
+
+import { StoreProvider } from "./StoreProvider";
+import Navbar from "./navbar/Navbar"
+import Main from "./Main";
 import dictionary from "./dictionary.json"
+
+
 const myVazirFont =  localFont({src:"../public/Vazirmatn.ttf"})
 const  myPoppinsFont =  localFont({src:"../public/Poppins-Regular.ttf"})
-import { StoreProvider } from "./StoreProvider";
-
-
-
 
 export default async function RootLayout({
   children,
@@ -19,24 +21,28 @@ export default async function RootLayout({
 }>) {
 
   const language =  getlanguage()
-  const direction =  getdir()
+  const lang = language.lang
+  const direction =  language.dir
   const theme =  getTheme()
 
-  const title = dictionary.WebSiteName[language]  ?? "WebSiteName"
+  const title = dictionary.WebSiteName[lang]  
+  const description = dictionary.WebSiteDis[lang]
 
   const metadata: Metadata = {
-    title:title,
-    description: "A platform for automated trading",
+    title,
+    description,
   };
 
 
 
   return (
     <StoreProvider >
-    <html lang={language}  dir={direction}>
-     
-      <body className={direction ==="ltr" ?   myPoppinsFont.className  : myVazirFont.className  } data-theme={theme} >
-        {children}
+    <html lang={lang}  dir={direction}  data-theme={theme}>
+      <body className={(direction ==="ltr" ?   myPoppinsFont.className  : myVazirFont.className)  +  " h-screen w-screen " } >
+        <Navbar />
+        <Main >
+            {children}
+        </Main>
       </body>
     </html>
     </StoreProvider>
