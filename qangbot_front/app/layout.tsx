@@ -37,14 +37,14 @@ export default async function RootLayout({
 
   return (
     <StoreProvider >
-    <html lang={lang}  dir={direction}  data-theme={theme}>
-      <body className={(direction ==="ltr" ?   myPoppinsFont.className  : myVazirFont.className)  +  " h-screen w-screen " } >
-        <Navbar />
-        <Main >
-            {children}
-        </Main>
-      </body>
-    </html>
+      <html lang={lang}  dir={direction}  data-theme={theme}>
+        <body className={(direction ==="ltr" ?   myPoppinsFont.className  : myVazirFont.className)  +  " h-screen w-screen " } >
+          <Navbar />
+          <Main >
+              {children}
+          </Main>
+        </body>
+      </html>
     </StoreProvider>
 
   );
