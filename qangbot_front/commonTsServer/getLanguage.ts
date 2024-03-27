@@ -1,14 +1,14 @@
 import { cookies } from 'next/headers';
 import { SUPPORTED_LANGUAGES  , LANGUAGES_COOKIE_NAME} from "@/settings"
 
-type Language = typeof SUPPORTED_LANGUAGES[number];
 
-const getLanguage = (): Language => {
+const getLanguage = ():  typeof  SUPPORTED_LANGUAGES[number] => {
   
-  const decidedLanguage = cookies().get(LANGUAGES_COOKIE_NAME)?.value as Language;
+  const decidedLanguage = cookies().get(LANGUAGES_COOKIE_NAME)?.value
+  const language = SUPPORTED_LANGUAGES.filter ( language => language.lang === decidedLanguage )[0]
 
-  return SUPPORTED_LANGUAGES.includes(decidedLanguage)
-    ? decidedLanguage
+  return language
+    ? language
     : SUPPORTED_LANGUAGES[0]
 };
 
