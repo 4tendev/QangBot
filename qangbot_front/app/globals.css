@@ -2,3 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+  .unselectable {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Standard syntax */
+  }
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+.alert {
+    @apply text-start ;
+    @apply text-sm ;
+    @apply px-3 ;
+    @apply sm:text-base ;
+    @apply justify-start ;
+    @apply flex ;
+
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    background-color: rgb(25, 1, 70);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color:rgba(0, 217, 255, 0.423) ;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    background-color: rgb(25, 1, 70);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color:rgba(0, 217, 255, 0.423) ;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: #2f2f2f;
+  }
