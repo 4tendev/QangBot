@@ -1,0 +1,17 @@
+{
+    "intro" : {"en" : "Welcome to QangBot, where innovation meets investment! We are passionate about empowering individuals to navigate the world of cryptocurrency trading and investment with confidence." , 
+    "fa" :"به  کنگ بات ، جایی که نوآوری با سرمایه‌گذاری همراه می‌شود ، خوش آمدید! ما با انگیزه  قدرت بخشیدن به افراد در دنیای معاملات و سرمایه‌گذاری در رمزارزها فعالیت می کنیم."}
+    ,"QangBot" :{"en" : "QangBot" , "fa" :"کنگ بات"}
+    ,"accessibility" :{"en" : "Accessibility" , "fa" :"در دسترس"}
+    ,"innovation" :{"en" : "Innovation" , "fa" :"نوآور"}
+    ,"transparency" :{"en" : "Transparency" , "fa" :"شفاف"}
+    ,"whyus" :{"en" : "Why Choose Us?" , "fa" :"چرا ما ؟"}
+    ,"mission" :{"en" : "Our Mission" , "fa" :"ماموریت ما"}
+    ,"missionExplained" :{"en" : "At QangBot, our mission is to democratize access to advanced trading tools and curated investment strategies. We believe that everyone should have the opportunity to participate in the exciting world of crypto markets, whether you are a seasoned trader or a complete beginner." , 
+    "fa" :"در کنگ بات، ماموریت ما دموکراتیزه کردن دسترسی به ابزارهای پیشرفته ترید و استراتژی‌های سرمایه‌گذاری است. ما باور داریم که همه باید فرصت شرکت در دنیای جذاب بازارهای رمزارزها را داشته باشند."}
+    ,"innovationExplained" :{"en" : "  Stay ahead in the crypto market with our innovative Grid Bot technology and investment strategies." , "fa" :"با تکنولوژی نوآورانه Grid Bot و استراتژی‌های سرمایه‌گذاری ما در بازار کریپتو پیشرو باشید."}
+    ,"accessibilityExplained" :{"en" : "Whether you are a novice or an experienced trader, our user-friendly platform is designed for easy navigation." , "fa" :"چه یک تازه‌کار یا یک معامله‌گر حرفه‌ای هستید، پلتفرم کاربرپسند ما برای کنترل آسان طراحی شده است.    "}
+    ,"transparencyExplained" :{"en" : "We believe in transparency and provide detailed insights into our strategies, empowering you to make informed decisions." ,
+     "fa" :"ما به شفافیت اعتقاد داریم و برای شما اطلاعات دقیق در مورد استراتژی‌های خود فراهم می‌کنیم، تا شما قادر به اتخاذ تصمیمات آگاهانه باشید."}
+
+}
