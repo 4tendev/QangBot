@@ -5,8 +5,8 @@ import Theme from './Theme/Theme'
 import Language from './Language/Language'
 import Link from 'next/link'
 import dictionary from "./dictionary.json"
-import menu from "./menu"
 import getLanguage from '@/commonTsServer/getLanguage'
+import { Site_MENU } from '@/settings'
 
 const Navbar =  () => {
   
@@ -18,7 +18,7 @@ const Navbar =  () => {
         className='w-full flex justify-between h-20 items-center px-5 md:px-11 max-w-7xl mx-auto'
       >
         <div className='flex items-center justify-between gap-5 md:hidden'>
-          <Drawer lang={lang} />
+          <Drawer  />
         </div>
         <div className='flex items-center grow md:grow-0'>
               <div 
@@ -36,7 +36,7 @@ const Navbar =  () => {
           className=' hidden md:flex gap-6 text-sm'
         >
               {
-                menu.map(
+                Site_MENU.map(
                   item =>  
                   <li 
                     key={item.name}
