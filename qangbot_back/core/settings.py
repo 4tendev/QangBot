@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "user",
 ]
 from django.utils.deprecation import MiddlewareMixin
 
