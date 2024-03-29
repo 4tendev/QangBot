@@ -2,9 +2,9 @@
 import React from 'react'
 import Link from 'next/link'
 
-const DrawerList = (props) => {
+const DrawerList = (props :{link : string ,text:string,toggleID :string}) => {
     function closeDrawer() {
-        document.getElementById("menu").click()
+        document.getElementById(props.toggleID)?.click()
     }
   return (
     <li onClick={closeDrawer}><Link href={props.link}>{props.text}</Link></li>
