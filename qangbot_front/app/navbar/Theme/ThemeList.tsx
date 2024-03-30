@@ -4,7 +4,7 @@ import  { Language   }  from '@/settings'
 import React from 'react'
 import dictionary from "./dictionary.json"
 import config ,{Theme} from "@/tailwind.config";
-import setCookie from '@/app/commonTsBrowser/setCookie';
+import setCookie from '@/commonTsBrowser/setCookie';
 
 const ThemeList = (props :{lang:Language} )  => {
     
