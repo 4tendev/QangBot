@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch } from "@/GlobalStates/hooks";
 import { newState } from "@/GlobalStates/Slices/userSlice";
-import { fetchapi } from "@/app/commonTsBrowser/fetchAPI";
+import { fetchapi } from "@/commonTsBrowser/fetchAPI";
 
 const CheckUser = () => {
   const setUserIsKnow = useAppDispatch();

@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import setCookie from '../../commonTsBrowser/setCookie'
+import setCookie from '../../../commonTsBrowser/setCookie'
 import {   SUPPORTED_LANGUAGES ,LANGUAGES_COOKIE_NAME } from "@/settings"
 
 
