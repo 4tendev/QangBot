@@ -4,11 +4,13 @@ import React, { useEffect } from 'react';
 
 function Main({ children }: { children: React.ReactNode }) {
     useEffect(() => {
+       
+        
         const mainElement :HTMLElement | null = document.querySelector('.mainContent');
         if (mainElement) {
           mainElement.style.height = (window.innerHeight - Navbar_Height) + 'px';
         }
-    
+        
         function handleResize() {
           if (mainElement) {
             mainElement.style.height = (window.innerHeight - Navbar_Height) + 'px';
