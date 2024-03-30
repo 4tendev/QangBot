@@ -6,6 +6,7 @@ import Language from './Language/Language'
 import Link from 'next/link'
 import dictionary from "./dictionary.json"
 import getLanguage from '@/commonTsServer/getLanguage'
+import Profile from "./Profile/Profile"
 import { Site_MENU } from '@/settings'
 
 const Navbar =  () => {
@@ -60,7 +61,7 @@ const Navbar =  () => {
               <Language/>
               <Theme />
             </div>
-            "PROFILE"
+            <Profile/>
         </div>
       </nav>
     </div>
