@@ -1,9 +1,7 @@
 
+import { NEXT_PUBLIC_BACKEND_URL } from "@/settings";
 export function fetchapi(endpoint : string , method : "GET" | "POST" |"PATCH" |"PUT" | "DELETE" , data? :object) {
-
-    let rootAddress = window.location.protocol + '//' + window.location.host;
-    const url = rootAddress == "http://127.0.0.1:3000" ? "http://127.0.0.1:8000" : ('https://api.' + rootAddress.substring(8))
-    return fetch(url + endpoint, {
+    return fetch(NEXT_PUBLIC_BACKEND_URL + endpoint, {
       method: method,
       headers: {
         'Content-Type': 'application/json',
