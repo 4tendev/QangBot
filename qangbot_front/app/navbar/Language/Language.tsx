@@ -37,16 +37,15 @@ const Language = () => {
         </svg>
       </div>
       <ul 
-       dir="ltr"
        tabIndex={0} 
-       className="dropdown-content z-[1] menu p-1 shadow bg-base-100 rounded-box w-48"
+       className="dropdown-content z-[1] menu p-1 shadow bg-base-100 rounded-box "
       >
         {
           SUPPORTED_LANGUAGES.map(
             language => <li
                 key={language.lang}
                 onClick={()=>ChangeLanguage(language)} 
-                className='flex gap-0 flex-row  justify-between'
+                className='text-center m-1'
               >
                  <small>{language.text}</small>
             </li>
