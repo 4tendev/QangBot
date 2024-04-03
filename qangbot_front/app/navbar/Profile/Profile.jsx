@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useAppSelector } from "@/GlobalStates/hooks";
 import CheckUser from "./CheckUser";
 import { isKnown } from "@/GlobalStates/Slices/userSlice";
+import UserProfile from "./UserProfile/UserProfile";
+import ProfileImage from "./ProfileImage";
 
 const Profile = () => {
   const userisKnown = useAppSelector(isKnown);
@@ -12,16 +14,10 @@ const Profile = () => {
   return userisKnown === undefined ? (
     <CheckUser />
   ) : userisKnown === true ? (
-    "userProfile"
+    <UserProfile />
   ) : (
     <Link className="flex items-center" href={"/auth"}>
-      <Image
-        alt="Profile"
-        width={48}
-        height={48}
-        className="rounded-full btn btn-outline p-0 border border-info"
-        src={"/avatar.png"}
-      />
+      <ProfileImage />
     </Link>
   );
 };
