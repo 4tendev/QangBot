@@ -1,17 +1,27 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import setCookie from '../../../commonTsBrowser/setCookie'
 import {   SUPPORTED_LANGUAGES ,LANGUAGES_COOKIE_NAME } from "@/settings"
-
+import getLanguage from '@/commonTsBrowser/getLanguage'
+import { useAppDispatch } from "@/GlobalStates/hooks";
+import { selectedLanguage } from "@/GlobalStates/Slices/languageSlice";
 
 const Language = () => {
-
+    const setLanguage = useAppDispatch();
 
     function ChangeLanguage(language : typeof SUPPORTED_LANGUAGES[number]) {
         const  daysToLeave :100 =100
         setCookie(LANGUAGES_COOKIE_NAME, language.lang ,daysToLeave)
         location.reload()
     }
+
+
+    useEffect(() => {
+      setLanguage(selectedLanguage(getLanguage()));
+      return () => {
+      }
+    }, [])
+    
 
 
   return (
