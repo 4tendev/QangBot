@@ -1,0 +1,7 @@
+{
+    "create" : {"en" : "Create GridBot" , "fa" :"ساخت گرید بات"}
+    ,"test" : {"en" : "Backtest Grids" , "fa" :"تست گرید بات"}
+
+    ,"createFree" : {"en" : "Create Free GridBot" , "fa" :"ساخت رایگان گرید بات"}
+
+}

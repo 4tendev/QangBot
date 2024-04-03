@@ -1,0 +1,17 @@
+{
+    "close" : {"en" : "Close" , "fa" :"بستن"}
+    ,"sixChar" : {"en" : "6 Digit" , "fa" :"6 رقمی"}
+    ,"TOTPCode" : {"en" : "TOTP Code" , "fa" :"کد زمانی"}
+    ,"EmailCode" : {"en" : "Received Code" , "fa" :"کد دریافتی"}
+    ,"success" : {"en" : "Successfully Removed." , "fa" :"غیرفعال شد."}
+    ,"wrong" : {"en" : "Wrong Code." , "fa" :"کد اشتباه."}
+    ,"manyTries" : {"en" : "To many Ttries." , "fa" :"تعداد اشتباه بیش از حد."}
+    ,"remove" : {"en" : "Remove TOTP Protection" , "fa" :"غیرفعال کردن رمززمانی."}
+    ,"emailSent" : {"en" : "We sent you an email for verification" , "fa" :"ایمیلی برای تایید برای شما ارسال شد"}
+    ,"removalNote" : {"en" : "Disabling the TOTP protection will temporarily deactivate certain features on your account." , "fa" :"غیرفعال کردن رمززمانی بعضی قابلیتهای اکانت رو موقتا غیرفعال می کند"}
+    ,"lostTOTP" : {"en" : "I dont have access to TOTP Code" , "fa" :"دسترسی به رمززمانی را ندارم"}
+
+
+
+
+}

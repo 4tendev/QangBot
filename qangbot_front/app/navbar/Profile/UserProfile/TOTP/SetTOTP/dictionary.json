@@ -1,0 +1,15 @@
+{
+    "scan" : {"en" : "Please Scan QR code with your Authenticator App" , "fa" :" توسط یک برنامه رمز زمانی کد QR را اسکن کنید"}
+    ,"copy" : {"en" : "to copy the secret Key" , "fa" :"را تا کد لازم کپی شود."}
+    ,"here" : {"en" : "HERE" , "fa" :"اینجا"}
+    ,"touch" : {"en" : "Or touch" , "fa" :"یا لمس کنید "}
+    ,"writeCode" : {"en" : "Provide generated 6 digit code below" , "fa" :"کد 6 رقمی تولید شده را وارد کنید"}
+    ,"TOTPCode" : {"en" : "TOTP Code" , "fa" :"کد زمانی"}
+    ,"verify" : {"en" : "Verify Code" , "fa" :"تایید کد"}
+    ,"wrongCode" : {"en" : "Wrong Code" , "fa" :"کد نامعتبر است"}
+    ,"successCode" : {"en" : "TOTP Successfully activated" , "fa" :"رمز زمانی برای اکانت شما فعال شد"}
+
+    ,"securityNote" : {"en" : "Adding TOTP will increase Your security." , "fa" :"فعال کردن رمز زمانی امنیت اکانت شما را بالا می برد."}
+
+
+}
