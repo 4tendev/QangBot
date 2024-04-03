@@ -54,6 +54,18 @@ class DisableCSRFMiddleware(MiddlewareMixin):
     def process_request(self, request):
         setattr(request, '_dont_enforce_csrf_checks', True)
 
+class sleepMiddleware(MiddlewareMixin):
+    def __init__(self, get_response):
+        self.get_response = get_response
+        self.is_debug = DEBUG
+
+    def __call__(self, request):
+        if self.is_debug:
+            import time
+            time.sleep(1)  
+        response = self.get_response(request)
+        return response        
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -65,6 +77,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+MIDDLEWARE.append('core.settings.sleepMiddleware',)  if DEBUG  else None
 
 CACHES = {
     'default': {
