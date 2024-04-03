@@ -62,7 +62,7 @@ class sleepMiddleware(MiddlewareMixin):
     def __call__(self, request):
         if self.is_debug:
             import time
-            time.sleep(1)  
+            time.sleep(0.5)  
         response = self.get_response(request)
         return response        
 
