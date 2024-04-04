@@ -14,7 +14,7 @@ const Drawer = () => {
     <div className="drawer-start md:hidden flex ">
       <input id={toggleID} type="checkbox" className="drawer-toggle " />
       <div className="drawer-content">
-        <label htmlFor="menu" className="">
+        <label htmlFor={toggleID} className="">
           <svg
             className="swap-off fill-current"
             xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,7 @@ const Drawer = () => {
       </div>
       <div className="drawer-side z-10">
         <label
-          htmlFor="menu"
+          htmlFor={toggleID}
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
@@ -40,7 +40,7 @@ const Drawer = () => {
             </div>
 
             <label
-              htmlFor="menu"
+              htmlFor={toggleID}
               aria-label="close sidebar"
               className="btn btn-ghost text-rose-600"
             >
