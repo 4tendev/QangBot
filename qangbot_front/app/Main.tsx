@@ -1,19 +1,20 @@
 "use client"
-import { Navbar_Height } from '@/settings';
+import { NAVBAR_ID } from '@/settings';
 import React, { useEffect } from 'react';
 
 function Main({ children }: { children: React.ReactNode }) {
     useEffect(() => {
        
-        
+        const navbarElement  :HTMLElement | null = document.getElementById(NAVBAR_ID);
         const mainElement :HTMLElement | null = document.querySelector('.mainContent');
+        const NavbarHeight = navbarElement?.offsetHeight || 80
         if (mainElement) {
-          mainElement.style.height = (window.innerHeight - Navbar_Height) + 'px';
+          mainElement.style.height = (window.innerHeight -NavbarHeight) + 'px';
         }
         
         function handleResize() {
           if (mainElement) {
-            mainElement.style.height = (window.innerHeight - Navbar_Height) + 'px';
+            mainElement.style.height = (window.innerHeight - NavbarHeight) + 'px';
           }
         }
     

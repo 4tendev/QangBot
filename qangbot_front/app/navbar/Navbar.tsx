@@ -7,13 +7,12 @@ import Link from "next/link";
 import dictionary from "./dictionary.json";
 import getLanguage from "@/commonTsServer/getLanguage";
 import Profile from "./Profile/Profile";
-import { Navbar_Height, Site_MENU } from "@/settings";
+import { Site_MENU ,NAVBAR_ID } from "@/settings";
 
 const Navbar = () => {
   const lang = getLanguage().lang;
-  const navbarClassName = `w-full bg-base-300 h-[${Navbar_Height}px]`
   return (
-    <div className={navbarClassName} >
+    <div className={"w-full bg-base-300 h-20" } id={NAVBAR_ID} >
       <nav className="w-full flex justify-between h-full items-center px-5 md:px-11 max-w-7xl mx-auto">
         <div className="flex items-center justify-between gap-5 md:hidden">
           <Drawer />
