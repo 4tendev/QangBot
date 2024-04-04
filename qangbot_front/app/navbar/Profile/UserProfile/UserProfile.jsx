@@ -6,6 +6,7 @@ import dictionary from "./dictionary.json";
 import { language } from "@/GlobalStates/Slices/languageSlice";
 import { useAppSelector } from "@/GlobalStates/hooks";
 import ProfileImage from "../ProfileImage";
+import TextSVG from "./TextSVG";
 
 export default function UserProfile() {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,17 +59,17 @@ export default function UserProfile() {
         <ul
           ref={dropdownRef}
           tabIndex={0}
-          className="dropdown-content  z-[1] mt-4 py-2 shadow bg-base-200 rounded-box w-52"
+          className="dropdown-content  shadow-lg z-[1] mt-4 py-2  bg-base-200  w-52"
         >
           {menuList.map((item) => (
             <li key={item.text} className={liClassName}>
               <Link
                 onClick={handleItemClick}
-                className="w-full btn shadow-none mb-4 rounded-none flex justify-between"
+                className="w-full"
                 href={item.href}
               >
-                <div>{item.text}</div>
-                {item.svg}
+                <TextSVG  key={item.text} svg={item.svg} text={item.text} />
+
               </Link>
             </li>
           ))}
