@@ -2,6 +2,7 @@
 
     
     "TOTP" : {"en" : "TOTP Settigns" , "fa" :"تنظیمات رمز زمانی"}
-    ,"accountPlan" : {"en" : "Account plan" , "fa" :"پلن اکانت"}
+    ,"plan" : {"en" : "Account plan" , "fa" :"پلن اکانت"}
+    ,"password" : {"en" : "Change Password" , "fa" :"تغییر پسورد"}
 
 }

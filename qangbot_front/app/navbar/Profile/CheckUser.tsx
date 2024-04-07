@@ -1,8 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
+
 import { useAppDispatch } from "@/GlobalStates/hooks";
 import { newState } from "@/GlobalStates/Slices/userSlice";
+
 import { fetchapi } from "@/commonTsBrowser/fetchAPI";
+
 import Profile from "./Profile";
 const CheckUser = () => {
   const setUserIsKnow = useAppDispatch();
