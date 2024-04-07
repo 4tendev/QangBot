@@ -13,7 +13,7 @@ const Navbar = () => {
   const lang = getLanguage().lang;
   return (
     <div className={"w-full bg-base-300 h-20" } id={NAVBAR_ID} >
-      <nav className="w-full flex justify-between h-full items-center px-5 md:px-11 max-w-7xl mx-auto">
+      <nav className="w-full flex justify-between h-full items-center px-5 sm:px-11 max-w-7xl mx-auto">
         <div className="flex items-center justify-between gap-5 md:hidden">
           <Drawer />
         </div>
