@@ -25,7 +25,7 @@ function Main({ children }: { children: React.ReactNode }) {
         };
       }, []);
   return (
-    <main className="w-full max-w-7xl mx-auto px-5 sm:px-11 py-2  mainContent overflow-auto bg-base-100">
+    <main className="w-full max-w-6xl mx-auto   mainContent overflow-auto bg-base-100">
       {children}
     </main>
   );
