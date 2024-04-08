@@ -26,7 +26,7 @@ REDIS_URL=os.getenv("REDIS_URL")
 DEBUG = os.getenv("DEBUG") or False
 DOMAIN=os.getenv("DOMAIN")
 
-ALLOWED_HOSTS = [DOMAIN,os.getenv("tradebotinternal")]
+ALLOWED_HOSTS = [DOMAIN,os.getenv("INTERNAL_HOST")]
 
 if DEBUG :
     CORS_ALLOW_ALL_ORIGINS = True  
@@ -36,7 +36,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [os.getenv("FRONT_HOST_HTTPS")]
 
-SESSION_COOKIE_AGE = 31536000
+SESSION_COOKIE_AGE = None
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -128,28 +128,6 @@ DATABASES = {
     }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -168,5 +146,11 @@ STATIC_URL = f'https://static.{DOMAIN}/statics/' if DOMAIN != "127.0.0.1" else '
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_COOKIE_NAME = 'SESSIONID'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get("EMAIL_HOST")  
+EMAIL_PORT = os.environ.get("EMAIL_PORT")
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")  
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
