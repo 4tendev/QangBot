@@ -18,7 +18,7 @@ const Profile = () => {
   ) : userisKnown === true ? (
     <UserProfile />
   ) : (
-    <Link className="flex items-center" href={"/auth"}>
+    <Link className="flex items-center" href={"/user/auth"}>
       <ProfileImage />
     </Link>
   );
