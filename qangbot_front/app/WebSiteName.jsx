@@ -11,7 +11,7 @@ const WebSiteName =  () => {
 
   return (
         <Link 
-          className={ 'text-2xl text-primary max-[310px]:text-xl ' +  ( getLanguage() == "fa" ? " " : " font-mono ") } 
+          className={ 'text-2xl text-primary max-[310px]:text-xl ' +  ( lang == "fa" ? " " : " font-mono ") } 
           href={"/"}
         > 
           {dictionary.WebSiteName[lang]} 
