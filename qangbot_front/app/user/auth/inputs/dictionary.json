@@ -1,0 +1,26 @@
+{    
+    "required" : {"en" : "Required" , "fa" :"لازم"},
+    "login" : {"en" : "Login" , "fa" :"ورود"},
+    "register" : {"en" : "Register" , "fa" :"ثبت نام"},
+    "reset" : {"en" : "Account Recovery" , "fa" :"فراموشی پسورد"},
+    "username" : {"en" : "Username" , "fa" :"نام کاربری"},
+    "password" : {"en" : "Password" , "fa" :"رمز عبور"},
+    "newPassword" : {"en" : "New Password" , "fa" :"رمز عبور جدید"},
+
+    "verificationSent" : {"en" : "Email verification." , "fa" :"تایید ایمیل"},
+    "verificationSentMessage" : {"en" : "We just sent you a Email including the verification code." , "fa" :"یک ایمیل حاوی کد تایید ارسال شد."},
+    "seccond" : {"en" : "secconds" , "fa" :"ثانیه"},
+    "minute" : {"en" : "minutes" , "fa" :"دقیقه"},
+    "dismiss" : {"en" : "Dismiss" , "fa" :"منصرف شدم"},
+    "verify" : {"en" : "Verify" , "fa" :"تایید"},
+    "verificationCode" : {"en" : "Verification Code" , "fa" :"کد تایید"},
+    "sixChar" : {"en" : "Atleast 6 characters" , "fa" :"حداقل 6 حرفی"},
+    "email" : {"en" : "Email" , "fa" :"ایمیل"},
+    "repeat" : {"en" : "Confirm Password" , "fa" :"تکرار رمز عبور"},
+    "eightChar" : {"en" : "Atleast 8 characters" , "fa" :"حداقل 8 حرفی"},
+
+    "emailFormatError" : {"en" : "Valid Email adress" , "fa" :"آدرس ایمل صحیح"},
+    "sixDigit" : {"en" : "6 Digit" , "fa" :"6 رقمی"}
+
+
+}
