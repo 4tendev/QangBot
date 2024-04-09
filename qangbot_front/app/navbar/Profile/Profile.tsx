@@ -19,7 +19,7 @@ const Profile = () => {
     <UserProfile />
   ) : (
     <Link className="flex items-center" href={"/user/auth"}>
-      <ProfileImage />
+      <ProfileImage  />
     </Link>
   );
 };
