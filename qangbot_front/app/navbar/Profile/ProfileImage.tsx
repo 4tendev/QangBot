@@ -2,10 +2,10 @@
 import Image from 'next/image'
 import React from 'react'
 
-const ProfileImage = (props : {onClick : Function}  | undefined) => {
+const ProfileImage = (props : {onClick : Function}  ) => {
   return (
     <Image
-    onClick={ ()=> props?.onClick()}
+    onClick={props?.onClick ? ()=> props?.onClick() : undefined}
     alt="Profile"
     role="button"
     tabIndex={0}
