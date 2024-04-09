@@ -1,3 +1,6 @@
+import { Language } from "@/settings";
+import dictionary from "./dictionary.json"
+
 const accountPlanSVG = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -21,19 +24,21 @@ const passwordSVG = (
   </svg>
 );
 
-export const menuList: {
-  textKey: "plan" | "password";
+export function menuList(lang:Language) :{
+  text: string;
   href: string;
   svg: JSX.Element;
-}[] = [
-  {
-    textKey: "plan",
-    href: "/user/plan",
-    svg: accountPlanSVG,
-  },
-  {
-    textKey: "password",
-    href: "/user/password",
-    svg: passwordSVG,
-  },
-];
+}[] {
+  return [
+    {
+      text: dictionary.plan[lang],
+      href: "/user/plan",
+      svg: accountPlanSVG,
+    },
+    {
+      text:dictionary.password[lang] ,
+      href: "/user/password",
+      svg: passwordSVG,
+    },
+  ]
+}
