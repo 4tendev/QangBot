@@ -20,7 +20,8 @@ def usernameInput(group, request):
 @ratelimit(key=usernameInput, method=['PATCH'], block=False, rate='15/m')
 def auth(request):
     if getattr(request, 'limited', False):
-        data = {"code": "429"}
+        data = {"code": "429",
+                "message": "To Many Tries"}
         return JsonResponse(data)
     try:
         data = {
