@@ -1,5 +1,6 @@
 {
-    "logout" : {"en" : "Logout" , "fa" :"خروج"}
+    "logout" : {"en" : "Logout" , "fa" :"خروج"},
+    "logedout" : {"en" : "Loged Out" , "fa" :"خروج موفق"}
 
 
 
