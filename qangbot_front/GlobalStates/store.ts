@@ -2,7 +2,7 @@ import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
 import { userSlice } from "./Slices/userSlice";
 import { languageSlice } from "./Slices/languageSlice";
-import { GlobalAlertSlice } from "./Slices/alertSlice";
+import { GlobalAlertSlice } from "./Slices/alert/Slice";
 
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.

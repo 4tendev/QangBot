@@ -2,7 +2,7 @@
 import React from 'react'
 import TimeAlert from './components/TimeAlert/TimeAlert'
 import { useAppSelector } from "@/GlobalStates/hooks";
-import { globalalert } from "@/GlobalStates/Slices/alertSlice";
+import { globalalert } from "@/GlobalStates/Slices/alert/Slice";
 
 
 const GlobalAlert = () => {
