@@ -35,7 +35,7 @@ export default function UserProfile() {
   const handleItemClick = () => {
     setIsOpen(false);
   };
-  const liClassName = "h-10 w-full flex items-center";
+  const liClassName = "h-13 w-full flex items-center";
 
 
   return (
@@ -48,13 +48,13 @@ export default function UserProfile() {
         <ul
           ref={dropdownRef}
           tabIndex={0}
-          className="dropdown-content  shadow-lg z-[1] mt-4 py-2  bg-base-200  w-52"
+          className="dropdown-content  shadow-lg z-[1] mt-3 py-1  bg-base-200  w-52"
         >
           {menuList(lang).map((item) => (
             <li key={item.text} className={liClassName}>
               <Link
                 onClick={handleItemClick}
-                className="w-full"
+                className="w-full h-full"
                 href={item.href}
               >
                 <TextSVG  svg={item.svg} text={ item.text} />
