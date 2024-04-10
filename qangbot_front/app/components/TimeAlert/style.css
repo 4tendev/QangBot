@@ -1,0 +1,12 @@
+.changeBrightness {  /* Make sure this class is applied to the desired element */
+  animation: brightnessAnimation 1s infinite ;
+}
+
+@keyframes brightnessAnimation {
+  0% {
+      filter: brightness(1.05); /* Original brightness */
+  }
+  100% {
+      filter: brightness(1); /* Desired brightness */
+  }
+}
