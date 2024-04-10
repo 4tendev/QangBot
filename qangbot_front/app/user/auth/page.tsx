@@ -5,6 +5,7 @@ import { language } from "@/GlobalStates/Slices/languageSlice";
 import { useAppSelector } from "@/GlobalStates/hooks";
 import Login from "./login/page";
 
+
 const Auth = () => {
   type TabType = "login" | "register";
   const [tab, setTab]: [TabType, Function] = useState("login");
