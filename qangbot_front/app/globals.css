@@ -18,15 +18,6 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
-.alert {
-    @apply text-start ;
-    @apply text-sm ;
-    @apply px-3 ;
-    @apply sm:text-base ;
-    @apply justify-start ;
-    @apply flex ;
-
-  }
 
   ::-webkit-scrollbar {
     width: 4px;
