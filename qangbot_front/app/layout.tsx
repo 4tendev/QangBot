@@ -8,6 +8,7 @@ import "./globals.css";
 import { StoreProvider } from "./StoreProvider";
 import Navbar from "./navbar/Navbar"
 import Main from "./Main";
+import GlobalAlert from "./GlobalAlert";
 import dictionary from "./dictionary.json"
 
 
@@ -39,6 +40,7 @@ export default async function RootLayout({
     <StoreProvider >
       <html lang={lang}  dir={direction}  data-theme={theme}>
         <body className={(direction ==="ltr" ?   myPoppinsFont.className  : myVazirFont.className)  +  " h-screen w-screen " } >
+          <GlobalAlert />
           <Navbar />
           <Main >
               {children}
