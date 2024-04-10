@@ -15,7 +15,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: (create) => ({
 
-    newState: create.reducer(
+    newUserState: create.reducer(
       (state, action: PayloadAction<boolean>) => {
         state.isKnown = action.payload;
       },
@@ -29,7 +29,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { newState } =
+export const { newUserState } =
   userSlice.actions;
 
 export const { isKnown } = userSlice.selectors;
