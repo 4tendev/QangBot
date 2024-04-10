@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 
 import { useAppDispatch } from "@/GlobalStates/hooks";
-import { newState } from "@/GlobalStates/Slices/userSlice";
+import { newUserState } from "@/GlobalStates/Slices/userSlice";
 
 import { fetchapi } from "@/commonTsBrowser/fetchAPI";
 
@@ -15,7 +15,7 @@ const CheckUser = () => {
     setIsUserChecked(undefined);
     fetchapi("/user/", "GET")
       .then((response) => {
-        setUserIsKnow(newState(response.code === "200"));
+        setUserIsKnow(newUserState(response.code === "200"));
         setIsUserChecked(true);
       })
       .catch((reasson) => setIsUserChecked(false));
