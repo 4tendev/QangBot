@@ -38,11 +38,11 @@ def checkCode(address, verify_for, code):
     answer = redis_client.get(key)
     if not answer:
         return None
+    failed_key = key+"FAILED"
     if answer == str(code):
         redis_client.delete(key)
         redis_client.delete(failed_key)
         return True
-    failed_key = key+"FAILED"
     failed_try = redis_client.get(failed_key)
     if failed_try:
         redis_client.incr(failed_key)
