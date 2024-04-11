@@ -63,7 +63,6 @@ def auth(request):
                     return JsonResponse({"code": responseCode, "message": responseMessage})
                 login(request, user)
                 if not trustedDevice:
-                    print("HERE")
                     request.session.set_expiry(0)
                 data = {
                     "code": "200",
