@@ -74,15 +74,10 @@ export function verificationCodeInput(lang: Language): Input {
 }
 
 export function repeatPasswordInput(lang: Language): Input {
-  return {
-    type: "password",
-    placeHolder: dictionary["repeat"][lang],
-    name: "repeatPassword",
-    validations: { required: true },
-    validationsMSG: {
-      required: dictionary["required"][lang],
-    },
-  };
+  const repeatPasswordInput =passwordInput(lang)
+  repeatPasswordInput.name = "repeatPassword"
+  repeatPasswordInput.placeHolder =dictionary["repeat"][lang]
+  return repeatPasswordInput;
 }
 export function newPasswordInput(lang: Language): Input {
   return {
