@@ -1,5 +1,6 @@
-
 {
-    "login" : {"en" : "Login" , "fa" :"ورود"}
-
+    "login" : {"en" : "Login" , "fa" :"ورود"},
+    "code400" : {"en" : "No user found." , "fa" :"کاربری پیدا نشد."},
+    "code200" : {"en" : "Logged Successfully." , "fa" :"ورود موفق."},
+    "code429" : {"en" : "Too many tries." , "fa" :"تلاش بیش از حد."}
 }
