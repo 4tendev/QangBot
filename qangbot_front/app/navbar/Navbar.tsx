@@ -18,7 +18,7 @@ const Navbar = () => {
           <Drawer />
         </div>
         <div className="flex items-center grow md:grow-0">
-          <div className="md:order-1">"Robot"</div>
+          <div className="md:order-1">Robot</div>
           <div className="grow flex justify-center">
             <WebSiteName />
           </div>
