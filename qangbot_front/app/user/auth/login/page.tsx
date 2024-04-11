@@ -1,11 +1,13 @@
 "use client";
 
 import UseFormTemplate from "@/app/UseForm/UseFormTemplate";
+import responseMessageFinder from "@/app/commonTs/responseMessageFinder"
 
 import {
   passwordInput,
   usernameInput,
   trustedDeviceInput,
+  
 } from "../inputs/inputs";
 import dictionary from "./dictionary.json";
 import React from "react";
@@ -16,7 +18,6 @@ import { useAppDispatch, useAppSelector } from "@/GlobalStates/hooks";
 import { newUserState } from "@/GlobalStates/Slices/userSlice";
 import {
   newAlert,
-  serverErrorAlert,
   connectionErrorAlert,
 } from "@/GlobalStates/Slices/alert/Slice";
 import { language } from "@/GlobalStates/Slices/languageSlice";
@@ -38,41 +39,12 @@ const Page = () => {
   async function login(data: any) {
     await fetchapi("/user/", "PATCH", (data = data))
       .then((response) => {
-        switch (response.code) {
-          case "200":
-            setGlobalState(newUserState(true));
-            setGlobalState(
-              newAlert({
-                mode: "success",
-                message: dictionary.code200[lang],
-                time: 3,
-              })
-            );
-            pathname === "/user/auth" ? router.push("/user") : null;
-            break;
-          case "400":
-            setGlobalState(
-              newAlert({
-                mode: "warning",
-                message: dictionary.code400[lang],
-                time: 4,
-              })
-            );
-            break;
-          case "429":
-            setGlobalState(
-              newAlert({
-                mode: "warning",
-                message: dictionary.code429[lang],
-                time: 4,
-              })
-            );
-            break;
-          case "500":
-            setGlobalState(serverErrorAlert(lang));
-            break;
-          default:
-            break;
+        const code =response.code
+        const mode = code ===200 ? "success" : "warning"
+        setGlobalState(newAlert({message:responseMessageFinder(dictionary,code,lang)  ,mode :mode ,time :4 }));
+        if (code ==="200") {
+          setGlobalState(newUserState(true));
+          pathname.substring(0,11) === "/user/auth" ? router.push("/user") : null;
         }
       })
       .catch((resson) => {
