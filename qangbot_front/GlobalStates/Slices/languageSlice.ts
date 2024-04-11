@@ -6,6 +6,7 @@ export type LanguageSliceState = typeof SUPPORTED_LANGUAGES[number]
 
 const initialState:  LanguageSliceState = SUPPORTED_LANGUAGES[0]
 
+
 export const languageSlice = createSlice({
   name: "language",
   initialState,
