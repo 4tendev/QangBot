@@ -4,6 +4,8 @@ import dictionary from "./dictionary.json";
 import { language } from "@/GlobalStates/Slices/languageSlice";
 import { useAppSelector } from "@/GlobalStates/hooks";
 import Login from "./login/page";
+import Register from "./register/page";
+
 
 
 const Auth = () => {
@@ -13,7 +15,7 @@ const Auth = () => {
 
   const tabs: { [key in TabType]: React.JSX.Element } = {
     login: <Login />,
-    register: <Login />,
+    register: <Register />,
   };
   return (
     <div className="w-full max-w-lg mx-auto">
