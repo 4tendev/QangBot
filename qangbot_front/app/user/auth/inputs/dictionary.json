@@ -14,7 +14,7 @@
     "minute" : {"en" : "minutes" , "fa" :"دقیقه"},
     "dismiss" : {"en" : "Dismiss" , "fa" :"منصرف شدم"},
     "verify" : {"en" : "Verify" , "fa" :"تایید"},
-    "verificationCode" : {"en" : "Verification Code" , "fa" :"کد تایید"},
+    "emailCode" : {"en" : "Email Verification Code" , "fa" :"کد تایید ایمیل"},
     "sixChar" : {"en" : "Atleast 6 characters" , "fa" :"حداقل 6 حرفی"},
     "email" : {"en" : "Email" , "fa" :"ایمیل"},
     "repeat" : {"en" : "Confirm Password" , "fa" :"تکرار رمز عبور"},
