@@ -52,9 +52,9 @@ const UseFormTemplate = (props: {
     formState: { errors },
   } = useForm({ defaultValues: defaultValue });
   const action = props.action;
-async  function onSubmit(data: object) {
+  async function onSubmit(data: object) {
     setonSubmitMode(true);
-    await action(data).then();
+    await action(data);
     setonSubmitMode(false);
   }
 
