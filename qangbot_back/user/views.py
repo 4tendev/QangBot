@@ -104,14 +104,15 @@ def auth(request):
                     match len(emailCode):
                         case  0:
                             data = {
-                                "code": "500"
+                                "code": "500",
+                                "message" : "Server Error"
                             }
                             timeRemaining = createCode(
                                 email, VERIFY_FOR_REGISTER)
                             if timeRemaining:
                                 data = {
                                     "code": "201",
-                                    "timeRemaining": timeRemaining,
+                                    "data" : {"timeRemaining": timeRemaining,},
                                     "message": "Code Sent"
                                 }
                         case  6:
