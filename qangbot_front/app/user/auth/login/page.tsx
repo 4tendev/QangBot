@@ -26,7 +26,7 @@ const Page = () => {
       switch (response.code) {
         case "200":
           setGlobalState(newUserState(true));
-          setGlobalState(newAlert({ mode: "success", message: "OK", time: 3 }));
+          setGlobalState(newAlert({ mode: "success", message:  dictionary.code200[lang], time: 3 }));
           pathname === "/user/auth" ? router.push("/user") : null;
           break;
         case "400":
