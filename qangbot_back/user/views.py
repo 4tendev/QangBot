@@ -53,7 +53,7 @@ def auth(request):
                 totpCode = form.cleaned_data.get("TOTPCode")
                 username = form.cleaned_data.get("username").lower()
                 password = form.cleaned_data.get("password")
-                trustedDvice = form.cleaned_data.get("trustedDvice") or False
+                trustedDevice = form.cleaned_data.get("trustedDevice") or False
                 user = authenticate(username=username, password=password)
                 if user is None:
                     return JsonResponse(data)
@@ -62,7 +62,8 @@ def auth(request):
                     responseCode, responseMessage = "4006", "TOTP REQUIRED" if totpCheckPass == None else "4007", "TOTP Wrong"
                     return JsonResponse({"code": responseCode, "message": responseMessage})
                 login(request, user)
-                if not trustedDvice:
+                if not trustedDevice:
+                    print("HERE")
                     request.session.set_expiry(0)
                 data = {
                     "code": "200",
@@ -83,8 +84,8 @@ def auth(request):
                 }
                 if form.is_valid():
                     password = form.cleaned_data.get("password")
-                    trustedDvice = form.cleaned_data.get(
-                        "trustedDvice") or False
+                    trustedDevice = form.cleaned_data.get(
+                        "trustedDevice") or False
                     email = form.cleaned_data.get("email")
                     username = form.cleaned_data.get("username").lower()
                     if User.objects.filter(username=username):
@@ -125,7 +126,7 @@ def auth(request):
                                     "message": "Created"
                                 }
                                 login(request, user)
-                                if not trustedDvice:
+                                if not trustedDevice:
                                     request.session.set_expiry(0)
 
                             elif isCodeAcceptable is None:

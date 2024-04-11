@@ -2,7 +2,7 @@
 
 import UseFormTemplate from "@/app/UseForm/UseFormTemplate";
 
-import { passwordInput, usernameInput } from "../inputs/inputs";
+import { passwordInput, usernameInput ,trustedDeviceInput} from "../inputs/inputs";
 import dictionary from "./dictionary.json";
 import React from "react";
 
@@ -23,7 +23,7 @@ const Page = () => {
   const router = useRouter();
   const pathname = usePathname();
   const form = {
-    inputs: [usernameInput(lang), passwordInput(lang)],
+    inputs: [usernameInput(lang), passwordInput(lang),trustedDeviceInput(lang)],
     action: dictionary.login[lang],
   };
   async function login(data: any) {

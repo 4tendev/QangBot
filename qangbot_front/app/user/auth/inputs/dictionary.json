@@ -6,6 +6,7 @@
     "username" : {"en" : "Username" , "fa" :"نام کاربری"},
     "password" : {"en" : "Password" , "fa" :"رمز عبور"},
     "newPassword" : {"en" : "New Password" , "fa" :"رمز عبور جدید"},
+    "trustedDevice" : {"en" : "It's my own trusted device" , "fa" :"این دستگاه قابل اعتماد خودم است."},
 
     "verificationSent" : {"en" : "Email verification." , "fa" :"تایید ایمیل"},
     "verificationSentMessage" : {"en" : "We just sent you a Email including the verification code." , "fa" :"یک ایمیل حاوی کد تایید ارسال شد."},
