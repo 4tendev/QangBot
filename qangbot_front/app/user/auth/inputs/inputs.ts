@@ -58,12 +58,12 @@ export function emailInput(lang: Language): Input {
     },
   };
 }
-export function verificationCodeInput(lang: Language): Input {
+export function emailCodeInput(lang: Language): Input {
   return {
     autoFocus: true,
     type: "number",
-    placeHolder: dictionary["verificationCode"][lang],
-    name: "verificationCode",
+    placeHolder: dictionary["emailCode"][lang],
+    name: "emailCode",
     validations: { required: true, maxLength: 6, minLength: 6 },
     validationsMSG: {
       required: dictionary["required"][lang],
