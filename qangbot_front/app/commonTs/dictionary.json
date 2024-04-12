@@ -1,7 +1,14 @@
 {
-
-    "unknownCode" :  {
-        "en" : "Unknown Response" ,  "fa" : "پاسخ غیر منتظره"
+    "unknownCode": {
+        "en": "Unknown Response",
+        "fa": "پاسخ غیر منتظره"
     },
-    "500" : {"en" : "Server Error. Please try again later." , "fa" :"خطا در سرور. بعدا تلاش کنید."}
+    "500": {
+        "en": "Server Error. Please try again later.",
+        "fa": "خطا در سرور. بعدا تلاش کنید."
+    },
+    "429": {
+        "en": "To many tries.",
+        "fa": "تلاش بیش از حد."
+    }
 }
