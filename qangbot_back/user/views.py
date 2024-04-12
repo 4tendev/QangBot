@@ -62,9 +62,9 @@ def auth(request):
                     if not user:
                         return JsonResponse(data)
                     email = user[0].email
-
+                    VERIFY_FOR_LOGIN = "LOGIN"
                     if not emailCode:
-                        VERIFY_FOR_LOGIN = "LOGIN"
+                        
                         timeRemaining = createCode(
                             email, VERIFY_FOR_LOGIN)
                         data = {
@@ -74,7 +74,7 @@ def auth(request):
                         }
                         return JsonResponse(data)
                     isCodeAcceptable = checkCode(
-                        email, VERIFY_FOR_REGISTER, emailCode)
+                        email, VERIFY_FOR_LOGIN, emailCode)
                     if not isCodeAcceptable:
                         if isCodeAcceptable is None:
                             data = {
