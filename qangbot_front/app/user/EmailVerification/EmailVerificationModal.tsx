@@ -19,16 +19,20 @@ const VerificationModal = (props: {
   useEffect(() => {
     if (isActive) {
       const interval = setInterval(
-        () => setTimeRemaining((prev) => (prev > 0 ? prev - 1 : prev)),
+        () => setTimeRemaining((prev) =>{ 
+        prev < 1 ? setIsActive(false) :null
+         return (prev > 0 ? prev - 1 : prev)
+        }),
         1000
       );
       return () => clearInterval(interval);
     }
   }, [isActive]);
 
-  function tryWithVerificationCode(dataCode: object) {
+async  function tryWithVerificationCode(dataCode: object) {
     const dataWithVerificationCode = Object.assign({}, data, dataCode);
-    return action(dataWithVerificationCode);
+    const response = await action(dataWithVerificationCode)
+    return response;
   }
 
   const minutes = Math.floor(timeRemaining / 60);
