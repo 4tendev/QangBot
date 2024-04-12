@@ -24,14 +24,17 @@ import {
 import { language } from "@/GlobalStates/Slices/languageSlice";
 import { useState } from "react";
 
-import EmailVerificationModal from "@/app/user/EmailVerification/EmailVerificationModal"
+import EmailVerificationModal from "@/app/user/EmailVerification/EmailVerificationModal";
 
 const Page = () => {
   const setGlobalState = useAppDispatch();
   const lang = useAppSelector(language).lang;
   const router = useRouter();
   const pathname = usePathname();
-  const [emailVerification, setEmailVerification] :[JSX.Element | undefined , Function] = useState(undefined)
+  const [emailVerification, setEmailVerification]: [
+    JSX.Element | undefined,
+    Function
+  ] = useState(undefined);
   const form = {
     inputs: [
       emailInput(lang),
@@ -57,14 +60,22 @@ const Page = () => {
     await fetchapi("/user/", "POST", (data = data))
       .then((response) => {
         const code = response.code;
-        const mode = code.substring(0,1) === "2" ? "success" : "warning";
+        const mode = code.substring(0, 1) === "2" ? "success" : "warning";
         if (code === "201") {
-          setEmailVerification(<EmailVerificationModal key={Math.random()} action={register} data={data}  timeRemaining={response.data.timeRemaining} lang={lang}  />)
-          return
+          setEmailVerification(
+            <EmailVerificationModal
+              key={Math.random()}
+              action={register}
+              data={data}
+              timeRemaining={response.data.timeRemaining}
+              lang={lang}
+            />
+          );
+          return;
         }
         setGlobalState(
           newAlert({
-            message: responseMessageFinder(dictionary, lang,code ),
+            message: responseMessageFinder(dictionary, lang, code),
             mode: mode,
             time: 4,
           })
@@ -77,7 +88,7 @@ const Page = () => {
         }
 
         if (code === "4003") {
-          setEmailVerification(undefined)
+          setEmailVerification(undefined);
         }
       })
       .catch((resson) => {
@@ -87,10 +98,7 @@ const Page = () => {
   return (
     <div className="mx-auto max-w-md px-3">
       <UseFormTemplate form={form} action={register} />
-      {emailVerification ?
-      emailVerification 
-      :null
-       }
+      {emailVerification ? emailVerification : null}
     </div>
   );
 };
