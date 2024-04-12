@@ -1,6 +1,22 @@
 {
-    "login" : {"en" : "Login" , "fa" :"ورود"},
-    "400" : {"en" : "No user found." , "fa" :"کاربری پیدا نشد."},
-    "200" : {"en" : "Logged Successfully." , "fa" :"ورود موفق."},
-    "429" : {"en" : "Too many tries." , "fa" :"تلاش بیش از حد."}
+    "login": {
+        "en": "Login",
+        "fa": "ورود"
+    },
+    "400": {
+        "en": "No user found.",
+        "fa": "کاربری پیدا نشد."
+    },
+    "200": {
+        "en": "Logged Successfully.",
+        "fa": "ورود موفق."
+    },
+    "4290": {
+        "en": "Ask new verification code.",
+        "fa": "درخواست کد جدید بدهید."
+    },
+    "4291": {
+        "en": "ٌwrong code.",
+        "fa": "کد نامعتبر."
+    }
 }

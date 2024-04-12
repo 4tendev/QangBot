@@ -21,8 +21,16 @@ import {
   connectionErrorAlert,
 } from "@/GlobalStates/Slices/alert/Slice";
 import { language } from "@/GlobalStates/Slices/languageSlice";
+import { useState } from "react";
+import EmailVerificationModal from "@/app/user/EmailVerification/EmailVerificationModal";
+import Alert from "@/app/components/Alert/Alert";
 
 const Page = () => {
+  const [modalVerification, setModalVerification]: [
+    JSX.Element | undefined,
+    Function
+  ] = useState(undefined);
+
   const setGlobalState = useAppDispatch();
   const lang = useAppSelector(language).lang;
   const router = useRouter();
@@ -37,31 +45,61 @@ const Page = () => {
   };
 
   async function login(data: any) {
-    await fetchapi("/user/", "PATCH", (data = data))
+    const response = await fetchapi("/user/", "PATCH", (data = data))
       .then((response) => {
         const code = response.code;
-        const mode = code === 200 ? "success" : "warning";
+        const mode = code === "200" ? "success" : "warning";
+        switch (code) {
+          case "200":
+            setModalVerification(undefined);
+            setGlobalState(newUserState(true));
+            pathname.substring(0, 11) === "/user/auth"
+              ? router.push("/user")
+              : null;
+            break;
+          case "429":
+            setModalVerification(
+              <EmailVerificationModal
+                key={Math.random()}
+                action={login}
+                data={data}
+                timeRemaining={response.data.timeRemaining}
+                lang={lang}
+              />
+            );
+            return;
+          case "4291":
+            return (
+              <Alert
+                alert={{
+                  message: responseMessageFinder(dictionary, lang, code),
+                  mode: "warning",
+                }}
+              />
+            );
+          case "4290":
+            setModalVerification(undefined);
+            break;
+          default:
+            break;
+        }
         setGlobalState(
           newAlert({
-            message: responseMessageFinder(dictionary, code, lang),
+            message: responseMessageFinder(dictionary, lang, code),
             mode: mode,
             time: 4,
           })
         );
-        if (code === "200") {
-          setGlobalState(newUserState(true));
-          pathname.substring(0, 11) === "/user/auth"
-            ? router.push("/user")
-            : null;
-        }
       })
       .catch((resson) => {
         setGlobalState(connectionErrorAlert(lang));
       });
+    return response;
   }
   return (
     <div className="mx-auto max-w-md px-3">
       <UseFormTemplate form={form} action={login} />
+      {modalVerification ? modalVerification : null}
     </div>
   );
 };
