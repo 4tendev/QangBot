@@ -43,6 +43,10 @@ const UseFormTemplate = (props: {
   form: Form;
   defaultValue?: DefaultValue<Input>;
 }) => {
+  const [responseMessage, setResponseMessage]: [
+    undefined | React.JSX.Element | void,
+    Function
+  ] = useState(undefined);
   const [onSubmitMode, setonSubmitMode] = useState(false);
   const defaultValue = props.defaultValue ?? {};
   const lang = useAppSelector(language).lang;
@@ -54,7 +58,10 @@ const UseFormTemplate = (props: {
   const action = props.action;
   async function onSubmit(data: object) {
     setonSubmitMode(true);
-    await action(data);
+    setResponseMessage(undefined);
+    await action(data).then((result: React.JSX.Element | void | undefined) => {
+      setResponseMessage(result);
+    });
     setonSubmitMode(false);
   }
 
@@ -82,6 +89,7 @@ const UseFormTemplate = (props: {
             {inputSelector(input)}
           </div>
         ))}
+        {responseMessage ? responseMessage : null}
         <button
           type="submit"
           disabled={onSubmitMode ?? true}
