@@ -8,6 +8,7 @@ class LoginForm(forms.Form):
     username=forms.CharField(max_length=50, required=True)
     password=forms.CharField(max_length=100,required=True)
     TOTPCode=forms.CharField(required=False)
+    emailCode=emailCodeField
     trustedDevice=trustedDeviceField
 
 class RegisterForm(forms.Form):

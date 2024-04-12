@@ -19,10 +19,6 @@ def usernameInput(group, request):
 @ratelimit(key=usernameInput, method=['PATCH'], block=False, rate='45/d')
 @ratelimit(key=usernameInput, method=['PATCH'], block=False, rate='15/m')
 def auth(request):
-    if getattr(request, 'limited', False):
-        data = {"code": "429",
-                "message": "To Many Tries"}
-        return JsonResponse(data)
     try:
         data = {
             "code": "405",
@@ -54,11 +50,49 @@ def auth(request):
                 username = form.cleaned_data.get("username").lower()
                 password = form.cleaned_data.get("password")
                 trustedDevice = form.cleaned_data.get("trustedDevice") or False
+                emailCode = form.cleaned_data.get("emailCode") or False
+
+                if getattr(request, 'limited', False):
+                    user = User.objects.filter(
+                        username=username
+                    )
+                    data = {"code": "400",
+                            "message": "Cant authurize"
+                            }
+                    if not user:
+                        return JsonResponse(data)
+                    email = user[0].email
+
+                    if not emailCode:
+                        VERIFY_FOR_LOGIN = "LOGIN"
+                        timeRemaining = createCode(
+                            email, VERIFY_FOR_LOGIN)
+                        data = {
+                            "code": "429",
+                                    "data": {"timeRemaining": timeRemaining, },
+                                    "message": "to many tries ,Code Sent"
+                        }
+                        return JsonResponse(data)
+                    isCodeAcceptable = checkCode(
+                        email, VERIFY_FOR_REGISTER, emailCode)
+                    if not isCodeAcceptable:
+                        if isCodeAcceptable is None:
+                            data = {
+                                "code": "4290",
+                                "message": "ASK NEW emailCODE"
+                            }
+                        elif isCodeAcceptable is False:
+                            data = {
+                                "code": "4291",
+                                "message": "Wrong emailCode Code"
+                            }
+                        return JsonResponse(data)
+
                 user = authenticate(username=username, password=password)
                 if user is None:
                     return JsonResponse(data)
                 totpCheckPass = TOTP.canPassTotp(user, totpCode)
-                if not totpCheckPass:
+                if not totpCheckPass and not emailCode:
                     responseCode, responseMessage = "4006", "TOTP REQUIRED" if totpCheckPass == None else "4007", "TOTP Wrong"
                     return JsonResponse({"code": responseCode, "message": responseMessage})
                 login(request, user)
@@ -105,14 +139,14 @@ def auth(request):
                         case  0:
                             data = {
                                 "code": "500",
-                                "message" : "Server Error"
+                                "message": "Server Error"
                             }
                             timeRemaining = createCode(
                                 email, VERIFY_FOR_REGISTER)
                             if timeRemaining:
                                 data = {
                                     "code": "201",
-                                    "data" : {"timeRemaining": timeRemaining,},
+                                    "data": {"timeRemaining": timeRemaining, },
                                     "message": "Code Sent"
                                 }
                         case  6:
