@@ -1,8 +1,26 @@
 {
-    "minute" : {"en" : "minutes" , "fa" :"دقیقه"},
-    "verificationSent" : {"en" : "Email verification." , "fa" :"تایید ایمیل"},
-    "verificationSentMessage" : {"en" : "We just sent you a Email including the verification code." , "fa" :"یک ایمیل حاوی کد تایید ارسال شد."},
-    "seccond" : {"en" : "secconds" , "fa" :"ثانیه"},
-    "dismiss" : {"en" : "Dismiss" , "fa" :"منصرف شدم"},
-    "verify" : {"en" : "Verify" , "fa" :"تایید"}
+    "minute": {
+        "en": "minutes",
+        "fa": "دقیقه"
+    },
+    "verificationSent": {
+        "en": "Email verification.",
+        "fa": "تایید ایمیل"
+    },
+    "verificationSentMessage": {
+        "en": "We just sent you an Email including the verification code.",
+        "fa": "یک ایمیل حاوی کد تایید ارسال شد."
+    },
+    "seccond": {
+        "en": "secconds",
+        "fa": "ثانیه"
+    },
+    "dismiss": {
+        "en": "Dismiss",
+        "fa": "منصرف شدم"
+    },
+    "verify": {
+        "en": "Verify",
+        "fa": "تایید"
+    }
 }
