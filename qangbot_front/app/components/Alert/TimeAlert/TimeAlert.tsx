@@ -1,13 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import "./style.css";
-import alertDetailFromMode from "./alertSelector";
-export type TimeAlertProp = {
-  message: string;
-  time: number;
-  mode: "error" | "warning" | "success" | "info" | null;
-};
+import alertDetailFromMode from "../alertSelector";
+import Alert from "../Alert";
 
+export interface TimeAlertProp extends Alert {
+  time: number;
+}
 const TimeAlert = (props: { timeAlert: TimeAlertProp }) => {
   const [shouldDelete, setShouldDelete] = useState(false);
 

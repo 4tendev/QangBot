@@ -1,4 +1,4 @@
-import { TimeAlertProp } from "./TimeAlert";
+import { TimeAlertProp } from "./TimeAlert/TimeAlert";
 export default function alertDetailFromMode(mode: TimeAlertProp["mode"]) {
   const svgClassname = "stroke-current shrink-0 h-4 w-4";
 
