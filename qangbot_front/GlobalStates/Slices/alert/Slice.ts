@@ -1,6 +1,6 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
-import { TimeAlertProp } from "@/app/components/TimeAlert/TimeAlert";
+import { TimeAlertProp } from "@/app/components/Alert/TimeAlert/TimeAlert";
 import dictionary from "./dictionary.json"
 import { Language } from "@/settings";
 const initialState: TimeAlertProp  = {
