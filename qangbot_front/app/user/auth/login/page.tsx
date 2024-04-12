@@ -45,7 +45,7 @@ const Page = () => {
   };
 
   async function login(data: any) {
-    const response = await fetchapi("/user/", "PATCH", (data = data))
+   return await fetchapi("/user/", "PATCH", (data = data))
       .then((response) => {
         const code = response.code;
         const mode = code === "200" ? "success" : "warning";
@@ -94,7 +94,7 @@ const Page = () => {
       .catch((resson) => {
         setGlobalState(connectionErrorAlert(lang));
       });
-    return response;
+    
   }
   return (
     <div className="mx-auto max-w-md px-3">

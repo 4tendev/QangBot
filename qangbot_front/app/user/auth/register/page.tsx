@@ -25,6 +25,7 @@ import { language } from "@/GlobalStates/Slices/languageSlice";
 import { useState } from "react";
 
 import EmailVerificationModal from "@/app/user/EmailVerification/EmailVerificationModal";
+import Alert from "@/app/components/Alert/Alert";
 
 const Page = () => {
   const setGlobalState = useAppDispatch();
@@ -57,7 +58,7 @@ const Page = () => {
       );
       return;
     }
-    await fetchapi("/user/", "POST", (data = data))
+    return await fetchapi("/user/", "POST", (data = data))
       .then((response) => {
         const code = response.code;
         const mode = code.substring(0, 1) === "2" ? "success" : "warning";
@@ -73,13 +74,6 @@ const Page = () => {
           );
           return;
         }
-        setGlobalState(
-          newAlert({
-            message: responseMessageFinder(dictionary, lang, code),
-            mode: mode,
-            time: 4,
-          })
-        );
         if (code === "200") {
           pathname.substring(0, 11) === "/user/auth"
             ? router.push("/user")
@@ -87,9 +81,27 @@ const Page = () => {
           setGlobalState(newUserState(true));
         }
 
+        if (code === "4004") {
+          return (
+            <Alert
+              alert={{
+                message: responseMessageFinder(dictionary, lang, code),
+                mode: "warning",
+              }}
+            />
+          );
+        }
+
         if (code === "4003") {
           setEmailVerification(undefined);
         }
+        setGlobalState(
+          newAlert({
+            message: responseMessageFinder(dictionary, lang, code),
+            mode: mode,
+            time: 4,
+          })
+        );
       })
       .catch((resson) => {
         setGlobalState(connectionErrorAlert(lang));
