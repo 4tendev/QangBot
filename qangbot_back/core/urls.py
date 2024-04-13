@@ -16,8 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path ,include
+from django.shortcuts import  redirect 
+from .settings import FRONT_HOST_HTTPS ,DEBUG
+
+
+def reject(request):
+    return redirect(FRONT_HOST_HTTPS)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/',  include("user.urls")),
 ]
+if not DEBUG :
+    urlpatterns.insert(0,path('admin/login/',reject ),)
