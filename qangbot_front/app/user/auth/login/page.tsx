@@ -4,7 +4,7 @@ import UseFormTemplate from "@/app/UseForm/UseFormTemplate";
 import responseMessageFinder from "@/app/commonTs/responseMessageFinder";
 import {
   passwordInput,
-  usernameInput,
+  emailInput,
   trustedDeviceInput,
 } from "../inputs/inputs";
 
@@ -37,7 +37,7 @@ const Page = () => {
   const pathname = usePathname();
   const form = {
     inputs: [
-      usernameInput(lang),
+      emailInput(lang),
       passwordInput(lang),
       trustedDeviceInput(lang),
     ],

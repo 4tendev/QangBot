@@ -3,7 +3,6 @@
 import UseFormTemplate from "@/app/UseForm/UseFormTemplate";
 import {
   passwordInput,
-  usernameInput,
   trustedDeviceInput,
   emailInput,
   repeatPasswordInput,
@@ -39,7 +38,6 @@ const Page = () => {
   const form = {
     inputs: [
       emailInput(lang),
-      usernameInput(lang),
       passwordInput(lang),
       repeatPasswordInput(lang),
       trustedDeviceInput(lang),

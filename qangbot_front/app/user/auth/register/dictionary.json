@@ -3,7 +3,6 @@
     "notMatchPassword" : {"en" : "Passwords are not the same." , "fa" :"رمز عبورها یکی نیستند."},
     "400" : {"en" : "Invalid inputs." , "fa" :"ورودی های نامعتبر ."},
     "4002" :{"en" : "Sry the Email adress is already taken." , "fa" :" آدرس ایمیل قبلا استفاده شده."},
-    "4001" : {"en" : "Sry the Username is already taken." , "fa" :"نام کاربری قبلا استفاده شده."},
     "201" : {"en" : "Verification code sent to your Email address." , "fa" :"کد تایید برای ایمیل شما ارسال شد."}
     ,"200" : {"en" : "Nice you just registered." , "fa" :"عالی ثبت نام تکمیل شد."},
     "4003":{"en" : "Please ask new verification code." , "fa" :"کد تایید جدید درخواست دهید."}
