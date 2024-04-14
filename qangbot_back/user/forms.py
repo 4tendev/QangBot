@@ -3,22 +3,23 @@ from django import forms
 
 emailCodeField=forms.CharField(required=False) 
 trustedDeviceField=forms.BooleanField( required=False)
+emailField= forms.EmailField(required=True)
+passwordField=forms.CharField(max_length=100,min_length=8,required=True)
 
 class LoginForm(forms.Form):
-    username=forms.CharField(max_length=50, required=True)
-    password=forms.CharField(max_length=100,required=True)
+    email=emailField
+    password=passwordField
     TOTPCode=forms.CharField(required=False)
     emailCode=emailCodeField
     trustedDevice=trustedDeviceField
 
 class RegisterForm(forms.Form):
-    username=forms.CharField(max_length=50,min_length=6, required=True)
-    password=forms.CharField(max_length=100,min_length=8,required=True)
-    email=forms.EmailField(required=True)
+    password=passwordField
+    email=emailField
     emailCode=emailCodeField
     trustedDevice=trustedDeviceField
 
 class ResetPasswordForm(forms.Form):
-    email=forms.EmailField(required=True)
+    email=emailField
     newPassword=forms.CharField(max_length=100,min_length=8,required=False)
     emailCode=emailCodeField   
