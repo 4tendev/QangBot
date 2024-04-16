@@ -57,6 +57,9 @@ const Page = () => {
               ? router.push("/user")
               : null;
             break;
+          case "400":
+              setModalVerification(undefined);
+              break;
           case "429":
             setModalVerification(
               <EmailVerificationModal

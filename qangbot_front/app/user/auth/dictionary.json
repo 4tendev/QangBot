@@ -1,6 +1,7 @@
 
 {
     "login" : {"en" : "Login" , "fa" :"ورود"}
-    ,"register" :{"en" : "Register" , "fa" :"ثبت نام"}
+    ,"register" :{"en" : "Register" , "fa" :"ثبت نام"},
+    "resetPassword" :{"en" : "Reset Password" , "fa" :"ریست پسورد"}
 
 }
