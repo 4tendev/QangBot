@@ -1,7 +1,7 @@
 import { NEXT_PUBLIC_BACKEND_URL } from "@/settings";
 export function fetchapi(
   endpoint: string,
-  method: "GET" | "POST" | "PATCH" | "PUT" | "DELETE",
+  method: "GET" | "POST" | "OPTIONS" | "PATCH" | "PUT" | "DELETE",
   data?: object
 ) {
   return fetch(NEXT_PUBLIC_BACKEND_URL + endpoint, {
