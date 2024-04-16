@@ -1,15 +1,16 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
-from datetime import timedelta
-from django.utils import timezone
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 import pyotp
 import redis
+
+from datetime import datetime, timedelta
 
 from core.settings import REDIS_URL
 
 
 redis_client = redis.from_url(REDIS_URL, decode_responses=True)
+
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -27,11 +28,15 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
+
 class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    TOTPKey = models.CharField(max_length=50, null=True, unique=True)
+    TOTPKey = models.CharField(
+        max_length=50, blank=True, null=True, unique=True)
     email = models.EmailField(unique=True)
+    vipExpiration = models.DateTimeField(
+        null=True, blank=True, auto_now=False, auto_now_add=False)
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
     objects = CustomUserManager()
@@ -57,33 +62,16 @@ class User(AbstractBaseUser, PermissionsMixin):
     def isRecentlyRemovedTOTP(self):
         return True if redis_client.get(self.TOTPredisKey) else False
 
-    def __str__(self):
-        return self.email
-
-
-class Limit(models.Model):
-    bot = 2
-    grids = 100
-    interval = 60
-    validVIPTime = models.DateTimeField(
-        auto_now=False, auto_now_add=False, blank=True, null=True)
-    user = models.OneToOneField(
-        User, related_name="Limit",  on_delete=models.PROTECT)
-    VIPPrice = 0.0025
-
-    def isUserVIP(self):
-        now = timezone.now()
-        if self.validVIPTime and now < self.validVIPTime:
-            return True
-        return False
-
-    def updateVIPTime(self):
-        now = timezone.now()
+    def updateVIPTime(self , days=370):
+        now = datetime.now()
         if self.validVIPTime == None or now > self.validVIPTime:
-            self.validVIPTime = now + timedelta(days=370)
+            self.validVIPTime = now + timedelta(days=days)
         else:
-            self.validVIPTime = self.validVIPTime + timedelta(days=370)
+            self.validVIPTime = self.validVIPTime + timedelta(days=days)
         self.save()
 
+    def isVIP(self):
+        return self.vipExpiration > datetime.now() if self.vipExpiration else False
+
     def __str__(self):
-        return self.user.username
+        return self.email

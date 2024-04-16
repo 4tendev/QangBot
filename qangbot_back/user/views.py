@@ -185,10 +185,8 @@ def auth(request):
                     return JsonResponse(data)
                 emailCode = form.cleaned_data.get("emailCode")
                 newPassword = form.cleaned_data.get("newPassword")
-
                 trustedDevice = form.cleaned_data.get("trustedDevice") or False
                 if not emailCode:
-
                     data = {
                         "code": "500",
                                 "message": "Server Error"
