@@ -1,30 +1,34 @@
 from django import forms
 
 
-emailCodeField=forms.CharField(required=False) 
-trustedDeviceField=forms.BooleanField( required=False)
-emailField= forms.EmailField(required=True)
-passwordField=forms.CharField(max_length=100,min_length=8,required=True)
+emailCodeField = forms.CharField(required=False)
+trustedDeviceField = forms.BooleanField(required=False)
+emailField = forms.EmailField(required=True)
+passwordField = forms.CharField(max_length=100, min_length=8, required=True)
+
 
 class LoginForm(forms.Form):
-    email=emailField
-    password=passwordField
-    TOTPCode=forms.CharField(required=False)
-    emailCode=emailCodeField
-    trustedDevice=trustedDeviceField
+    email = emailField
+    password = passwordField
+    TOTPCode = forms.CharField(required=False)
+    emailCode = emailCodeField
+    trustedDevice = trustedDeviceField
+
 
 class RegisterForm(forms.Form):
-    password=passwordField
-    email=emailField
-    emailCode=emailCodeField
-    trustedDevice=trustedDeviceField
+    password = passwordField
+    email = emailField
+    emailCode = emailCodeField
+    trustedDevice = trustedDeviceField
+
 
 class ResetPasswordForm(forms.Form):
-    email=emailField
-    newPassword=forms.CharField(max_length=100,min_length=8,required=False)
-    emailCode=emailCodeField   
+    email = emailField
+    newPassword = forms.CharField(max_length=100, min_length=8, required=False)
+    emailCode = emailCodeField
+
 
 class ResetPassword(forms.Form):
-    emailCode=emailCodeField  
-    email=emailField
-    newPassword=forms.CharField(max_length=100,min_length=8,required=False)
+    emailCode = emailCodeField
+    email = emailField
+    newPassword = forms.CharField(max_length=100, min_length=8, required=False)

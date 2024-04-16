@@ -1,7 +1,7 @@
 import json
 
 from django.http import JsonResponse
-from django.contrib.auth import login, authenticate, logout ,update_session_auth_hash
+from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 
 from django_ratelimit.decorators import ratelimit
 
@@ -185,7 +185,7 @@ def auth(request):
                     return JsonResponse(data)
                 emailCode = form.cleaned_data.get("emailCode")
                 newPassword = form.cleaned_data.get("newPassword")
-               
+
                 trustedDevice = form.cleaned_data.get("trustedDevice") or False
                 if not emailCode:
 
@@ -205,8 +205,8 @@ def auth(request):
                     isCodeAcceptable = checkCode(
                         email, RESET_PASSWROD, emailCode)
                     if isCodeAcceptable:
-                        if not newPassword :
-                            return JsonResponse({"code" : "400" , "message" : "INVALID INPUTS"})
+                        if not newPassword:
+                            return JsonResponse({"code": "400", "message": "INVALID INPUTS"})
                         user = user[0]
                         user.set_password(newPassword)
                         user.save()
