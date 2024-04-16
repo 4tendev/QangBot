@@ -5,7 +5,7 @@ from django.contrib.auth import login, authenticate, logout, update_session_auth
 
 from django_ratelimit.decorators import ratelimit
 
-from .forms import LoginForm, RegisterForm, ResetPassword
+from .forms import LoginForm, RegisterForm, ResetPasswordForm
 from .models import User
 from .EmailOTP import createCode, checkCode
 
@@ -167,7 +167,7 @@ def auth(request):
             case "OPTIONS":
                 RESET_PASSWROD = "ResetPassword"
                 form_data = json.loads(request.body)
-                form = ResetPassword(form_data)
+                form = ResetPasswordForm(form_data)
                 data = {
                     "code": "400",
                     "message": "Invalid Inputs "
