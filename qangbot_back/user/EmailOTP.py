@@ -16,7 +16,7 @@ def createCode(address, verify_for):
     if redis_client.exists(key):
         return int(redis_client.ttl(key))
     else:
-        CODE_TIME_VALIDITY = 180
+        CODE_TIME_VALIDITY = 300
         code = str(randint(99999, 999999))
         try:
             subject = f'Email Verification {DOMAIN} {verify_for}'
