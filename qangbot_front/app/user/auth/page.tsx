@@ -1,21 +1,24 @@
 "use client";
 import React, { useState } from "react";
+
 import dictionary from "./dictionary.json";
+
 import { language } from "@/GlobalStates/Slices/languageSlice";
 import { useAppSelector } from "@/GlobalStates/hooks";
+
 import Login from "./login/page";
 import Register from "./register/page";
-
-
+import ResetPassword from "./resetpassword/page";
 
 const Auth = () => {
-  type TabType = "login" | "register";
+  type TabType = "login" | "register" | "resetPassword";
   const [tab, setTab]: [TabType, Function] = useState("login");
   const lang = useAppSelector(language).lang;
 
-  const tabs: { [key in TabType]: React.JSX.Element } = {
+  const tabs: { [key in TabType]: JSX.Element } = {
     login: <Login />,
     register: <Register />,
+    resetPassword: <ResetPassword />,
   };
   return (
     <div className="w-full max-w-lg mx-auto">
