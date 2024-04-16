@@ -1,12 +1,12 @@
 import json
 
 from django.http import JsonResponse
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate, logout ,update_session_auth_hash
 
 from django_ratelimit.decorators import ratelimit
 
-from .forms import LoginForm, RegisterForm
-from .models import  User
+from .forms import LoginForm, RegisterForm, ResetPassword
+from .models import User
 from .EmailOTP import createCode, checkCode
 
 
@@ -62,7 +62,7 @@ def auth(request):
                         return JsonResponse(data)
                     VERIFY_FOR_LOGIN = "LOGIN"
                     if not emailCode:
-                        
+
                         timeRemaining = createCode(
                             email, VERIFY_FOR_LOGIN)
                         data = {
@@ -90,7 +90,7 @@ def auth(request):
                 if user is None:
                     return JsonResponse(data)
                 totpCheckPass = user.canPassTotp(totpCode)
-                if not totpCheckPass and not emailCode:
+                if not totpCheckPass:
                     responseCode, responseMessage = "4006", "TOTP REQUIRED" if totpCheckPass == None else "4007", "TOTP Wrong"
                     return JsonResponse({"code": responseCode, "message": responseMessage})
                 login(request, user)
@@ -164,6 +164,71 @@ def auth(request):
                                     "code": "4004",
                                     "message": "Wrong VERIFICATION Code"
                                 }
+            case "OPTIONS":
+                RESET_PASSWROD = "ResetPassword"
+                form_data = json.loads(request.body)
+                form = ResetPassword(form_data)
+                data = {
+                    "code": "400",
+                    "message": "Invalid Inputs "
+                }
+                if not form.is_valid():
+                    return JsonResponse(data)
+                email = form.cleaned_data.get("email")
+                user = User.objects.filter(
+                    email=email)
+                if not user:
+                    data = {
+                        "code": "4001",
+                        "message": "No USER FOUND"
+                    }
+                    return JsonResponse(data)
+                emailCode = form.cleaned_data.get("emailCode")
+                newPassword = form.cleaned_data.get("newPassword")
+               
+                trustedDevice = form.cleaned_data.get("trustedDevice") or False
+                if not emailCode:
+
+                    data = {
+                        "code": "500",
+                                "message": "Server Error"
+                    }
+                    timeRemaining = createCode(
+                        email, RESET_PASSWROD)
+                    if timeRemaining:
+                        data = {
+                            "code": "201",
+                            "data": {"timeRemaining": timeRemaining, },
+                            "message": "Code Sent"
+                        }
+                else:
+                    isCodeAcceptable = checkCode(
+                        email, RESET_PASSWROD, emailCode)
+                    if isCodeAcceptable:
+                        if not newPassword :
+                            return JsonResponse({"code" : "400" , "message" : "INVALID INPUTS"})
+                        user = user[0]
+                        user.set_password(newPassword)
+                        user.save()
+                        update_session_auth_hash(request, user)
+                        login(request, user)
+                        data = {
+                            "code": "200",
+                            "message": "Password Changed"
+                        }
+                        if not trustedDevice:
+                            request.session.set_expiry(0)
+
+                    elif isCodeAcceptable is None:
+                        data = {
+                            "code": "4003",
+                            "message": "ASK NEW CODE"
+                        }
+                    else:
+                        data = {
+                            "code": "4004",
+                            "message": "Wrong VERIFICATION Code"
+                        }
     except Exception as e:
         print(e)
         data = {
