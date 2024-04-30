@@ -28,7 +28,9 @@ DEBUG = os.getenv("DEBUG") or False
 DOMAIN=os.getenv("DOMAIN")
 FRONT_HOST_HTTPS=os.getenv("FRONT_HOST_HTTPS")
 INTERNAL_HOST=os.getenv("INTERNAL_HOST")
-
+DEFAULT_PROXY_USERNAME=os.getenv("DEFAULT_PROXY_USERNAME")
+DEFAULT_PROXY_PASSWORD=os.getenv("DEFAULT_PROXY_PASSWORD")
+DEFAULT_PROXY_URL=os.getenv("DEFAULT_PROXY_URL")
 ALLOWED_HOSTS = [DOMAIN,INTERNAL_HOST]
 
 if DEBUG :
@@ -49,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "user",
+    "gridbot"
 ]
 from django.utils.deprecation import MiddlewareMixin
 
