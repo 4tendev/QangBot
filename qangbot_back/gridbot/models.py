@@ -18,9 +18,7 @@ class GridBot(models.Model):
     account_id = models.IntegerField()
     account = GenericForeignKey('account_model', 'account_id')
 
-    contract_model = models.ForeignKey(ContentType, on_delete=models.PROTECT)
-    contract_id = models.IntegerField()
-    contract = GenericForeignKey('contract_model', 'contract_id')
+    contract = models.ForeignKey("gridbot.Contract", related_name="GridBots", on_delete=models.CASCADE ,default=1)
 
     noneVIPCreationLimit = 2
     noneVIPGridsCreationLimit = 100
@@ -46,7 +44,7 @@ class GridBot(models.Model):
     def checkOpenGrids(self):
         if not self.Grids.filter(status=1):
             return
-        pendingOrdersIDs = self.account.getPendingOrdersID(self.contract)
+        pendingOrdersIDs = self.account.getPendingOrdersID(self)
         if pendingOrdersIDs != None:
             needToCheckGrids = self.Grids.all().exclude(
                 order__orderID__in=pendingOrdersIDs)
@@ -104,7 +102,8 @@ class Grid(models.Model):
 
     def checkOrder(self):
         if self.status == 1:
-            isFinished = self.order.isFinished()
+            account=self.bot.account
+            isFinished = self.order.isFinished(account)
             if isFinished == True:
                 self.status = 2
                 self.save()
@@ -119,10 +118,11 @@ class Order(models.Model):
     executed = models.BooleanField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    contract = models.ForeignKey("gridbot.Contract",default=1 ,related_name=("Orders"), on_delete=models.PROTECT)
 
-    def isFinished(self):
-        contract = self.grid.bot.contract
-        isFinished = self.grid.bot.account.isOrderFinished(
+    def isFinished(self, account):
+        contract = self.contract
+        isFinished = account.isOrderFinished(
             self.orderID, contract)
         self.executed = isFinished
         self.save()
@@ -175,7 +175,7 @@ class CoinexAccount(models.Model):
 
     def isOrderFinished(self, orderID, contract):
 
-        market = contract.apiidentifier
+        market = contract.apiIdentifier
         try:
             response = self.robot.query_order_status(
                 market=market, order_id=orderID)
@@ -201,14 +201,14 @@ class CoinexAccount(models.Model):
                 str(e) + f" CoinexAccount with id {self.id} Failed to checkOrder")
             return None
 
-    def getPendingOrdersID(self, contract):
+    def getPendingOrdersID(self , bot):
         result = "getPendingOrdersID"
         try:
-            market = contract.apiIdentifier
+            market = bot.contract.apiIdentifier
             openOrdersKeys = []
             limit = 100
             offset = 0
-            totalGrids = self.gridBot.Grids.all().filter(status=1).count()
+            totalGrids = bot.Grids.all().filter(status=1).count()
             for i in range(0, (int(totalGrids/100) + 1)):
                 result = self.robot.query_order_pending(
                     market=market, side=0, offset=offset, limit=limit)
@@ -245,7 +245,7 @@ class CoinexAccount(models.Model):
             print(result)
             if result["code"] == 0:
                 order = Order.objects.create(
-                    exactCreationtResponse=result,  orderID=result["data"]["order_id"])
+                    exactCreationtResponse=result, contract=contract ,orderID=result["data"]["order_id"])
                 return order
             elif result["code"] == 3109:
                 print(f"balance not enough {self.id } createOrder  ")
