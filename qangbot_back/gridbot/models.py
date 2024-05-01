@@ -102,8 +102,7 @@ class Grid(models.Model):
 
     def checkOrder(self):
         if self.status == 1:
-            account=self.bot.account
-            isFinished = self.order.isFinished(account)
+            isFinished = self.order.isFinished()
             if isFinished == True:
                 self.status = 2
                 self.save()
@@ -122,16 +121,16 @@ class Order(models.Model):
     def __str__(self):
         return self.contract.name
     
-    def isFinished(self, account):
-        contract = self.contract
+    def isFinished(self):
+        account = self.Grids.all()[0].bot.account
         isFinished = account.isOrderFinished(
-            self.orderID, contract)
+            self.orderID, self.contract)
         self.executed = isFinished
         self.save()
         return isFinished
 
     def cancelOrder(self):
-        contract = self.grid.bot.contract
+        contract = self.contract
         isOrderCanceled = self.grid.bot.account.cancelOrder(
             self.orderID, contract)
         if isOrderCanceled:
