@@ -18,7 +18,7 @@ class GridBot(models.Model):
     account_id = models.IntegerField()
     account = GenericForeignKey('account_model', 'account_id')
 
-    contract = models.ForeignKey("gridbot.Contract", related_name="GridBots", on_delete=models.CASCADE ,default=1)
+    contract = models.ForeignKey("gridbot.Contract", related_name="GridBots", on_delete=models.PROTECT )
 
     noneVIPCreationLimit = 2
     noneVIPGridsCreationLimit = 100
@@ -118,7 +118,7 @@ class Order(models.Model):
     executed = models.BooleanField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    contract = models.ForeignKey("gridbot.Contract",default=1 ,related_name=("Orders"), on_delete=models.PROTECT)
+    contract = models.ForeignKey("gridbot.Contract" ,related_name=("Orders"), on_delete=models.PROTECT)
 
     def isFinished(self, account):
         contract = self.contract
