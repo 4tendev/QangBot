@@ -119,7 +119,9 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     contract = models.ForeignKey("gridbot.Contract" ,related_name=("Orders"), on_delete=models.PROTECT)
-
+    def __str__(self):
+        return self.contract.name
+    
     def isFinished(self, account):
         contract = self.contract
         isFinished = account.isOrderFinished(
@@ -140,6 +142,10 @@ class Order(models.Model):
 
 class Exchange(models.Model):
     name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+    
 
 
 class CoinexAccount(models.Model):
@@ -280,3 +286,6 @@ class Contract (models.Model):
     name = models.CharField(max_length=50)
     url = models.URLField(max_length=200)
     apiIdentifier = models.CharField(max_length=50)
+    def __str__(self):
+        return self.name
+    Exchange
