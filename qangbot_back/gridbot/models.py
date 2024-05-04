@@ -141,6 +141,8 @@ class Order(models.Model):
 
 class Exchange(models.Model):
     name = models.CharField(max_length=50)
+    account_model = models.OneToOneField(ContentType,default=1, on_delete=models.PROTECT)
+
 
     def __str__(self):
         return self.name
@@ -287,4 +289,4 @@ class Contract (models.Model):
     apiIdentifier = models.CharField(max_length=50)
     def __str__(self):
         return self.name
-    Exchange
+    
