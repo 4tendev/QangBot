@@ -1,0 +1,8 @@
+{
+    "200" : {"en" : "Password Changed" , "fa" :"رمز عبور تغییر کرد"},
+    "notSamePassword" : {"en" : "New passwords are not the same." , "fa" :"رمز عبورهای جدید یکی نیستند. "},
+    "4001" : {"en" : "Wrong password" , "fa" :"رمز عبور  نامعتبر"},
+    "changePassword" : {"en" : "Change password" , "fa" :"تغییر رمز عبور"}
+
+
+}
