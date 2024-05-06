@@ -5,7 +5,7 @@ from django.contrib.auth import login, authenticate, logout, update_session_auth
 
 from django_ratelimit.decorators import ratelimit
 
-from .forms import LoginForm, RegisterForm, ResetPasswordForm
+from .forms import LoginForm, RegisterForm, ResetPasswordForm, ChangePasswordForm
 from .models import User
 from .EmailOTP import createCode, checkCode
 
@@ -13,10 +13,13 @@ from .EmailOTP import createCode, checkCode
 def emailInput(group, request):
     if request.method == "PATCH":
         return json.loads(request.body).get('email')
-
-
+def userID(group, request):
+    if request.method == "PUT":
+        return request.user.id
+    
 @ratelimit(key=emailInput, method=['PATCH'], block=False, rate='45/d')
 @ratelimit(key=emailInput, method=['PATCH'], block=False, rate='15/m')
+@ratelimit(key=userID, method=['PUT'], block=False, rate='10/d')
 def auth(request):
     try:
         data = {
@@ -227,6 +230,43 @@ def auth(request):
                             "code": "4004",
                             "message": "Wrong VERIFICATION Code"
                         }
+            case "PUT":
+                if getattr(request, 'limited', False):
+                        data = {
+                            "code": "429",
+                            "message": "to many tries "
+                        }
+                        return JsonResponse(data)
+                user = request.user
+                data = {
+                    "code": "401",
+                    "message": "User Unknown"
+                }
+                if not user:
+                    return JsonResponse(data)
+                form_data = json.loads(request.body)
+                form = ChangePasswordForm(form_data)
+                data = {
+                    "code": "400",
+                    "message": "invalid Inputs "
+                }
+
+                if not form.is_valid():
+                    return JsonResponse(data)
+                password = form.cleaned_data.get("password")
+                newPassword = form.cleaned_data.get("newPassword")
+                user = authenticate(email=user.email, password=password)
+                if not user:
+                    data = {
+                        "code": "4001",
+                        "message": "invalid Password "
+                    }
+                    return JsonResponse(data)
+                user.set_password(newPassword)
+                user.save()
+                update_session_auth_hash(request, user)
+                login(request, user)
+                data = {"code": "200", "message": "Password renewed"}
     except Exception as e:
         print(e)
         data = {
