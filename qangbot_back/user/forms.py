@@ -27,5 +27,7 @@ class ResetPasswordForm(forms.Form):
     newPassword = forms.CharField(max_length=100, min_length=8, required=False)
     emailCode = emailCodeField
 
-
+class ChangePasswordForm(forms.Form):
+    password = passwordField
+    newPassword = forms.CharField(max_length=100, min_length=8, required=False)
 
