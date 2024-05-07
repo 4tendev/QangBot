@@ -30,8 +30,8 @@ class CustomUserManager(BaseUserManager):
 
 
 class VIP:
-    price = 0.025
-    
+    price = 0.0025
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
