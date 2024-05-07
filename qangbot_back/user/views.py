@@ -41,7 +41,7 @@ def auth(request):
                         "message": "known User",
                         "data" : {
                             "VIP" : user.isVIP() ,
-                            "vipExpiration" :user.vipExpiration
+                            "vipExpiration" :user.vipExpiration.timestamp() if user.vipExpiration else None
                         }
                     }
             case "PATCH":
