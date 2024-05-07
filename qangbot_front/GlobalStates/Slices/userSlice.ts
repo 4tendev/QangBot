@@ -4,10 +4,15 @@ import  { createSlice } from "@reduxjs/toolkit";
 
 export interface UserSliceState {
     isKnown: boolean | undefined;
+    isVIP : boolean | undefined ; 
+    vipExpiration : number | undefined
+
 }
 
 const initialState: UserSliceState = {
     isKnown: undefined,
+    isVIP : undefined,
+    vipExpiration : undefined
 };
 
 export const userSlice = createSlice({
@@ -16,8 +21,8 @@ export const userSlice = createSlice({
   reducers: (create) => ({
 
     newUserState: create.reducer(
-      (state, action: PayloadAction<boolean>) => {
-        state.isKnown = action.payload;
+      (state, action: PayloadAction<UserSliceState>) => {
+        return action.payload
       },
     ),
 
@@ -26,10 +31,14 @@ export const userSlice = createSlice({
 
   selectors: {
     isKnown: (user) => user.isKnown,
+    isVIP : (user) => user.isVIP,
+    vipExpiration : (user) => user.vipExpiration,
+
   },
 });
 
 export const { newUserState } =
   userSlice.actions;
 
-export const { isKnown } = userSlice.selectors;
+export const { isKnown ,isVIP , vipExpiration} = userSlice.selectors;
+
