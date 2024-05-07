@@ -6,7 +6,8 @@ import { fetchapi } from "@/commonTsBrowser/fetchAPI";
 
 const VIPExplain = () => {
   const lang = useAppSelector(language).lang;
-  const [vipPrice, setVIPPrice] : [undefined | false | number , Function] = useState(undefined);
+  const [vipPrice, setVIPPrice]: [undefined | false | number, Function] =
+    useState(undefined);
 
   function checkPrice() {
     setVIPPrice(undefined);
@@ -27,13 +28,13 @@ const VIPExplain = () => {
 
   return (
     <>
-      <h2 className="text-primary text-3xl  font-bold my-2">VIP</h2>
+      <h2 className="text-primary text-3xl  font-bold my-2">
+        {dictionary.vip[lang]}
+      </h2>
       <div className="text-start text-accent">
         {vipPrice === undefined ? (
-           (
-            <span className="loading loading-bars loading-xs mx-1"></span>
-          )
-        ) :vipPrice === false ? (
+          <span className="loading loading-bars loading-xs mx-1"></span>
+        ) : vipPrice === false ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"

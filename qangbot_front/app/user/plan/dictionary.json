@@ -16,5 +16,6 @@
     ,"upgrade" : {"en" : "Upgrade To VIP" , "fa" :"ارتقا به VIP"}
     ,"expiry" : {"en" : "Expiration : " , "fa" :"انقضا : "}
     ,"update" : {"en" : "Update a year" , "fa" :"یک سال تمدید"}
+    ,"vip" : {"en" : "VIP" , "fa" :"وی آی پی"}
 
 }
