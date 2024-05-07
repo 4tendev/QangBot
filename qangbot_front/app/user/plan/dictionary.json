@@ -1,0 +1,20 @@
+{
+    "FreePlan" : {"en" : "Free Plan" , "fa" :"پلن رایگان"},
+    "VIPPlan" : {"en" : "VIP Plan" , "fa" :"پلن VIP"}
+
+    ,"botCreationLimit" : {"en" : "You are able to create limited Grid Bots." , "fa" :"ساخت محدود بات."}
+
+    ,"intervalLimitation" : {"en" : "The bot will check grids less frequently." , "fa" :"چک کردن گریدها با پریود زمانی طولانی تر."}
+
+    ,"gridLimitation" : {"en" : "Each bot can have limited Grids." , "fa" :"محدودبت گرید برای هر بات."}
+
+    ,"price" : {"en" : " BTC/Year" , "fa" :" بیت کویت برای یک سال"}
+    ,"payment" : {"en" : "We only accept real money: BTC." , "fa" :"ما فقط پول واقعی قبول می کنیم : بیت کوین"}
+    ,"InfiniteBot" : {"en" : "Infinite Grid Bots." , "fa" :"بی نهایت بات."}
+    ,"InfiniteGrid" : {"en" : "Infinite Grids." , "fa" :"بینهایت گرید"}
+    ,"interval" : {"en" : "check grids  with flexible timing." , "fa" :"چک کردن گریدها با زمان منعطف ."}
+    ,"upgrade" : {"en" : "Upgrade To VIP" , "fa" :"ارتقا به VIP"}
+    ,"expiry" : {"en" : "Expiration : " , "fa" :"انقضا : "}
+    ,"update" : {"en" : "Update a year" , "fa" :"یک سال تمدید"}
+
+}
