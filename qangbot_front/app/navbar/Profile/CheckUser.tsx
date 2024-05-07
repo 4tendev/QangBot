@@ -15,7 +15,7 @@ const CheckUser = () => {
     setIsUserChecked(undefined);
     fetchapi("/user/", "GET")
       .then((response) => {
-        setUserIsKnow(newUserState(response.code === "200"));
+        setUserIsKnow(newUserState(response.data));
         setIsUserChecked(true);
       })
       .catch((reasson) => setIsUserChecked(false));
