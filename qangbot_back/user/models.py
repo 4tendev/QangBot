@@ -29,6 +29,10 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
+class VIP:
+    price = 0.025
+    
+
 class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -40,6 +44,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
     objects = CustomUserManager()
+    VIPPRICE=VIP.price
+
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
