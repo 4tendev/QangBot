@@ -15,11 +15,11 @@ def emailInput(group, request):
         return json.loads(request.body).get('email')
 def userID(group, request):
     if request.method == "PUT":
-        return request.user.id
+        return str(request.user.id)
     
 @ratelimit(key=emailInput, method=['PATCH'], block=False, rate='45/d')
 @ratelimit(key=emailInput, method=['PATCH'], block=False, rate='15/m')
-@ratelimit(key=userID, method=['PUT'], block=False, rate='10/d')
+@ratelimit(key=userID, method=['PUT'], block=False, rate='20/d')
 def auth(request):
     try:
         data = {
@@ -32,12 +32,17 @@ def auth(request):
                 user = request.user
                 data = {
                     "code": "401",
-                    "message": "User Unknown"
+                    "message": "User Unknown",
+                   
                 }
                 if user.is_authenticated:
                     data = {
                         "code": "200",
                         "message": "known User",
+                        "data" : {
+                            "VIP" : user.isVIP() ,
+                            "vipExpiration" :user.vipExpiration
+                        }
                     }
             case "PATCH":
                 form_data = json.loads(request.body)
