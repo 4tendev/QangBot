@@ -13,10 +13,13 @@ from .EmailOTP import createCode, checkCode
 def emailInput(group, request):
     if request.method == "PATCH":
         return json.loads(request.body).get('email')
+
+
 def userID(group, request):
     if request.method == "PUT":
         return str(request.user.id)
-    
+
+
 @ratelimit(key=emailInput, method=['PATCH'], block=False, rate='45/d')
 @ratelimit(key=emailInput, method=['PATCH'], block=False, rate='15/m')
 @ratelimit(key=userID, method=['PUT'], block=False, rate='20/d')
@@ -33,15 +36,20 @@ def auth(request):
                 data = {
                     "code": "401",
                     "message": "User Unknown",
-                   
+                    "data": {
+                        "isKnown": False,
+                        "VIP": False,
+                        "vipExpiration":  None
+                    }
                 }
                 if user.is_authenticated:
                     data = {
                         "code": "200",
                         "message": "known User",
-                        "data" : {
-                            "VIP" : user.isVIP() ,
-                            "vipExpiration" :user.vipExpiration.timestamp() if user.vipExpiration else None
+                        "data": {
+                            "isKnown": True,
+                            "VIP": user.isVIP(),
+                            "vipExpiration": user.vipExpiration.timestamp() if user.vipExpiration else None
                         }
                     }
             case "PATCH":
@@ -237,11 +245,11 @@ def auth(request):
                         }
             case "PUT":
                 if getattr(request, 'limited', False):
-                        data = {
-                            "code": "429",
-                            "message": "to many tries "
-                        }
-                        return JsonResponse(data)
+                    data = {
+                        "code": "429",
+                        "message": "to many tries "
+                    }
+                    return JsonResponse(data)
                 user = request.user
                 data = {
                     "code": "401",
