@@ -5,7 +5,7 @@ import  { createSlice } from "@reduxjs/toolkit";
 export interface UserSliceState {
     isKnown: boolean | undefined;
     isVIP : boolean | undefined ; 
-    vipExpiration : number | undefined
+    vipExpiration : string | undefined
 
 }
 
