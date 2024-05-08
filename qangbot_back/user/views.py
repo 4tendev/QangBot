@@ -44,7 +44,7 @@ def auth(request):
                     "message": "User Unknown",
                     "data": {
                         "isKnown": False,
-                        "VIP": False,
+                        "isVIP": False,
                         "vipExpiration":  None
                     }
                 }
@@ -54,8 +54,8 @@ def auth(request):
                         "message": "known User",
                         "data": {
                             "isKnown": True,
-                            "VIP": user.isVIP(),
-                            "vipExpiration": user.vipExpiration.timestamp() if user.vipExpiration else None
+                            "isVIP": user.isVIP(),
+                            "vipExpiration":  user.vipExpiration.date()
                         }
                     }
             case "PATCH":
