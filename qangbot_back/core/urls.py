@@ -27,6 +27,7 @@ def reject(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/',  include("user.urls")),
+    path('gridbot/',  include("gridbot.urls")),
 ]
 if not DEBUG :
     urlpatterns.insert(0,path('admin/login/',reject ),)
