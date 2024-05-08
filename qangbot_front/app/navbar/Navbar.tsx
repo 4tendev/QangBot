@@ -7,18 +7,20 @@ import Link from "next/link";
 import dictionary from "./dictionary.json";
 import getLanguage from "@/commonTsServer/getLanguage";
 import Profile from "./Profile/Profile";
-import { Site_MENU ,NAVBAR_ID } from "@/settings";
-
+import { Site_MENU, NAVBAR_ID } from "@/settings";
+import Robot from "./Roobot/Robot";
 const Navbar = () => {
   const lang = getLanguage().lang;
   return (
-    <div className={"w-full bg-base-300 h-20" } id={NAVBAR_ID} >
+    <div className={"w-full bg-base-300 h-20"} id={NAVBAR_ID}>
       <nav className="w-full flex justify-between h-full items-center px-5 sm:px-11 max-w-7xl mx-auto">
         <div className="flex items-center justify-between gap-5 md:hidden">
           <Drawer />
         </div>
         <div className="flex items-center grow md:grow-0">
-          <div className="md:order-1">Robot</div>
+          <div className="md:order-1">
+            <Robot />
+          </div>
           <div className="grow flex justify-center">
             <WebSiteName />
           </div>
