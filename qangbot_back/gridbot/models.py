@@ -17,9 +17,8 @@ class GridBot(models.Model):
         ContentType, on_delete=models.PROTECT, related_name="GridBots")
     account_id = models.IntegerField()
     account = GenericForeignKey('account_model', 'account_id')
-
     contract = models.ForeignKey("gridbot.Contract", related_name="GridBots", on_delete=models.PROTECT )
-
+    user= models.ForeignKey(User, related_name=("GridBots"), on_delete=models.PROTECT)
     noneVIPCreationLimit = 2
     noneVIPGridsCreationLimit = 100
 
