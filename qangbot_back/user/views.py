@@ -19,12 +19,14 @@ def userID(group, request):
     if request.method == "PUT":
         return str(request.user.id)
 
-def vip(request) :
+
+def vip(request):
     return JsonResponse({
-        "code" : "200",
-        "data" :{
-        "price" : User.VIPPRICE}
+        "code": "200",
+        "data": {
+            "price": User.VIPPRICE}
     })
+
 
 @ratelimit(key=emailInput, method=['PATCH'], block=False, rate='45/d')
 @ratelimit(key=emailInput, method=['PATCH'], block=False, rate='15/m')
