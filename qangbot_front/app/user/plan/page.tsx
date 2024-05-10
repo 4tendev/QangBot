@@ -3,13 +3,11 @@ import React from "react";
 import FreePlan from "./FreePlan";
 import VIPPlan from "./VIPPlan";
 import { useAppSelector } from "@/GlobalStates/hooks";
-import { isKnown, isVIP } from "@/GlobalStates/Slices/userSlice";
-import Auth from "../auth/page";
+import {  isVIP } from "@/GlobalStates/Slices/userSlice";
 
 const Page = () => {
-  const userisKnown = useAppSelector(isKnown);
   const userisVIP = useAppSelector(isVIP);
-  return userisKnown ? userisVIP ? <VIPPlan /> : <FreePlan /> : <Auth />;
+  return userisVIP ? <VIPPlan /> : <FreePlan /> 
 };
 
 export default Page;
