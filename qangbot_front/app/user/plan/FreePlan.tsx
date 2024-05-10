@@ -8,7 +8,7 @@ import { language } from "@/GlobalStates/Slices/languageSlice";
 const FreePlan = () => {
   const lang = useAppSelector(language).lang;
   return (
-    <div className="py-5 flex flex-col justify-center text-center px-5 sm:px-11">
+    <div className="py-2 flex flex-col justify-center text-center px-5 sm:px-11">
       <h1 className="text-xl text-info">{dictionary.FreePlan[lang]}</h1>
       <ul className="flex flex-wrap max-w-lg text-sm justify-between my-3 text-start gap-2 px-3 mx-auto">
         <li>{dictionary.botCreationLimit[lang]}</li>

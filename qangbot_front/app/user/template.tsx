@@ -11,7 +11,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
       <span className="loading loading-bars loading-lg mt-10 "></span>
     </div>
   ) : userisKnown ? (
-    { children }
+    <>{children}</>
   ) : (
     <Auth />
   );
