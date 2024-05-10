@@ -3,10 +3,12 @@ import { combineSlices, configureStore } from "@reduxjs/toolkit";
 import { userSlice } from "./Slices/userSlice";
 import { languageSlice } from "./Slices/languageSlice";
 import { GlobalAlertSlice } from "./Slices/alert/Slice";
+import { botSlice } from "./Slices/botSlice";
+
 
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
-const rootReducer = combineSlices(userSlice,languageSlice ,GlobalAlertSlice);
+const rootReducer = combineSlices(userSlice,languageSlice ,GlobalAlertSlice,botSlice);
 // Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>;
 
