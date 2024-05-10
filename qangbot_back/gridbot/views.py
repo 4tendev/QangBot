@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from .models import GridBot
+from .models import GridBot, Exchange
 # Create your views here.
 
 
@@ -28,10 +28,10 @@ def bot(request):
                         botsData.append(
                             {
                                 "id": bot.id,
-                                "name" : bot.name,
-                                "contractName" : bot.contract.name,
-                                "exchangeName" : bot.contract.exchange.name,
-                             }
+                                "name": bot.name,
+                                "contractName": bot.contract.name,
+                                "exchangeName": bot.contract.exchange.name,
+                            }
                         )
                 data = {
                     "code": "200",
@@ -39,6 +39,37 @@ def bot(request):
                         "bots": botsData
                     }
                 }
+    except Exception as e:
+        print(e)
+        data = {
+            "code": "500",
+            "message": "Server Error"
+        }
+    return JsonResponse(data)
+
+
+def exchange(request):
+    try:
+        method = request.method
+        match method:
+            case "GET":
+                data = {
+                    "code": "200",
+                    "data": {"exchanges": [
+
+                    ]}
+                }
+                exchanges = Exchange.objects.all()
+                if exchanges:
+                    for exchange in exchanges:
+                        data["data"]["exchanges"].append(
+                            {
+                                "name": exchange.name,
+                                "accountRequirement" :  exchange.getAccountSecretFiledsName()
+                             
+                            }
+                        )
+
     except Exception as e:
         print(e)
         data = {
