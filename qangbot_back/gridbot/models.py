@@ -17,8 +17,10 @@ class GridBot(models.Model):
         ContentType, on_delete=models.PROTECT, related_name="GridBots")
     account_id = models.IntegerField()
     account = GenericForeignKey('account_model', 'account_id')
-    contract = models.ForeignKey("gridbot.Contract", related_name="GridBots", on_delete=models.PROTECT )
-    user= models.ForeignKey(User, related_name=("GridBots"), on_delete=models.PROTECT)
+    contract = models.ForeignKey(
+        "gridbot.Contract", related_name="GridBots", on_delete=models.PROTECT)
+    user = models.ForeignKey(User, related_name=(
+        "GridBots"), on_delete=models.PROTECT)
     noneVIPCreationLimit = 2
     noneVIPGridsCreationLimit = 100
 
@@ -116,10 +118,12 @@ class Order(models.Model):
     executed = models.BooleanField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    contract = models.ForeignKey("gridbot.Contract" ,related_name=("Orders"), on_delete=models.PROTECT)
+    contract = models.ForeignKey("gridbot.Contract", related_name=(
+        "Orders"), on_delete=models.PROTECT)
+
     def __str__(self):
         return self.contract.name
-    
+
     def isFinished(self):
         account = self.Grids.all()[0].bot.account
         isFinished = account.isOrderFinished(
@@ -140,12 +144,16 @@ class Order(models.Model):
 
 class Exchange(models.Model):
     name = models.CharField(max_length=50)
-    account_model = models.OneToOneField(ContentType,default=1, on_delete=models.PROTECT)
+    account_model = models.OneToOneField(
+        ContentType, on_delete=models.PROTECT)
+    secretRequiredTag="secretRequired"
+    def getAccountSecretFiledsName(self):
 
+        return self.account_model.model_class().getSecretFieldsName()
+        
 
     def __str__(self):
         return self.name
-    
 
 
 class CoinexAccount(models.Model):
@@ -207,7 +215,7 @@ class CoinexAccount(models.Model):
                 str(e) + f" CoinexAccount with id {self.id} Failed to checkOrder")
             return None
 
-    def getPendingOrdersID(self , bot):
+    def getPendingOrdersID(self, bot):
         result = "getPendingOrdersID"
         try:
             market = bot.contract.apiIdentifier
@@ -251,7 +259,7 @@ class CoinexAccount(models.Model):
             print(result)
             if result["code"] == 0:
                 order = Order.objects.create(
-                    exactCreationtResponse=result, contract=contract ,orderID=result["data"]["order_id"])
+                    exactCreationtResponse=result, contract=contract, orderID=result["data"]["order_id"])
                 return order
             elif result["code"] == 3109:
                 print(f"balance not enough {self.id } createOrder  ")
@@ -278,6 +286,11 @@ class CoinexAccount(models.Model):
         except Exception as e:
             print(str(e) + " checkAccount Coinex ")
             return False
+        
+    def getSecretFieldsName():
+        return ["access_ID" , "secret_key"]
+
+
 
 
 class Contract (models.Model):
@@ -286,6 +299,6 @@ class Contract (models.Model):
     name = models.CharField(max_length=50)
     url = models.URLField(max_length=200)
     apiIdentifier = models.CharField(max_length=50)
+
     def __str__(self):
         return self.name
-    
