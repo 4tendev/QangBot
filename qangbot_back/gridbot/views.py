@@ -36,7 +36,8 @@ def bot(request):
                 data = {
                     "code": "200",
                     "data": {
-                        "bots": botsData
+                        "bots": botsData,
+                        "canCreateBot" : GridBot.canCreate(user)
                     }
                 }
     except Exception as e:

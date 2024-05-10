@@ -28,7 +28,7 @@ class GridBot(models.Model):
         return None if self.account.user.isVIP() else (GridBot.noneVIPGridsCreationLimit - Grid.objects.filter(bot=self).count())
 
     def canCreate(user: User):
-        return (user.isVIP() or GridBot.objects.filter(account__user=user).count() < GridBot.noneVIPCreationLimit)
+        return (user.isVIP() or GridBot.objects.filter(user=user).count() < GridBot.noneVIPCreationLimit)
 
     def canCreateNewGrids(self, newGridsCount: int) -> bool:
         return True if self.gridCreationLimit() == None else self.gridCreationLimit() >= newGridsCount
