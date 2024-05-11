@@ -293,12 +293,12 @@ class CoinexAccount(models.Model):
 
 
 
+
 class Contract (models.Model):
     exchange = models.ForeignKey(
-        Exchange, related_name="Contracts", on_delete=models.CASCADE)
+        Exchange, related_name="Contracts", on_delete=models.PROTECT)
     name = models.CharField(max_length=50)
     url = models.URLField(max_length=200)
     apiIdentifier = models.CharField(max_length=50)
-
     def __str__(self):
         return self.name
