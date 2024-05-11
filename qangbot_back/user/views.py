@@ -123,6 +123,11 @@ def auth(request):
                 data = {
                     "code": "200",
                     "message": "Successfully authurized",
+                    "data": {
+                            "isKnown": True,
+                            "isVIP": user.isVIP(),
+                            "vipExpiration":  user.vipExpiration.date()
+                        }
                 }
             case "DELETE":
                 logout(request)
