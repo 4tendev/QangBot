@@ -23,10 +23,8 @@ class Command(BaseCommand):
                     gridBOTkey = f"GridBot {gridBot.id}"
                     if redis_client.get(gridBOTkey):
                         continue
-                    s=gridBot.account.checkAccount()
-                    if not s :
+                    if not gridBot.account.checkAccount():
                         continue
-                    print(s)
                     redis_client.setex(gridBOTkey, gridBot.interval, 1)
                     gridBot.checkOpenGrids()
                     gridBot.makeOrders()
