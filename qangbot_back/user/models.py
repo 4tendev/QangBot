@@ -77,7 +77,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.save()
 
     def isVIP(self):
-        return self.vipExpiration > datetime.now() if self.vipExpiration else False
+        return self.vipExpiration > datetime.now() or self.is_superuser if self.vipExpiration else False
 
     def __str__(self):
         return self.email
