@@ -76,7 +76,7 @@ const Page = () => {
           pathname.substring(0, 11) === "/user/auth"
             ? router.push("/user")
             : null;
-          setGlobalState(newUserState(true));
+          setGlobalState(newUserState(response.data));
         }
 
         if (code === "4004") {
