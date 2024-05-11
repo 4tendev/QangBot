@@ -52,7 +52,7 @@ const Page = () => {
         switch (code) {
           case "200":
             setModalVerification(undefined);
-            setGlobalState(newUserState(true));
+            setGlobalState(newUserState(response.data))
             pathname.substring(0, 11) === "/user/auth"
               ? router.push("/user")
               : null;
