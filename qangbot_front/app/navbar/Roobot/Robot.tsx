@@ -112,13 +112,13 @@ const Robot = () => {
         <ul
           ref={dropdownRef}
           tabIndex={0}
-          className="dropdown-content rounded-none z-[2] mt-4 py-1 shadow bg-base-200  w-52"
+          className="dropdown-content rounded-none z-[2] mt-4 py-1 shadow bg-base-200  w-56"
         >
           {botList?.map((bot) => (
             <li key={bot.id} className={liClassName}>
               <Link
                 onClick={handleItemClick}
-                className="w-full text-xs relative pt-4 px-8  btn shadow-none rounded-none flex justify-between"
+                className="w-full text-xs relative pt-4 px-4  btn shadow-none rounded-none flex justify-between"
                 href={"/gridbot/" + bot.id}
               >
                 <div className="absolute top-1.5 left-0 ps-3 text-start text-xs text-primary">
