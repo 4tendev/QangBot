@@ -28,6 +28,19 @@ def vip(request):
     })
 
 
+def userData(user):
+    return {
+
+        "isKnown": True,
+        "isVIP": user.isVIP(),
+        "vipExpiration":  user.vipExpiration.date() if user.isVIP()else None
+    } if user.is_authenticated else {
+        "isKnown": False,
+        "isVIP": False,
+        "vipExpiration":  None
+    }
+
+
 @ratelimit(key=emailInput, method=['PATCH'], block=False, rate='45/d')
 @ratelimit(key=emailInput, method=['PATCH'], block=False, rate='15/m')
 @ratelimit(key=userID, method=['PUT'], block=False, rate='20/d')
@@ -44,21 +57,13 @@ def auth(request):
                 data = {
                     "code": "401",
                     "message": "User Unknown",
-                    "data": {
-                        "isKnown": False,
-                        "isVIP": False,
-                        "vipExpiration":  None
-                    }
+                    "data": userData(user)
                 }
                 if user.is_authenticated:
                     data = {
                         "code": "200",
                         "message": "known User",
-                        "data": {
-                            "isKnown": True,
-                            "isVIP": user.isVIP(),
-                            "vipExpiration":  user.vipExpiration.date()
-                        }
+                        "data": userData(user)
                     }
             case "PATCH":
                 form_data = json.loads(request.body)
@@ -123,11 +128,7 @@ def auth(request):
                 data = {
                     "code": "200",
                     "message": "Successfully authurized",
-                    "data": {
-                            "isKnown": True,
-                            "isVIP": user.isVIP(),
-                            "vipExpiration":  user.vipExpiration.date()
-                        }
+                    "data": userData(user)
                 }
             case "DELETE":
                 logout(request)
@@ -177,7 +178,8 @@ def auth(request):
                                     password=password, email=email)
                                 data = {
                                     "code": "200",
-                                    "message": "Created"
+                                    "message": "Created",
+                                    "data" :userData(user)
                                 }
                                 login(request, user)
                                 if not trustedDevice:
