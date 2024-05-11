@@ -20,7 +20,7 @@ export const Site_MENU : {name :Name , link :Link}[] =[
     
 ] 
 export const NEXT_PUBLIC_BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
-export const BACKEND_URL_PRIVATE = process.env.BACKEND_URL_PRIVATE
+export const BACKEND_LOCAL_URL = process.env.BACKEND_LOCAL_URL
 
 
 
