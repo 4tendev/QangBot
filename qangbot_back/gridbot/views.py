@@ -49,7 +49,6 @@ def bot(request):
                     "message": "Cant authurize"
                 }
                 if not form.is_valid():
-                    print(form.errors)
                     return JsonResponse(data)                
                 exchangeID = form.cleaned_data.get("exchangeID")
                 contractID = form.cleaned_data.get("contractID")
@@ -145,7 +144,7 @@ def account(request , exchangeName) :
                     "data": {"accounts": [
 
                     ],
-                    "newAccountFields" :exchange.getAccountSecretFiledsName()
+                    "accountFields" :exchange.getAccountSecretFiledsName()
                     
                     
                     }
@@ -159,7 +158,32 @@ def account(request , exchangeName) :
                                 "name": account.name,
                             }
                         )
-
+            case "POST" :
+                fields=exchange.getAccountSecretFiledsName()
+                form_data = json.loads(request.body)
+                form = exchange.account_model.model_class().form(form_data)
+                data = {
+                    "code": "400",
+                    "message": "invalid  Input"
+                }
+                if not form.is_valid():
+                    return JsonResponse(data)   
+                data = {
+                    "code": "4001",
+                    "message": "Cant Authuraioze"
+                } 
+                account=exchange.account_model.model_class()(**form.cleaned_data , user=user)
+                print(form.cleaned_data)
+                if not account.checkAccount() :
+                    return JsonResponse(data)   
+                account=exchange.account_model.model_class().objects.create(**form.cleaned_data , user=user)
+                data={
+                    "code" : "200",
+                    "data" : {
+                        "id" : account.id,
+                        "name" :account.name,
+                    }
+                }
     except Exception as e:
         print(e)
         data = {
