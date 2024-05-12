@@ -4,7 +4,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from .coinexlib import CoinexPerpetualApi
 from core.settings import DEFAULT_PROXY_USERNAME, DEFAULT_PROXY_PASSWORD, DEFAULT_PROXY_URL
-
+from .forms import CreateCoinexAccountForm
 
 class GridBot(models.Model):
     name = models.CharField(max_length=50)
@@ -158,11 +158,12 @@ class Exchange(models.Model):
 
 class CoinexAccount(models.Model):
 
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50 ,unique=True)
     access_ID = models.CharField(max_length=50)
     secret_key = models.CharField(max_length=100)
     user = models.ForeignKey(User, related_name=(
         "CoinexAccounts"), on_delete=models.PROTECT)
+    form=CreateCoinexAccountForm
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
