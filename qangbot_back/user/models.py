@@ -44,8 +44,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
     objects = CustomUserManager()
-    VIPPRICE=VIP.price
-
+    VIPPRICE = VIP.price
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -68,7 +67,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     def isRecentlyRemovedTOTP(self):
         return True if redis_client.get(self.TOTPredisKey) else False
 
-    def updateVIPTime(self , days=370):
+    def updateVIPTime(self, days=370):
         now = datetime.now()
         if self.validVIPTime == None or now > self.validVIPTime:
             self.validVIPTime = now + timedelta(days=days)
@@ -77,7 +76,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.save()
 
     def isVIP(self):
-        return self.vipExpiration > datetime.now() or self.is_superuser if self.vipExpiration else False
+        return  self.is_superuser or (self.vipExpiration > datetime.now()  if self.vipExpiration else False)
 
     def __str__(self):
         return self.email
