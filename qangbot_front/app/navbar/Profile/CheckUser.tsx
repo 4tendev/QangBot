@@ -9,16 +9,23 @@ import { fetchapi } from "@/commonTsBrowser/fetchAPI";
 import Profile from "./Profile";
 const CheckUser = () => {
   const setUserIsKnow = useAppDispatch();
-  const [isUserChecked , setIsUserChecked] : [undefined | boolean , Function] = useState(undefined);
+  const [isUserChecked , setIsUserChecked]  = useState<undefined | boolean>(undefined);
 
   function checkUser() {
     setIsUserChecked(undefined);
     fetchapi("/user/", "GET")
       .then((response) => {
         setUserIsKnow(newUserState(response.data));
-        setIsUserChecked(true);
+        if (response.code ==="500") {
+          setIsUserChecked(false)
+         
+        }else{
+          setIsUserChecked(true);
+        }
+       
+
       })
-      .catch((reasson) => setIsUserChecked(false));
+      .catch((reasson) =>{  setIsUserChecked(false)});
   }
 
   useEffect(() => {
