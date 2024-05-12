@@ -159,7 +159,6 @@ def account(request , exchangeName) :
                             }
                         )
             case "POST" :
-                fields=exchange.getAccountSecretFiledsName()
                 form_data = json.loads(request.body)
                 form = exchange.account_model.model_class().form(form_data)
                 data = {
