@@ -1,0 +1,63 @@
+{
+    "authProblem": {
+        "en": "Sry we cant authurize to your account",
+        "fa": "نتونستیم با این اطلاعات وارد بشیم."
+    },
+
+    "reminder": {
+        "en": "Reminder Name",
+        "fa": "اسم دلخواه بات"
+    },
+    "createBot": {
+        "en": "Create Bot",
+        "fa": "بات روبسازش"
+    },
+    "successCreateBot": {
+        "en": "Your Bot Created successfuly",
+        "fa": "بات ساخته شد."
+    },
+    "furtureContract": {
+        "en": "All Bots will work on future contracts",
+        "fa": "همه بات ها روی قراردهای فیوچر کار خواهند کرد"
+    },
+    "vipRequired": {
+        "en": "To create more bots you need to become VIP.",
+        "fa": "برای ساخت بات جدید باید VIP شوید."
+    },
+    "becomeVIP": {
+        "en": "Become VIP member",
+        "fa": "عضویت VIP"
+    },
+    "myBot": {
+        "en": "my Bots",
+        "fa": "باتهای من"
+    },
+    "required": {
+        "en": "Required",
+        "fa": "لازم"
+    },
+    "pickExchange": {
+        "en": "Pick a Exchange",
+        "fa": "یک صرافی انتخاب کنید"
+    },
+    "createAccount": {
+        "en": "Create a new Account",
+        "fa": "یک اکانت جدید بسازید"
+    },
+    "checkValididity": {
+        "en": "Check Valididity",
+        "fa": "چک کردن اکانت"
+    },
+    "maxLength20": {
+        "en": "max 20 characters",
+        "fa": "نهایتا 20 حرف"
+    },
+    "selectContract": {
+        "en": "Select a Contract (pair)",
+        "fa": "یک قرارداد (جفت ارز) انتخاب کنید"
+    },
+    "accountCreated": {
+        "en": "Account authorized successfully",
+        "fa": "دسترسی به اکانت تایید شد."
+    }
+}
