@@ -33,7 +33,7 @@ def userData(user):
 
         "isKnown": True,
         "isVIP": user.isVIP(),
-        "vipExpiration":  user.vipExpiration.date() if user.isVIP()else None
+        "vipExpiration":  user.vipExpiration.date() if user.vipExpiration else None
     } if user.is_authenticated else {
         "isKnown": False,
         "isVIP": False,
@@ -179,7 +179,7 @@ def auth(request):
                                 data = {
                                     "code": "200",
                                     "message": "Created",
-                                    "data" :userData(user)
+                                    "data": userData(user)
                                 }
                                 login(request, user)
                                 if not trustedDevice:
