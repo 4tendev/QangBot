@@ -3,14 +3,17 @@
         "en": "Sry we cant authurize to your account",
         "fa": "نتونستیم با این اطلاعات وارد بشیم."
     },
-
-    "reminder": {
-        "en": "Reminder Name",
+    "botreminder": {
+        "en": "Bot Reminder Name",
         "fa": "اسم دلخواه بات"
+    },
+    "accountreminder": {
+        "en": "Account Reminder Name",
+        "fa": "اسم دلخواه اکانت"
     },
     "createBot": {
         "en": "Create Bot",
-        "fa": "بات روبسازش"
+        "fa": "بات رو بسازش"
     },
     "successCreateBot": {
         "en": "Your Bot Created successfuly",
@@ -59,5 +62,9 @@
     "accountCreated": {
         "en": "Account authorized successfully",
         "fa": "دسترسی به اکانت تایید شد."
+    },
+    "contractInfo": {
+        "en": "Selected Contract Info",
+        "fa": "اطلاعات قرارداد انتخابی"
     }
 }
