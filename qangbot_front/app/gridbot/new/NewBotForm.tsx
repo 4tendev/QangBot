@@ -105,7 +105,7 @@ const Page = (props: { exchanges: Exchange[] }) => {
                   "input input-bordered w-full max-w-md " +
                   (botName ? " " : " input-error")
                 }
-                placeholder={dictionary.reminder[lang]}
+                placeholder={dictionary.botreminder[lang]}
               />
               <SelectContract
                 exchangeName={exchangeName}
