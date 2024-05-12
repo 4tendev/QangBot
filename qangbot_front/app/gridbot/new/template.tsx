@@ -29,6 +29,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
     ) : (
       <VIPRequired />
     )
+  ) : useisknown === undefined ? (
+    <Loading></Loading>
   ) : (
     <Auth />
   );
