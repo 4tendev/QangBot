@@ -23,7 +23,7 @@ export type Input = {
   type: "text" | "password" | "number" | "checkbox" | "textarea";
   name: string;
   validations?: Validations;
-  validationsMSG: ValidationsMSG<Validations>;
+  validationsMSG?: ValidationsMSG<Validations>;
   autoFocus?: boolean;
   autoComplete?: "on" | "off";
   placeHolder: string;
