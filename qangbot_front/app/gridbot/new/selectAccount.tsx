@@ -36,7 +36,7 @@ const SelectAccount = (props: {
             {
               type: "text",
               name: "name",
-              placeHolder: dictionary["reminder"][lang],
+              placeHolder: dictionary["accountreminder"][lang],
               validations: { required: true, maxLength: 20 },
               validationsMSG: {
                 required: dictionary["required"][lang],
@@ -88,7 +88,13 @@ const SelectAccount = (props: {
         setUserAccounts((accounts) => [...accounts, newAccount]);
         props.setAccountID(newAccount.id);
       } else if (response.code === "4001") {
-        dispatch(newAlert({ message: dictionary.authProblem[lang], mode: "warning", time: 3 }));
+        dispatch(
+          newAlert({
+            message: dictionary.authProblem[lang],
+            mode: "warning",
+            time: 3,
+          })
+        );
       }
     });
   }
