@@ -16,7 +16,7 @@ const Robot = () => {
 
   const lang = useAppSelector(language).lang;
   const botList = useAppSelector(bots);
-  const userIsKnown =  useAppSelector(isKnown)
+  const userIsKnown = useAppSelector(isKnown);
   const [error, setError]: [boolean | undefined, Function] =
     useState(undefined);
   async function getBots(): Promise<BotInfo | void> {
@@ -63,13 +63,10 @@ const Robot = () => {
   }, [error]);
 
   useEffect(() => {
-    error !== undefined ?  setError (undefined) :null
-  
-    return () => {
-      
-    }
-  }, [userIsKnown])
-  
+    error !== undefined ? setError(undefined) : null;
+
+    return () => {};
+  }, [userIsKnown]);
 
   const liClassName = "h-12 w-full p-0 flex items-center";
 
@@ -97,15 +94,26 @@ const Robot = () => {
         role="button"
         className=""
       >
-        {" "}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          className="text-success hover:bg-transparent btn btn-ghost max-[300px]:ms-3   max-[350px]:ms-5 ms-10 w-10 p-0"
-          viewBox="0 0 640 512"
-        >
-          <path d="M320 0c17.7 0 32 14.3 32 32V96H472c39.8 0 72 32.2 72 72V440c0 39.8-32.2 72-72 72H168c-39.8 0-72-32.2-72-72V168c0-39.8 32.2-72 72-72H288V32c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H208zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H304zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H400zM264 256a40 40 0 1 0 -80 0 40 40 0 1 0 80 0zm152 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80zM48 224H64V416H48c-26.5 0-48-21.5-48-48V272c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H576V224h16z" />
-        </svg>
+        <div className="flex relative text-success hover:bg-transparent btn btn-ghost max-[300px]:ms-3   max-[350px]:ms-5 ms-10  p-0">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 640 512"
+            className="w-10"
+          >
+            <path d="M320 0c17.7 0 32 14.3 32 32V96H472c39.8 0 72 32.2 72 72V440c0 39.8-32.2 72-72 72H168c-39.8 0-72-32.2-72-72V168c0-39.8 32.2-72 72-72H288V32c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H208zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H304zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H400zM264 256a40 40 0 1 0 -80 0 40 40 0 1 0 80 0zm152 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80zM48 224H64V416H48c-26.5 0-48-21.5-48-48V272c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H576V224h16z" />
+          </svg>
+          {botList.filter((bot) => !bot.status).length > 0 ? (
+            <svg
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 absolute end-0 top-1 text-rose-600"
+              viewBox="0 0 64 512"
+            >
+              <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V320c0 17.7 14.3 32 32 32s32-14.3 32-32V64zM32 480a40 40 0 1 0 0-80 40 40 0 1 0 0 80z" />
+            </svg>
+          ) : null}
+        </div>
       </div>
 
       {isOpen && (
@@ -118,11 +126,14 @@ const Robot = () => {
             <li key={bot.id} className={liClassName}>
               <Link
                 onClick={handleItemClick}
-                className="w-full text-xs relative pt-4 px-4  btn shadow-none rounded-none flex justify-between"
+                className="w-full text-xs relative pt-4 px-4  btn shadow-none rounded-none flex justify-between "
                 href={"/gridbot/" + bot.id}
               >
                 <div className="absolute top-1.5 left-0 ps-3 text-start text-xs text-primary">
                   {bot.name}
+                  {bot.status ? null : (
+                    <small className="text-rose-600"> !?</small>
+                  )}
                 </div>
 
                 <div>{bot.exchangeName}</div>
