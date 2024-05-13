@@ -13,7 +13,6 @@ class GridBot(models.Model):
     status = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    lastTrueCheck = models.DateTimeField(null=True)
     interval = models.IntegerField(default=60)
     account_model = models.ForeignKey(
         ContentType, on_delete=models.PROTECT, related_name="GridBots")
