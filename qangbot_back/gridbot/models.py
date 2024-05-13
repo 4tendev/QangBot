@@ -3,8 +3,10 @@ from user.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from .coinexlib import CoinexPerpetualApi
-from core.settings import DEFAULT_PROXY_USERNAME, DEFAULT_PROXY_PASSWORD, DEFAULT_PROXY_URL
+from core.settings import DEFAULT_PROXY_USERNAME, DEFAULT_PROXY_PASSWORD, DEFAULT_PROXY_URL ,NONE_VIP_CREATION_LIMIT ,NONE_VIP_GRIDS_CREATION_LIMIT
 from .forms import CreateCoinexAccountForm
+from django.core import signing
+
 
 class GridBot(models.Model):
     name = models.CharField(max_length=50)
@@ -21,8 +23,8 @@ class GridBot(models.Model):
         "gridbot.Contract", related_name="GridBots", on_delete=models.PROTECT)
     user = models.ForeignKey(User, related_name=(
         "GridBots"), on_delete=models.PROTECT)
-    noneVIPCreationLimit = 2
-    noneVIPGridsCreationLimit = 100
+    noneVIPCreationLimit = int(NONE_VIP_CREATION_LIMIT) 
+    noneVIPGridsCreationLimit =int(NONE_VIP_GRIDS_CREATION_LIMIT) 
 
     def gridCreationLimit(self):
         return None if self.account.user.isVIP() else (GridBot.noneVIPGridsCreationLimit - Grid.objects.filter(bot=self).count())
@@ -146,11 +148,11 @@ class Exchange(models.Model):
     name = models.CharField(max_length=50)
     account_model = models.OneToOneField(
         ContentType, on_delete=models.PROTECT)
-    secretRequiredTag="secretRequired"
+    secretRequiredTag = "secretRequired"
+
     def getAccountSecretFiledsName(self):
 
         return self.account_model.model_class().getSecretFieldsName()
-        
 
     def __str__(self):
         return self.name
@@ -158,18 +160,29 @@ class Exchange(models.Model):
 
 class CoinexAccount(models.Model):
 
-    name = models.CharField(max_length=50 ,unique=True)
-    access_ID = models.CharField(max_length=50)
-    secret_key = models.CharField(max_length=100)
+    name = models.CharField(max_length=50, unique=True)
+    access_ID = models.CharField(max_length=200)
+    secret_key = models.CharField(max_length=200)
     user = models.ForeignKey(User, related_name=(
         "CoinexAccounts"), on_delete=models.PROTECT)
-    form=CreateCoinexAccountForm
+    form = CreateCoinexAccountForm
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.robot = CoinexPerpetualApi(self.access_ID, self.secret_key, {
-            'https': f'http://{DEFAULT_PROXY_USERNAME}:{ DEFAULT_PROXY_PASSWORD}@{DEFAULT_PROXY_URL}'
-        })
+        if self.id:
+            self.robot = CoinexPerpetualApi(signing.loads(self.access_ID), signing.loads(self.secret_key), {
+                'https': f'http://{DEFAULT_PROXY_USERNAME}:{ DEFAULT_PROXY_PASSWORD}@{DEFAULT_PROXY_URL}'
+            })
+        else:
+            self.robot = CoinexPerpetualApi(self.access_ID, self.secret_key, {
+                'https': f'http://{DEFAULT_PROXY_USERNAME}:{ DEFAULT_PROXY_PASSWORD}@{DEFAULT_PROXY_URL}'
+            })
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.access_ID = signing.dumps(self.access_ID)
+            self.secret_key = signing.dumps(self.secret_key)
+        super().save(*args, **kwargs)
 
     def cancelOrder(self, orderID, contract):
         market = contract.apiIdentifier
@@ -287,12 +300,9 @@ class CoinexAccount(models.Model):
         except Exception as e:
             print(str(e) + " checkAccount Coinex ")
             return False
-        
+
     def getSecretFieldsName():
-        return ["access_ID" , "secret_key"]
-
-
-
+        return ["access_ID", "secret_key"]
 
 
 class Contract (models.Model):
@@ -301,5 +311,6 @@ class Contract (models.Model):
     name = models.CharField(max_length=50)
     url = models.URLField(max_length=200)
     apiIdentifier = models.CharField(max_length=50)
+
     def __str__(self):
         return self.name
