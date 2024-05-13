@@ -5,7 +5,18 @@ from .forms import CreateBotForm
 # Create your views here.
 
 
-def bot(request):
+def getBotData(gridtBot: GridBot):
+    return {
+        "id": gridtBot.id,
+        "name": gridtBot.name,
+        "contractName": gridtBot.contract.name,
+        "exchangeName": gridtBot.contract.exchange.name,
+        "status": gridtBot.status,
+        "interval": gridtBot.interval,
+    }
+
+
+def gridbots(request):
     try:
         data = {
             "code": "405",
@@ -23,16 +34,12 @@ def bot(request):
         match method:
             case "GET":
                 botsData = []
-                bots = GridBot.objects.filter(user=user)
-                if bots:
-                    for bot in bots:
+                gridBots = GridBot.objects.filter(user=user)
+                if gridBots:
+                    for gridBot in gridBots:
                         botsData.append(
-                            {
-                                "id": bot.id,
-                                "name": bot.name,
-                                "contractName": bot.contract.name,
-                                "exchangeName": bot.contract.exchange.name,
-                            }
+                            getBotData(gridBot)
+
                         )
                 data = {
                     "code": "200",
@@ -85,7 +92,7 @@ def bot(request):
     return JsonResponse(data)
 
 
-def exchange(request):
+def exchanges(request):
     try:
         method = request.method
         match method:
@@ -116,7 +123,7 @@ def exchange(request):
     return JsonResponse(data)
 
 
-def account(request, exchangeName):
+def accounts(request, exchangeName):
     user = request.user
     try:
         if not user.is_authenticated:
@@ -194,7 +201,7 @@ def account(request, exchangeName):
     return JsonResponse(data)
 
 
-def contract(request, exchangeName):
+def contracts(request, exchangeName):
     try:
         exchange = Exchange.objects.filter(name=exchangeName)
         if not exchange:
@@ -234,3 +241,39 @@ def contract(request, exchangeName):
         }
 
     return JsonResponse(data)
+
+
+def gridbot(request, id):
+    user = request.user
+    data = {
+        "code": "400",
+        "message": "BAD REQUEST"
+    }
+    if not user.is_authenticated:
+        return JsonResponse(
+            data
+        )
+    if not id > 0:
+        return JsonResponse(
+            data
+        )
+    try:
+        match request.method:
+            case "GET":
+
+                gridBot = GridBot.objects.filter(id=id, user=user)
+                if not gridBot:
+                    return JsonResponse(
+                        {
+                            "code": "400",
+                            "message": "Not Found"
+                        }
+                    )
+                gridBot = gridBot[0]
+                data = {
+                    "code": "200",
+                    "data": getBotData(gridBot)
+                }
+    except Exception as e:
+        print(e)
+        return JsonResponse(data)
