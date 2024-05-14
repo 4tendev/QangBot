@@ -3,7 +3,7 @@ from user.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from .coinexlib import CoinexPerpetualApi
-from core.settings import DEFAULT_PROXY_USERNAME, DEFAULT_PROXY_PASSWORD, DEFAULT_PROXY_URL ,NONE_VIP_CREATION_LIMIT ,NONE_VIP_GRIDS_CREATION_LIMIT
+from core.settings import DEFAULT_PROXY_USERNAME, DEFAULT_PROXY_PASSWORD, DEFAULT_PROXY_URL, NONE_VIP_CREATION_LIMIT, NONE_VIP_GRIDS_CREATION_LIMIT
 from .forms import CreateCoinexAccountForm
 from django.core import signing
 
@@ -22,8 +22,8 @@ class GridBot(models.Model):
         "gridbot.Contract", related_name="GridBots", on_delete=models.PROTECT)
     user = models.ForeignKey(User, related_name=(
         "GridBots"), on_delete=models.PROTECT)
-    noneVIPCreationLimit = int(NONE_VIP_CREATION_LIMIT) 
-    noneVIPGridsCreationLimit =int(NONE_VIP_GRIDS_CREATION_LIMIT) 
+    noneVIPCreationLimit = int(NONE_VIP_CREATION_LIMIT)
+    noneVIPGridsCreationLimit = int(NONE_VIP_GRIDS_CREATION_LIMIT)
 
     def gridCreationLimit(self):
         return None if self.account.user.isVIP() else (GridBot.noneVIPGridsCreationLimit - Grid.objects.filter(bot=self).count())
@@ -85,32 +85,28 @@ class Grid(models.Model):
     objects = ActiveProxyManager()
 
     def createOrder(self):
-        if self.status in [1, 3]:
-            return None
+        grid = Grid.objects.filter(id=self.id)
+        if not (grid and grid[0].is_active and grid.status in [1, 3]):
+            return
         contract = self.bot.contract
         price = self.sell if self.nextPosition == 1 else self.buy
         order = self.bot.account.createOrder(
             price, self.nextPosition, self.size, contract)
         if order:
-            self.order = order
             self.orders.add(order)
-            self.status = 1
             excutedPosition = self.nextPosition
-            self.nextPosition = 1 if excutedPosition == 2 else 2
-            self.save()
+            Grid.objects.filter(id=self.id).update(
+                order=order, status=1, nextPosition=1 if excutedPosition == 2 else 2)
         elif order == False:
-            self.status = 3
-            self.save()
+            Grid.objects.filter(id=self.id).update(status=3)
 
     def checkOrder(self):
         if self.status == 1:
             isFinished = self.order.isFinished()
             if isFinished == True:
-                self.status = 2
-                self.save()
+                Grid.objects.filter(id=self.id).update(status=2)
             elif isFinished == False:
-                self.status = 3
-                self.save()
+                Grid.objects.filter(id=self.id).update(status=3)
 
 
 class Order(models.Model):
