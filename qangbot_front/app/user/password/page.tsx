@@ -58,7 +58,7 @@ const Page = () => {
   }
 
   return userisKnown === true ? (
-    <div className="max-w-lg mx-auto">
+    <div className="max-w-lg mx-auto px-5">
       <h4 className="text-lg bold my-3 text-info">
         {dictionary.changePassword[lang]}
       </h4>
