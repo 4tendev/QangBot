@@ -2,7 +2,7 @@ import React from 'react'
 
 const Page = () => {
   return (
-    <div>not-found</div>
+    <div className='text-center w-full' > Not Found </div>
   )
 }
 
