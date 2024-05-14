@@ -7,7 +7,7 @@ import { language } from "@/GlobalStates/Slices/languageSlice";
 import SelectAccount from "./selectAccount";
 import SelectContract from "./selectContract";
 import { fetchapi } from "@/commonTsBrowser/fetchAPI";
-import { addBot } from "@/GlobalStates/Slices/botSlice";
+import { updateBot } from "@/GlobalStates/Slices/botSlice";
 import { newAlert } from "@/GlobalStates/Slices/alert/Slice";
 import { useRouter } from "next/navigation";
 
@@ -43,7 +43,7 @@ const Page = (props: { exchanges: Exchange[] }) => {
             time: 3,
           })
         );
-        dispatch(addBot(response.data.gridbot));
+        dispatch(updateBot(response.data.gridbot));
         router.push(`/gridbot/${response.data.gridbot.id}`);
       } else {
         dispatch(
