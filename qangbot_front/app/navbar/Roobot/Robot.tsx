@@ -9,6 +9,7 @@ import { bots, newBotInfo, BotInfo } from "@/GlobalStates/Slices/botSlice";
 
 import { useAppSelector, useAppDispatch } from "@/GlobalStates/hooks";
 import { isKnown } from "@/GlobalStates/Slices/userSlice";
+
 const Robot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLUListElement | null>(null);
@@ -25,9 +26,11 @@ const Robot = () => {
       const response = await fetchapi("/gridbot/", "GET");
       response.code ? setError(false) : null;
       if (response.code == "400") {
-        return { bots: [], canCreateBot: undefined };
+        return { bots: [], canCreateBot: undefined ,isLoaded :true };
       }
-      return response.data as BotInfo;
+      const botInfo :BotInfo =response.data
+      botInfo.isLoaded =true
+      return botInfo;
     } catch (error) {
       setError(true);
     }
