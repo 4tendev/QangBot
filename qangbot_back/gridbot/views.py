@@ -1,7 +1,7 @@
 import json
 from django.http import JsonResponse
 from .models import GridBot, Exchange
-from .forms import CreateBotForm
+from .forms import CreateBotForm, BotActions
 # Create your views here.
 
 
@@ -245,6 +245,7 @@ def contracts(request, exchangeName):
 
 def gridbot(request, id):
     user = request.user
+    
     data = {
         "code": "400",
         "message": "BAD REQUEST"
@@ -258,22 +259,47 @@ def gridbot(request, id):
             data
         )
     try:
+        gridBot = GridBot.objects.filter(id=id, user=user)
+        if not gridBot:
+            return JsonResponse(
+                {
+                    "code": "400",
+                    "message": "Not Found"
+                }
+            )
+        gridBot = gridBot[0]
         match request.method:
             case "GET":
-
-                gridBot = GridBot.objects.filter(id=id, user=user)
-                if not gridBot:
-                    return JsonResponse(
-                        {
-                            "code": "400",
-                            "message": "Not Found"
-                        }
-                    )
-                gridBot = gridBot[0]
                 data = {
                     "code": "200",
                     "data": getBotData(gridBot)
                 }
+            case "OPTIONS":
+                form_data = json.loads(request.body)
+                form = BotActions(form_data)
+                data = {
+                    "code": "400",
+                    "message": "invalid  Input"
+                }
+                if not form.is_valid():
+                    return JsonResponse(data)
+                match form.cleaned_data.get("action"):
+                    case "pause":
+                        gridBot.status=False
+                        gridBot.save()
+                        data={
+                            "code" : "200",
+                            "data": getBotData(gridBot)
+                        }
+                        pass
+                    case "resume" :
+                        gridBot.status=True
+                        gridBot.save()
+                        data={
+                            "code" : "200",
+                            "data": getBotData(gridBot)
+                        }
     except Exception as e:
         print(e)
         return JsonResponse(data)
+    return JsonResponse(data)
