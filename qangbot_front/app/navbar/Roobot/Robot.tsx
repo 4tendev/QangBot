@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import dictionary from "./dictionary.json";
 import { fetchapi } from "@/commonTsBrowser/fetchAPI";
 import { language } from "@/GlobalStates/Slices/languageSlice";
@@ -20,21 +20,21 @@ const Robot = () => {
   const userIsKnown = useAppSelector(isKnown);
   const [error, setError]: [boolean | undefined, Function] =
     useState(undefined);
-  async function getBots(): Promise<BotInfo | void> {
-    setError(undefined);
-    try {
-      const response = await fetchapi("/gridbot/", "GET");
-      response.code ? setError(false) : null;
-      if (response.code == "400") {
-        return { bots: [], canCreateBot: undefined ,isLoaded :true };
-      }
-      const botInfo :BotInfo =response.data
-      botInfo.isLoaded =true
-      return botInfo;
-    } catch (error) {
-      setError(true);
-    }
+
+  async function getBots(): Promise<void> {
+    const response = await fetchapi("/gridbot/", "GET");
+    if (response.code == "400") {
+      dispatch(
+        newBotInfo({ bots: [], canCreateBot: undefined, isLoaded: true })
+      );
+    } else if (response.code == "200") {
+      const botInfo: BotInfo = response.data;
+      botInfo.isLoaded = true;
+      dispatch(newBotInfo(botInfo));
+    } 
+    setError(false);
   }
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -56,20 +56,22 @@ const Robot = () => {
   };
 
   useEffect(() => {
-    error === undefined
-      ? getBots().then((response) => {
-          response ? dispatch(newBotInfo(response)) : null;
-        })
-      : null;
-
-    return () => {};
+    error === undefined ? getBots().catch((error) => setError(true)) : null;
+    let interval;
+    interval = userIsKnown
+      ? setInterval(() => {
+          getBots();
+        }, 60000)
+      : undefined;
+    return () => {
+      clearInterval(interval);
+    };
   }, [error]);
 
-  useEffect(() => {
-    error !== undefined ? setError(undefined) : null;
-
-    return () => {};
-  }, [userIsKnown]);
+  useMemo(
+    () => (error !== undefined ? setError(undefined) : null),
+    [userIsKnown]
+  );
 
   const liClassName = "h-12 w-full p-0 flex items-center";
 
