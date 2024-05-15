@@ -31,7 +31,7 @@ const VIPExplain = () => {
       <h2 className="text-primary text-3xl  font-bold my-2">
         {dictionary.vip[lang]}
       </h2>
-      <div className="text-start text-accent">
+      <div className="text-start text-accent ps-2">
         {vipPrice === undefined ? (
           <span className="loading loading-bars loading-xs mx-1"></span>
         ) : vipPrice === false ? (
@@ -47,9 +47,9 @@ const VIPExplain = () => {
           vipPrice
         )}
         <small>{dictionary.price[lang]}</small>
-        <small className="text-xs block">{dictionary.payment[lang]}</small>
+        <small className="text-xs block ">{dictionary.payment[lang]}</small>
       </div>
-      <ul className="flex flex-wrap justify-between py-5 text-start gap-1 w-full">
+      <ul className="flex flex-wrap justify-between py-2 text-start gap-2 w-full">
         <li className="grow bg-base-300 p-2 text-sm">
           {dictionary.InfiniteBot[lang]}
           <svg

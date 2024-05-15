@@ -9,7 +9,7 @@
     ,"gridLimitation" : {"en" : "Each bot can have limited Grids." , "fa" :"محدودبت گرید برای هر بات."}
 
     ,"price" : {"en" : " BTC/Year" , "fa" :" بیت کویت برای یک سال"}
-    ,"payment" : {"en" : "We only accept real money: BTC." , "fa" :"ما فقط پول واقعی قبول می کنیم : بیت کوین"}
+    ,"payment" : {"en" : "We only accept BTC." , "fa" :"ما فقط بیت کوین قبول می کنیم."}
     ,"InfiniteBot" : {"en" : "Infinite Grid Bots." , "fa" :"بی نهایت بات."}
     ,"InfiniteGrid" : {"en" : "Infinite Grids." , "fa" :"بینهایت گرید"}
     ,"interval" : {"en" : "check grids  with flexible timing." , "fa" :"چک کردن گریدها با زمان منعطف ."}
