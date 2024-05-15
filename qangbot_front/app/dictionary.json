@@ -1,6 +1,8 @@
 {
 
     "WebSiteName" : {"en" : "QangBot" , "fa" :"کنگ بات"},
+    "notFound" : {"en" : "Not Found" , "fa" :"چیزی پیدا نشد"},
+
     "WebSiteDis" : {"en" : "A platform for automated trading" , "fa" :"بستری برای ترید خودکار"}
 
 }
