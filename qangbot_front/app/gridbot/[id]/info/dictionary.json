@@ -9,9 +9,10 @@
     ,"interval" : {"en" : "Interval" , "fa" :"دوره"}
     ,"resume" : {"en" : "Resume" , "fa" :"شروع مجدد"}
     ,"lastTrueCheck" : {"en" : "Last Check" , "fa" :"آخرین چک"},
-    "pauseBot" : {"en" : "Pause Bot" , "fa" :"توقف بات"}
+    "botStopped" : {"en" : "Bot Stopped !" , "fa" :"بات متوقف شد"}
+    ,"botResumed" : {"en" : "Bot Resumed" , "fa" :"شروع مجدد بات"}
     ,"dismiss" : {"en" : "Dismiss" , "fa" :"منصرف شدم"}
-    ,"pause" : {"en" : "Pause" , "fa" :"توقف"}
+    ,"stop" : {"en" : "Stop" , "fa" :"توقف"}
     ,"cancelOrders" : {"en" : "1 : Cancel all orders from Future Contract related to the bot." , "fa" :"1 : تمام اردرهای قرارداد را کنسل می کند."}
     ,"removeGrids" : {"en" : "2 : Remove all the Grids related to the bot." , "fa" :"2 : تمام گریدها را پاک می کند"}
     ,"pauseState" : {"en" : "3 : Pause the state of the bot." , "fa" :"3 : بات را متوقف میکند."}

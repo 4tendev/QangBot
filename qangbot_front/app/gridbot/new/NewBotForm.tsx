@@ -27,6 +27,12 @@ const Page = (props: { exchanges: Exchange[] }) => {
   const exchanges = props.exchanges;
   const dispatch = useAppDispatch();
   const router = useRouter();
+  function resetDefault() {
+    setBotName("");
+    setContractID(0);
+    setAccountID(0);
+    setExchangeID(0);
+  }
 
   async function createBot() {
     await fetchapi("/gridbot/", "POST", {
@@ -57,75 +63,85 @@ const Page = (props: { exchanges: Exchange[] }) => {
     });
   }
   return (
-    <div className="flex flex-col gap-3 py-3 items-center px-5 max-w-md mx-auto">
-      <select
-        onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-          setExchangeName(event.target.value as string);
-          event.target.value
-            ? setExchangeID(
-                exchanges.filter(
-                  (exchange: Exchange) => exchange.name === event.target.value
-                )[0].id
-              )
-            : setExchangeID(0);
-        }}
-        className="select select-bordered w-full  px-4 mx-3"
-      >
-        <option value={""} className="my-1 border-2">
-          {dictionary["pickExchange"][lang]}
-        </option>
-        {exchanges?.map((exchange) => (
-          <option
-            className="my-5 border-2"
-            key={exchange.name}
-            value={exchange.name}
-          >
-            {exchange.name}
-          </option>
-        ))}
-      </select>
-      {exchangeName ? (
-        <>
-          <SelectAccount
-            exchangeName={exchangeName}
-            setAccountID={setAccountID}
-          />
-          {accountID > 0 ? (
-            <>
-              <input
-                type="text"
-                value={botName}
-                onChange={(event) =>
-                  event.target.value.length < 20
-                    ? setBotName(event.target.value)
-                    : null
-                }
-                autoFocus
-                className={
-                  "input input-bordered w-full max-w-md " +
-                  (botName ? " " : " input-error")
-                }
-                placeholder={dictionary.botreminder[lang]}
-              />
-              <SelectContract
-                exchangeName={exchangeName}
-                setContractID={setContractID}
-              />
-            </>
-          ) : null}
-        </>
-      ) : null}
-      <>
-        <button
-          disabled={
-            exchangeName && contractID && accountID && botName ? false : true
+    <div className="flex flex-col md:flex-row py-2 gap-2">
+      <div className="w-full max-w-sm text-start mx-auto px-5">
+        <h3 className="text-info text-2xl text-center">{dictionary.notice[lang]}</h3>
+        {dictionary.avoidTrade[lang]}
+      </div>
+
+      <div className="flex w-full flex-col gap-3 items-center px-5 max-w-md mx-auto">
+        <select
+          onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+            setExchangeName(event.target.value as string);
+            event.target.value
+              ? setExchangeID(
+                  exchanges.filter(
+                    (exchange: Exchange) => exchange.name === event.target.value
+                  )[0].id
+                )
+              : resetDefault();
+          }}
+          className={
+            "select select-bordered w-full  px-4 mx-3" +
+            (!exchangeName ? " select-warning" : " ")
           }
-          onClick={createBot}
-          className="btn btn-success w-full "
         >
-          {dictionary.createBot[lang]}
-        </button>
-      </>
+          <option value={""} className="my-1 border-2">
+            {dictionary["pickExchange"][lang]}
+          </option>
+          {exchanges?.map((exchange) => (
+            <option
+              className="my-5 border-2"
+              key={exchange.name}
+              value={exchange.name}
+            >
+              {exchange.name}
+            </option>
+          ))}
+        </select>
+        {exchangeName ? (
+          <>
+            <SelectAccount
+              exchangeName={exchangeName}
+              setAccountID={setAccountID}
+            />
+            {accountID > 0 ? (
+              <>
+                <input
+                  type="text"
+                  value={botName}
+                  onChange={(event) =>
+                    event.target.value.length < 20
+                      ? setBotName(event.target.value)
+                      : null
+                  }
+                  autoFocus
+                  className={
+                    "input input-bordered w-full max-w-md " +
+                    (botName ? " " : " input-warning ")
+                  }
+                  placeholder={dictionary.botreminder[lang]}
+                />
+                <SelectContract
+                  exchangeName={exchangeName}
+                  setContractID={setContractID}
+                />
+              </>
+            ) : null}
+          </>
+        ) : null}
+        <>
+          <button
+            disabled={
+              exchangeName && contractID && accountID && botName ? false : true
+            }
+            onClick={createBot}
+            className="btn btn-success w-full "
+          >
+            {dictionary.createBot[lang]}
+          </button>
+        </>
+      </div>
     </div>
   );
 };

@@ -15,9 +15,17 @@
         "en": "Create Bot",
         "fa": "بات رو بسازش"
     },
+    "avoidTrade": {
+        "en": "Please refrain from engaging in any trades on related contracts (paire) managed by bot to avoid potential conflicts.",
+        "fa": "لطفاً از انجام هرگونه معاملات در قرارداد مرتبط (جفت ارز) که توسط ربات مدیریت می‌شود، به دلیل احتمال بروز خطا پرهیز کنید."
+    },
     "successCreateBot": {
         "en": "Your Bot Created successfuly",
         "fa": "بات ساخته شد."
+    },
+    "notice": {
+        "en": "Important Notice",
+        "fa": "نکته مهم"
     },
     "furtureContract": {
         "en": "All Bots will work on future contracts",

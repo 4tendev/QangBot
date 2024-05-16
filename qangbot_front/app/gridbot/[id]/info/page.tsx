@@ -1,16 +1,38 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import dictionary from "./dictionary.json";
-import { useAppSelector } from "@/GlobalStates/hooks";
+import { useAppDispatch, useAppSelector } from "@/GlobalStates/hooks";
 import { language } from "@/GlobalStates/Slices/languageSlice";
-import Pause from "./Pause";
-import { bots } from "@/GlobalStates/Slices/botSlice";
+import { bots, updateBot } from "@/GlobalStates/Slices/botSlice";
+import { fetchapi } from "@/commonTsBrowser/fetchAPI";
+import { newAlert, serverErrorAlert } from "@/GlobalStates/Slices/alert/Slice";
 
 const Info = ({ params }: { params: { id: number } }) => {
   const botID = params.id;
   const gridbot = useAppSelector(bots).filter((bot) => bot.id == botID)[0];
-
+  const [acting, setActing] = useState<boolean>(false);
   const lang = useAppSelector(language).lang;
+  const dispatch = useAppDispatch();
+  async function actions(action: "stop" | "resume") {
+    setActing(true);
+    await fetchapi(`/gridbot/${botID}/`, "OPTIONS", { action: action }).then(
+      (response) => {
+        if (response.code == "200") {
+          dispatch(updateBot(response.data));
+          dispatch(
+            newAlert({
+              mode: "success",
+              message: action ==="stop"? dictionary.botStopped[lang] :  dictionary.botResumed[lang],
+              time: 4,
+            })
+          );
+        } else {
+          dispatch(serverErrorAlert(lang));
+        }
+      }
+    );
+    setActing(false);
+  }
 
   const thClassName = "text-center";
   return gridbot ? (
@@ -65,11 +87,19 @@ const Info = ({ params }: { params: { id: number } }) => {
                 {gridbot.status === undefined ? (
                   <span className="loading loading-dots loading-xs"></span>
                 ) : gridbot.status === true ? (
-                  <>
-                    <Pause botID={gridbot.id} lang={lang} />
-                  </>
+                  <button
+                    disabled={acting}
+                    onClick={() => actions("stop")}
+                    className="btn btn-sm btn-warning"
+                  >
+                    {dictionary.stop[lang]}
+                  </button>
                 ) : (
-                  <button className="btn btn-sm btn-success">
+                  <button
+                    disabled={acting}
+                    onClick={() => actions("resume")}
+                    className="btn btn-sm btn-primary"
+                  >
                     {dictionary.resume[lang]}
                   </button>
                 )}

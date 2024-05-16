@@ -115,7 +115,7 @@ const SelectAccount = (props: {
             : props.setAccountID(0);
         }}
         value={account}
-        className="select select-bordered w-full "
+        className={"select select-bordered w-full " + (!account ?"select-warning" : " ") }
       >
         <option value={""} className="my-1 border-2">
           {dictionary["createAccount"][lang]}

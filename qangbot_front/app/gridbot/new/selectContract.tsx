@@ -56,7 +56,10 @@ const SelectContract = (props: {
           }
         }}
         value={contract !== undefined ? contract.name : ""}
-        className="select select-bordered w-full max-w-md "
+        className={
+          "select select-bordered w-full max-w-md " +
+          (!contract ? " select-warning " : " ")
+        }
       >
         <option value={""} className="my-1 border-2">
           {dictionary["selectContract"][lang]}
