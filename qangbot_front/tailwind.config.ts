@@ -20,9 +20,9 @@ const config: Config = {
   ],
   daisyui: {
     themes : [
+      "dark",
       "synthwave",
       "cupcake",
-      "dark",
       "light",
       "bumblebee",
       "retro",
