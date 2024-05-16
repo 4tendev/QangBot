@@ -54,6 +54,16 @@ class GridBot(models.Model):
                 for grid in needToCheckGrids:
                     grid.checkOrder()
 
+    def stop(self):
+        account = self.account
+        if account.cancelAllOrders(self.contract):
+            if account.closePosition(self.contract):
+                self.Grids.all().update(is_active=False)
+                self.status = False
+                self.save()
+                return self
+        return False
+
 
 class ActiveProxyManager(models.Manager):
     def get_queryset(self):
@@ -85,8 +95,8 @@ class Grid(models.Model):
     objects = ActiveProxyManager()
 
     def createOrder(self):
-        grid = Grid.objects.filter(id=self.id)
-        if not (grid and grid[0].is_active and grid.status in [1, 3]):
+        grid = Grid.objects.filter(id=self.id, status__in=[0, 2])
+        if not grid:
             return
         contract = self.bot.contract
         price = self.sell if self.nextPosition == 1 else self.buy
@@ -231,7 +241,7 @@ class CoinexAccount(models.Model):
             openOrdersKeys = []
             limit = 100
             offset = 0
-            totalGrids = bot.Grids.all().filter(status=1).count()
+            totalGrids = bot.Grids.filter(status=1).count()
             for i in range(0, (int(totalGrids/100) + 1)):
                 result = self.robot.query_order_pending(
                     market=market, side=0, offset=offset, limit=limit)
@@ -253,6 +263,47 @@ class CoinexAccount(models.Model):
             print(
                 str(e) + f" CoinexAccount with id {self.id} Failed to getPendingOrdersID")
             return None
+
+    def cancelAllOrders(self, contract):
+        result = " "
+        try:
+            market = contract.apiIdentifier
+            result = self.robot.cancel_all_order(market=market)
+            if result["code"] == 0:
+                return True
+            else:
+                print(result)
+                print(" UNKNOWN CODE ACT ACORDINGLY ")
+                print(
+                    str(e) + f" CoinexAccount with id {self.id}  cancelAllOrders")
+        except Exception as e:
+            print(result)
+            print(str(
+                e) + f" CoinexAccount with id {self.id} Failed to in connetion cancelAllOrders")
+        return False
+
+    def closePosition(self, contract):
+        result = " "
+        try:
+            market = contract.apiIdentifier
+            positions = self.robot.query_position_pending(market=market)[
+                "data"]
+            if positions:
+                for position in positions:
+                    result = self.robot.close_market(
+                        market=market, position_id=position['position_id'])
+                    if result["code"] != 0:
+                        print(result)
+                        print(" UNKNOWN CODE ACT ACORDINGLY ")
+                        return False
+                return True
+            else:
+                return True
+        except Exception as e:
+            print(result)
+            print(
+                str(e) + f" CoinexAccount with id {self.id} Failed to in connetion closePosition")
+        return False
 
     def createOrder(self, price, position, order_size, contract):
         market = contract.apiIdentifier
