@@ -7,9 +7,6 @@ from core.settings import REDIS_URL
 redis_client = redis.from_url(REDIS_URL, decode_responses=True)
 
 
-
-
-
 class Command(BaseCommand):
     def handle(self, *args, **options):
         time.sleep(60)
