@@ -14,7 +14,7 @@ class CreateCoinexAccountForm(forms.Form):
 
 class BotActions(forms.Form):
     CHOICES = [
-        "pause" ,
-        "resume"
+        ("stop", "Stop"),
+        ("resume", "Resume"),
     ]
-    action=forms.ChoiceField( choices=[CHOICES], required=True)
+    action=forms.ChoiceField( choices=CHOICES, required=True)
