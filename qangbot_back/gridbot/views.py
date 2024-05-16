@@ -75,12 +75,7 @@ def gridbots(request):
                 data = {
                     "code": "200",
                     "data": {
-                        "gridbot": {
-                            "id": gridbot.id,
-                            "name": gridbot.name,
-                            "contractName": gridbot.contract.name,
-                            "exchangeName": gridbot.contract.exchange.name,
-                        }
+                        "gridbot": getBotData(gridbot)
                     }
                 }
     except Exception as e:
@@ -245,7 +240,7 @@ def contracts(request, exchangeName):
 
 def gridbot(request, id):
     user = request.user
-    
+
     data = {
         "code": "400",
         "message": "BAD REQUEST"
@@ -284,22 +279,30 @@ def gridbot(request, id):
                 if not form.is_valid():
                     return JsonResponse(data)
                 match form.cleaned_data.get("action"):
-                    case "pause":
-                        gridBot.status=False
+                    case "stop":
+                        gridBot = GridBot.stop(gridBot)
+                        if gridBot:
+                            data = {
+                                "code": "200",
+                                "data": getBotData(gridBot)
+                            }
+                        else:
+                            data = {
+                                "code": "500",
+                                "message": "Server Error"
+                            }
+
+                    case "resume":
+                        gridBot.status = True
                         gridBot.save()
-                        data={
-                            "code" : "200",
-                            "data": getBotData(gridBot)
-                        }
-                        pass
-                    case "resume" :
-                        gridBot.status=True
-                        gridBot.save()
-                        data={
-                            "code" : "200",
+                        data = {
+                            "code": "200",
                             "data": getBotData(gridBot)
                         }
     except Exception as e:
         print(e)
-        return JsonResponse(data)
+        return JsonResponse({
+            "code": "500",
+            "message": "Server Error"
+        })
     return JsonResponse(data)
