@@ -64,9 +64,12 @@ const Page = (props: { exchanges: Exchange[] }) => {
   }
   return (
     <div className="flex flex-col md:flex-row py-2 gap-2">
-      <div className="w-full max-w-sm text-start mx-auto px-5">
-        <h3 className="text-info text-2xl text-center">{dictionary.notice[lang]}</h3>
+      <div className="w-full max-w-md text-start mx-auto px-5">
+        <h3 className="text-info text-2xl text-start">{dictionary.notice[lang]}</h3>
+        <p className="ps-1 py-1">
         {dictionary.avoidTrade[lang]}
+
+        </p>
       </div>
 
       <div className="flex w-full flex-col gap-3 items-center px-5 max-w-md mx-auto">
