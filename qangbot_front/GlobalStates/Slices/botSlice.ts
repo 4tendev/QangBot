@@ -1,8 +1,8 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
-import { BotList, Bot } from "@/app/gridbot/types";
+import {  Bot ,Grid } from "@/app/gridbot/types";
 export type BotInfo = {
-  bots: BotList;
+  bots: Bot[];
   canCreateBot: boolean | undefined;
   isLoaded: boolean;
 };
@@ -26,15 +26,17 @@ export const botSlice = createSlice({
       );
       state.bots = [...oldstate, action.payload];
     }),
+
   }),
 
   selectors: {
     botInfo: (botInfo) => botInfo,
     bots: (botInfo) => botInfo.bots,
     canAddBot: (botInfo) => botInfo.canCreateBot,
+    getBot: (botInfo, id) => botInfo.bots.find(bot => bot.id === id),
   },
 });
 
 export const { newBotInfo, updateBot } = botSlice.actions;
 
-export const { bots, canAddBot, botInfo } = botSlice.selectors;
+export const {getBot, bots, canAddBot, botInfo } = botSlice.selectors;
