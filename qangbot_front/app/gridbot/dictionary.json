@@ -1,36 +1,106 @@
 {
-    "intro" : {"en" : "Our platform empowers you to harness the full potential of cryptocurrency markets through our Grid Bots. Let's delve into what Grid Bots are and how they can revolutionize your trading experience." , 
-        "fa" :"پلتفرم ما به شما امکان می‌دهد تا از توانمندی کامل بازارهای رمزارز با استفاده از روبات‌های گرید بهره‌مند شوید. روبات‌های گرید چه هستند و چگونه می‌توانند تجربه‌ی معاملاتی شما را دگرگون کنند."},
-    "gridPotential" : {"en" : "Unlocking Potential Profits with Grid Bots" , "fa" :"با روبات‌های گرید، پتانسیل سودهای نهفته را فراهم کنید."},
-    "AiNotice" : {"en" : "A Grid Bot is not an AI tool designed to make you rich." , 
-        "fa" :"روبات گرید یک ابزار هوش مصنوعی نیست که طراحی شده باشد تا شما را ثروتمند کند."},
-    "what" : {"en" : "What is a Grid Bot?" , "fa" :"گرید بات چیست؟"},
-    "explain" : {"en" : "Grid Bots are  trading algorithms designed to automate your trading strategies. The core concept lies in creating a grid of buy and sell orders, enabling you to capitalize on market fluctuations without the need for constant manual supervision.brToday, exchanges offer grid bots for their users, and at QangBot, we provide grid bots that operate within exchanges. This allows you to manage all your grid bots in one centralized platform." , 
-        "fa" :"بات‌های گرید الگوریتم‌های معاملاتی هستند که برای اتوماسیون استراتژی‌های معاملاتی شما طراحی شده‌اند. مفهوم اصلی در ایجاد یک گرید از اردرهای خرید و فروش است، که به شما امکان می‌دهد بدون نیاز به نظارت دستی مداوم از نوسانات بازار بهره‌مند شوید . امروزه، صرافی‌ها برای کاربران خود بات‌های گرید را ارائه می‌دهند، و در کنگ بات ما بات‌های گرید ارائه می‌دهیم که در داخل صرافی‌ها عمل می‌کنند. این به شما این امکان را می‌دهد که تمام بات‌های گرید خود را در یک پلتفرم متمرکز مدیریت کنید."},
-    "benefits" : {"en" : "Benefits of Grid Bots" , "fa" :"مزیتهای گرید بات"}
-    ,"emotionFree" : {"en" : "1. Emotion-Free Trading:" , "fa" :"1. ترید خالی از احساسات:"}
-    ,"emotionFreeExplain" : {"en" : "Eliminate emotional decision-making. Grid Bots follow a set strategy, removing the impact of fear and greed from your trading equation." , "fa" :"حذف تصمیم‌گیری‌های احساسی. بات‌های گرید یک استراتژی مشخص را دنبال می‌کنند، اثرات ترس و حرص را از معادله معاملات شما حذف می‌کنند."}
-    ,"noneStop" : {"en" : "2. 24/7 Trading:" , "fa" :"2. ترید 24 ساعته:"}
-    ,"noneStopExplain" : {"en" : "non-stop trading without being tied to your screen. Grid Bots operate round the clock, taking advantage of opportunities even when you're asleep or busy." , "fa" :"معاملات بی‌وقفه بدون اینکه به صفحه نمایش خود محدود شوید. بات‌های گرید شبانه‌روزی عمل می‌کنند، از فرصت‌ها بهره می‌برند حتی زمانی که شما خوابیده یا مشغول دیگر کارها هستید."}
-    ,"How" : {"en" : "How It Works" , "fa" :"نحوه عملکرد"}
-    ,"setup" : {"en" : "Grid Setup:" , "fa" :"راه اندازی:"}
-    ,"setupExplain" : {"en" : "Define a grid by placing buy and sell orders at regular intervals. The grid adapts to market movements, capturing gains as the price fluctuates." , "fa" :" یک گرید با قرار دادن دستورات خرید و فروش در فواصل منظم تعریف کنید. این گرید به حرکات بازار سازگاری پیدا می‌کند و با نوسانات قیمت، سودها را ثبت می‌کند."}
-    ,"execution" : {"en" : "Automated Execution:" , "fa" :"عملگر خودکار:"}
-    ,"executionExplain" : {"en" : "Once configured, the Grid Bot automatically executes buy and sell orders based on your predefined parameters." , 
-        "fa" :"بعد از پیکربندی ، بات گرید به صورت خودکار دستورات خرید و فروش را بر اساس پارامترهای پیش‌تعیین شده اجرا می‌کند."}
-    ,"start" : {"en" : "Getting Started " , "fa" :"چگونه شروع کنید؟"}    
-    ,"createAccount" : {"en" : "Create an Account:" , "fa" :"یک اکانت بسازید"}    
-    ,"SignUp" : {"en" : "Sign up on our platform to access the powerful features of our Grid Bots." , "fa" :"برای دسترسی به ویژگی‌های قدرتمند بات‌های گرید ما، در پلتفرم ما ثبت‌نام کنید."}    
-    ,"api" : {"en" : "Create GridBot with providing API:" , "fa" :"ساخت بات گرید با ارائه API:"}    
-    ,"createBot" : {"en" : "we need you to provide API access to enable our app to manage your account and function as a Grid Bot." ,
-        "fa" :" دسترسی به API را فراهم کنید تا برنامه ما قادر به مدیریت حساب شما و انجام عملکرد به عنوان یک بات گرید باشد."}    
-     ,"config" : {"en" : "Configure Your Grid Bot:" , "fa" :"بات خود را تنظیم کنید:"}    
-     ,"configExplain" : {"en" : "Set up your Grids  by specifying parameters such as grid range, order sizes ..." , "fa" :" گرید‌های خود را با مشخص کردن پارامترهایی مانند محدوده گرید، اندازه اردر و ... پیکربندی کنید."}    
-     ,"monitor" : {"en" : "Monitor:" , "fa" :"نظارت:"}    
-     ,"monitorExplain" : {"en" : "Monitor the performance and make necessary adjustments. You have the flexibility to continually add or remove grids as needed." , "fa" :"عملکرد را نظارت کنید و تنظیمات لازم را اعمال کنید. شما امکان دارید به صورت مداوم گریدها را اضافه یا حذف کنید ."}    
-     ,"action" : {"en" : "Feel free to initiate your inaugural Grid Bot within the QangBot and explore how it can bring advantages to your trades." , 
-        "fa" :"گرید بات  خود را درون کنگ بات شروع کنید و بررسی کنید که چگونه می‌تواند مزایای زیادی برای شما ایجاد کند."}    
-     ,"freeCreate" : {"en" : "Create Free GridBot" , "fa" :"ساخت رایگان گرید بات"}    
-
-
-} 
+    "intro": {
+        "en": "Our platform empowers you to harness the full potential of cryptocurrency markets through our Grid Bots. Let's delve into what Grid Bots are and how they can revolutionize your trading experience.",
+        "fa": "پلتفرم ما به شما امکان می‌دهد تا از توانمندی کامل بازارهای رمزارز با استفاده از روبات‌های گرید بهره‌مند شوید. روبات‌های گرید چه هستند و چگونه می‌توانند تجربه‌ی معاملاتی شما را دگرگون کنند."
+    },
+    "gridPotential": {
+        "en": "Unlocking Potential Profits with Grid Bots",
+        "fa": "با روبات‌های گرید، پتانسیل سودهای نهفته را فراهم کنید."
+    },
+    "AiNotice": {
+        "en": "A Grid Bot is not an AI tool designed to make you rich.",
+        "fa": "روبات گرید یک ابزار هوش مصنوعی نیست که طراحی شده باشد تا شما را ثروتمند کند."
+    },
+    "what": {
+        "en": "What is a Grid Bot?",
+        "fa": "گرید بات چیست؟"
+    },
+    "explain": {
+        "en": "Grid Bots are  trading algorithms designed to automate your trading strategies. The core concept lies in creating a grid of buy and sell orders, enabling you to capitalize on market fluctuations without the need for constant manual supervision.brToday, exchanges offer grid bots for their users, and at QangBot, we provide grid bots that operate within exchanges. This allows you to manage all your grid bots in one centralized platform.",
+        "fa": "بات‌های گرید الگوریتم‌های معاملاتی هستند که برای اتوماسیون استراتژی‌های معاملاتی شما طراحی شده‌اند. مفهوم اصلی در ایجاد یک گرید از اردرهای خرید و فروش است، که به شما امکان می‌دهد بدون نیاز به نظارت دستی مداوم از نوسانات بازار بهره‌مند شوید . امروزه، صرافی‌ها برای کاربران خود بات‌های گرید را ارائه می‌دهند، و در کنگ بات ما بات‌های گرید ارائه می‌دهیم که در داخل صرافی‌ها عمل می‌کنند. این به شما این امکان را می‌دهد که تمام بات‌های گرید خود را در یک پلتفرم متمرکز مدیریت کنید."
+    },
+    "benefits": {
+        "en": "Benefits of Grid Bots",
+        "fa": "مزیتهای گرید بات"
+    },
+    "emotionFree": {
+        "en": "1. Emotion-Free Trading:",
+        "fa": "1. ترید خالی از احساسات:"
+    },
+    "emotionFreeExplain": {
+        "en": "Eliminate emotional decision-making. Grid Bots follow a set strategy, removing the impact of fear and greed from your trading equation.",
+        "fa": "حذف تصمیم‌گیری‌های احساسی. بات‌های گرید یک استراتژی مشخص را دنبال می‌کنند، اثرات ترس و حرص را از معادله معاملات شما حذف می‌کنند."
+    },
+    "noneStop": {
+        "en": "2. 24/7 Trading:",
+        "fa": "2. ترید 24 ساعته:"
+    },
+    "noneStopExplain": {
+        "en": "non-stop trading without being tied to your screen. Grid Bots operate round the clock, taking advantage of opportunities even when you're asleep or busy.",
+        "fa": "معاملات بی‌وقفه بدون اینکه به صفحه نمایش خود محدود شوید. بات‌های گرید شبانه‌روزی عمل می‌کنند، از فرصت‌ها بهره می‌برند حتی زمانی که شما خوابیده یا مشغول دیگر کارها هستید."
+    },
+    "How": {
+        "en": "How It Works",
+        "fa": "نحوه عملکرد"
+    },
+    "setup": {
+        "en": "Grid Setup:",
+        "fa": "راه اندازی:"
+    },
+    "setupExplain": {
+        "en": "Define a grid by placing buy and sell orders at regular intervals. The grid adapts to market movements, capturing gains as the price fluctuates.",
+        "fa": " یک گرید با قرار دادن دستورات خرید و فروش در فواصل منظم تعریف کنید. این گرید به حرکات بازار سازگاری پیدا می‌کند و با نوسانات قیمت، سودها را ثبت می‌کند."
+    },
+    "execution": {
+        "en": "Automated Execution:",
+        "fa": "عملگر خودکار:"
+    },
+    "executionExplain": {
+        "en": "Once configured, the Grid Bot automatically executes buy and sell orders based on your predefined parameters.",
+        "fa": "بعد از پیکربندی ، بات گرید به صورت خودکار دستورات خرید و فروش را بر اساس پارامترهای پیش‌تعیین شده اجرا می‌کند."
+    },
+    "start": {
+        "en": "Getting Started ",
+        "fa": "چگونه شروع کنید؟"
+    },
+    "createAccount": {
+        "en": "Create an Account:",
+        "fa": "یک اکانت بسازید"
+    },
+    "SignUp": {
+        "en": "Sign up on our platform to access the powerful features of our Grid Bots.",
+        "fa": "برای دسترسی به ویژگی‌های قدرتمند بات‌های گرید ما، در پلتفرم ما ثبت‌نام کنید."
+    },
+    "api": {
+        "en": "Create GridBot with providing API:",
+        "fa": "ساخت بات گرید با ارائه API:"
+    },
+    "createBot": {
+        "en": "we need you to provide API access to enable our app to manage your account and function as a Grid Bot.",
+        "fa": " دسترسی به API را فراهم کنید تا برنامه ما قادر به مدیریت حساب شما و انجام عملکرد به عنوان یک بات گرید باشد."
+    },
+    "config": {
+        "en": "Configure Your Grid Bot:",
+        "fa": "بات خود را تنظیم کنید:"
+    },
+    "configExplain": {
+        "en": "Set up your Grids  by specifying parameters such as grid range, order sizes ...",
+        "fa": " گرید‌های خود را با مشخص کردن پارامترهایی مانند محدوده گرید، اندازه اردر و ... پیکربندی کنید."
+    },
+    "monitor": {
+        "en": "Monitor:",
+        "fa": "نظارت:"
+    },
+    "monitorExplain": {
+        "en": "Monitor the performance and make necessary adjustments. You have the flexibility to continually add or remove grids as needed.",
+        "fa": "عملکرد را نظارت کنید و تنظیمات لازم را اعمال کنید. شما امکان دارید به صورت مداوم گریدها را اضافه یا حذف کنید ."
+    },
+    "action": {
+        "en": "Feel free to initiate your inaugural Grid Bot within the QangBot and explore how it can bring advantages to your trades.",
+        "fa": "گرید بات  خود را درون کنگ بات شروع کنید و بررسی کنید که چگونه می‌تواند مزایای زیادی برای شما ایجاد کند."
+    },
+    "freeCreate": {
+        "en": "Create Free GridBot",
+        "fa": "ساخت رایگان گرید بات"
+    }
+}
