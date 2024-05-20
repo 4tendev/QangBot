@@ -78,7 +78,7 @@ const SelectContract = (props: {
         <Link
           href={contract.url}
           target="blank"
-          className="link text-start w-full max-w-md px-1"
+          className="link text-start w-full max-w-md px-2 link-info"
         >
           {dictionary.contractInfo[lang]}
         </Link>

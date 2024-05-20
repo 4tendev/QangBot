@@ -1,0 +1,55 @@
+{
+    "botName": {
+        "en": "Bot Name",
+        "fa": "نام بات"
+    },
+    "accountName": {
+        "en": "Account Name",
+        "fa": "نام اکانت"
+    },
+    "exchange": {
+        "en": "Exchange",
+        "fa": "صرافی"
+    },
+    "status": {
+        "en": "State",
+        "fa": "وضعیت"
+    },
+    "title": {
+        "en": "Bot Info",
+        "fa": "اطلاعات بات"
+    },
+    "executedRate": {
+        "en": "Time/ORders",
+        "fa": "اردر/زمان"
+    },
+    "seconds": {
+        "en": "Seconds",
+        "fa": "ثانیه"
+    },
+    "action": {
+        "en": "Action",
+        "fa": "کنترل"
+    },
+    "interval": {
+        "en": "Interval",
+        "fa": "دوره"
+    },
+    "resume": {
+        "en": "Resume",
+        "fa": "شروع مجدد"
+    },
+    "botStopped": {
+        "en": "Bot Stopped !",
+        "fa": "بات متوقف شد"
+    },
+    "botResumed": {
+        "en": "Bot Resumed",
+        "fa": "شروع مجدد بات"
+    },
+
+    "stop": {
+        "en": "Stop",
+        "fa": "توقف"
+    }
+}
