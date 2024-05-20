@@ -3,6 +3,21 @@ from django.http import JsonResponse
 from .models import GridBot, Exchange
 from .forms import CreateBotForm, BotActions
 # Create your views here.
+serverErrorResponse = {
+    "code": "500",
+    "message": "Server Error"
+}
+
+
+def getGridData(grid):
+    return {
+        "id": grid.id,
+        "status": grid.status,
+        "size": grid.size,
+        "sell": grid.sell,
+        "buy": grid.buy,
+        "nextPosition": grid.nextPosition
+    }
 
 
 def getBotData(gridtBot: GridBot):
@@ -13,6 +28,8 @@ def getBotData(gridtBot: GridBot):
         "exchangeName": gridtBot.contract.exchange.name,
         "status": gridtBot.status,
         "interval": gridtBot.interval,
+        "accountName": gridtBot.account.name,
+        "grids": [getGridData(grid) for grid in gridtBot.Grids.all()]
     }
 
 
@@ -305,4 +322,46 @@ def gridbot(request, id):
             "code": "500",
             "message": "Server Error"
         })
+    return JsonResponse(data)
+
+
+def grids(request, id):
+    user = request.user
+
+    data = {
+        "code": "400",
+        "message": "BAD REQUEST"
+    }
+    if not user.is_authenticated:
+        return JsonResponse(
+            data
+        )
+    if not id > 0:
+        return JsonResponse(
+            data
+        )
+
+    try:
+        gridbot = GridBot.objects.filter(user=user, id=id)
+        if not gridbot:
+            return JsonResponse(data)
+        gridbot=gridbot[0]
+        grids = gridbot.Grids.all()
+        data = {
+            "code": "200",
+                    "data": []
+        }
+        match request.method:
+            case "GET":
+                if grids:
+                    for grid in grids:
+                        data["data"].append(
+                            getGridData(grid)
+                        )
+            case "DELETE":
+                if not gridbot.removeAllGrids():
+                    data =serverErrorResponse
+    except Exception as e:
+        print(e)
+        return JsonResponse(serverErrorResponse)
     return JsonResponse(data)
