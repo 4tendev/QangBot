@@ -12,7 +12,7 @@ import ResetPassword from "./resetpassword/page";
 
 const Auth = () => {
   type TabType = "login" | "register" | "resetPassword";
-  const [tab, setTab]: [TabType, Function] = useState("login");
+  const [tab, setTab] = useState<TabType>("login");
   const lang = useAppSelector(language).lang;
 
   const tabs: { [key in TabType]: JSX.Element } = {
@@ -28,8 +28,8 @@ const Auth = () => {
           .map((tabsKey) => (
             <li
               className={
-                "mx-1  btn my-2 px-2 sm:px-3 max-[320px]:px-1   max-[300px]:text-xs  " +
-                (tabsKey === tab ? " btn-accent  " : " btn-ghost ")
+                "mx-1 btn-sm btn my-2 px-2 sm:px-3 max-[320px]:px-1   max-[300px]:text-xs  " +
+                (tabsKey === tab ? " btn-accent shadow-md" : " btn-ghost ")
               }
               key={tabsKey}
               onClick={() => setTab(tabsKey)}
