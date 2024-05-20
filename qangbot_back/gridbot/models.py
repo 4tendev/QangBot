@@ -25,6 +25,12 @@ class GridBot(models.Model):
     noneVIPCreationLimit = int(NONE_VIP_CREATION_LIMIT)
     noneVIPGridsCreationLimit = int(NONE_VIP_GRIDS_CREATION_LIMIT)
 
+    def removeAllGrids(self) ->bool :
+        if  self.account.cancelAllOrders(self.contract) : 
+            self.Grids.all().update(is_active=False)
+            return True
+        return False
+    
     def gridCreationLimit(self):
         return None if self.account.user.isVIP() else (GridBot.noneVIPGridsCreationLimit - Grid.objects.filter(bot=self).count())
 
@@ -93,6 +99,7 @@ class Grid(models.Model):
     orders = models.ManyToManyField("gridbot.Order",  blank=True)
     is_active = models.BooleanField(default=True)
     objects = ActiveProxyManager()
+
 
     def createOrder(self):
         grid = Grid.objects.filter(id=self.id, status__in=[0, 2])
