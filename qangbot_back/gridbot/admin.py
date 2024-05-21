@@ -1,11 +1,11 @@
 from django.contrib import admin
-from .models import Grid , GridBot , CoinexAccount , Order ,Exchange ,Contract 
+from .models import Grid , GridBot , CoinexAccount , Order  ,Contract 
 
 class GridBotAdmin(admin.ModelAdmin):
     list_display = ("name","status","created","updated")
 
 class GridAdmin(admin.ModelAdmin):
-    list_display = ("sell","buy","size","nextPosition","status","bot","is_active")
+    list_display = ("sell","buy","size","nextPosition","status","gridbot","is_active")
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ("orderID","executed","contract","created","updated")
