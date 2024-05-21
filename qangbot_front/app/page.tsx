@@ -1,10 +1,10 @@
+import SectionOne from "./Index/SectionOne";
 
 
 export default function Home() {
   return (
-    <main >
-      Main
-
-    </main>
+    <div className="w-full max-w-6xl">
+      <SectionOne />
+    </div>
   );
 }

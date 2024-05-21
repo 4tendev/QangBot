@@ -1,0 +1,12 @@
+{
+    "isVolatile" : {"en" : "Is Crypto Volatile?" , "fa" :"نوسان رمزارزها بالاست؟"},
+    "exploreGridBot" : {"en" : "Explore Stability!" , "fa" :"ثبات را  تجربه کنید!"},
+    "gridbenefits" : {"en" : "Grid bots are great for benefiting from the volatile market" , "fa" :"گرید باتها برای بازارهای پرنوسان عالین"},
+    "backTest" : {"en" : "Back Tests" , "fa" :"بک تست"},
+    "createFree" : {"en" : "Create Free" , "fa" :"شروع رایگان"},
+
+    "GridBot" : {"en" : "Grid Bots" , "fa" :"گرید بات"}
+        
+    
+
+}
