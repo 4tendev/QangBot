@@ -6,7 +6,7 @@ import { useAppSelector, useAppDispatch } from "@/GlobalStates/hooks";
 import { useEffect } from "react";
 import { fetchapi } from "@/commonTsBrowser/fetchAPI";
 import Loading from "@/app/loading";
-import VIPRequired from "./VIPRequired";
+import VIPRequired from "../VIPRequired";
 import Auth from "@/app/user/auth/page";
 export default function Template({ children }: { children: React.ReactNode }) {
   const canCreateBot = useAppSelector(canAddBot);

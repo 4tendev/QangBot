@@ -4,9 +4,10 @@ import { useAppDispatch, useAppSelector } from "@/GlobalStates/hooks";
 import { fetchapi } from "@/commonTsBrowser/fetchAPI";
 import React from "react";
 import { Bot } from "../../types";
-
-const TotalGrids = (props: { botID: number }) => {
+type TotalGridsProps = { botID?: number; grids: Bot["grids"] };
+const TotalGrids = (props: TotalGridsProps) => {
   const bot = useAppSelector((state) => getBot(state, props.botID)) as Bot;
+  const grids = props.grids;
   const dispatch = useAppDispatch();
   function removeGrids() {
     fetchapi(`/gridbot/${props.botID}/grids/`, "DELETE").then((resposne) => {
@@ -20,13 +21,12 @@ const TotalGrids = (props: { botID: number }) => {
   }
   return (
     <>
-      Total Grids : {bot.grids.length}{" "}
-      {bot.grids.length > 0 && (
+      Total Grids : {grids.length}
+      {props.botID && grids.length > 0 && (
         <button onClick={removeGrids} className="btn btn-xs btn-error ms-5">
           Remove All
         </button>
       )}
-      
     </>
   );
 };

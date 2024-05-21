@@ -3,9 +3,8 @@ import { useAppSelector } from "@/GlobalStates/hooks";
 import React from "react";
 import { Bot, Grid } from "../../types";
 
-const CoveredRange = (props: { botID: number }) => {
-  const bot = useAppSelector((state) => getBot(state, props.botID)) as Bot;
-  const grids = bot.grids;
+const CoveredRange = (props: { grids: Bot["grids"] }) => {
+  const grids = props.grids;
   function mergeRanges(objs: Grid[]) {
     // Sort objects based on the 'buy' value
     const objects = [...objs];
@@ -33,7 +32,7 @@ const CoveredRange = (props: { botID: number }) => {
   const ranges =
     unPausedGrids.length > 0 ? mergeRanges(unPausedGrids) : undefined;
   return (
-    <>
+    <div  className="flex items-center w-full">
       {unPausedGrids.length > 0 && (
         <>
           Covered Range :
@@ -48,7 +47,7 @@ const CoveredRange = (props: { botID: number }) => {
           ))}
         </>
       )}
-    </>
+    </div>
   );
 };
 

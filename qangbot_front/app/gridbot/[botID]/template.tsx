@@ -1,5 +1,5 @@
 "use client";
-import { botInfo } from "@/GlobalStates/Slices/botSlice";
+import { botInfo, getBot } from "@/GlobalStates/Slices/botSlice";
 import { isKnown } from "@/GlobalStates/Slices/userSlice";
 import { useAppSelector } from "@/GlobalStates/hooks";
 import Loading from "@/app/loading";
@@ -12,19 +12,16 @@ export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const botID = Number(pathname.substring(9, 10));
   const userBotInfo = useAppSelector(botInfo);
-  return useisknown ? (
-    userBotInfo.isLoaded ? (
-      userBotInfo.bots.filter((bot) => bot.id == botID).length > 0 ? (
-        <>{children}</>
-      ) : (
-        <NotFound />
-      )
-    ) : (
-      <Loading />
-    )
-  ) : useisknown === undefined ? (
-    <Loading></Loading>
-  ) : (
+  const gridbot = useAppSelector((state) => getBot(state, botID));
+  const loading = useisknown === undefined || userBotInfo.isLoaded === false;
+
+  return   loading ? (
+    <Loading />
+  ) : useisknown === false ? (
     <Auth />
+  ) : gridbot ? (
+    <>{children}</>
+  ) : (
+    <NotFound />
   );
 }

@@ -1,21 +1,83 @@
 {
-    "all" : {"en" : "Total Grids" , "fa" : "تعداد کل گریدها"}
-    ,"totalWorking" : {"en" : "Total working Grids" , "fa" : "گریدهای باز"}
-    ,"covered" : {"en" : "Covered Range" , "fa" : "رنج در حال پوشش"}
-    ,"totalMargin" : {"en" : "Total Margin" , "fa" : "مارجین مورد نیاز"}
-    ,"leverage" : {"en" : "(1x Leverage)" , "fa" : "(لورج 1x)"}
+    "all": {
+        "en": "Total Grids",
+        "fa": "تعداد کل گریدها"
+    },
+    "totalWorking": {
+        "en": "Total working Grids",
+        "fa": "گریدهای باز"
+    },
+    "covered": {
+        "en": "Covered Range",
+        "fa": "رنج در حال پوشش"
+    },
+    "totalMargin": {
+        "en": "Total Margin",
+        "fa": "مارجین مورد نیاز"
+    },
+    "leverage": {
+        "en": "(1x Leverage)",
+        "fa": "(لورج 1x)"
+    },
+    "size": {
+        "en": "Size",
+        "fa": "حجم"
+    },
+    "priceRange": {
+        "en": "Price Range",
+        "fa": "رنج قیمت"
+    },
+    "status": {
+        "en": "Status",
+        "fa": "وضعیت"
+    },
+    "actions": {
+        "en": "Actions",
+        "fa": "کنترل"
+    },
+    "side": {
+        "en": "Start Side",
+        "fa": "پوزیشن شروع"
+    },
+    "pause": {
+        "en": "Pause",
+        "fa": "توقف"
+    },
+    "startSell": {
+        "en": "Resume Sell",
+        "fa": "شروع با فروش"
+    },
+    "startBuy": {
+        "en": "Resume Buy",
+        "fa": "شروع با خرید"
+    },
+    "buy": {
+        "en": "Buy",
+        "fa": "خرید"
+    },
+    "sell": {
+        "en": "Sell",
+        "fa": "فروش"
+    },
+    "delete": {
+        "en": "Delete",
+        "fa": "حذف"
+    },
+    "option": {
+        "en": "Grid Options",
+        "fa": "کنترل گریدها"
+    },
+    "info": {
+        "en": "Grids Info",
+        "fa": "اطلاعات گریدها"
+    },
+    "add": {
+        "en": "Add Grids",
+        "fa": "افزودن گرید"
+    },
+    
+    "create" : {"en" : "Create All" , "fa" : "همه رو بساز"}
+    ,"dismiss" : {"en" : "Dismiss" , "fa" : "منصرف شدم"}
 
-    ,"size" : {"en" : "Size" , "fa" : "حجم"}
-    ,"priceRange" : {"en" : "Price Range" , "fa" : "رنج قیمت"}
-    ,"status" : {"en" : "Status" , "fa" : "وضعیت"}
-    ,"actions" : {"en" : "Actions" , "fa" : "کنترل"}
-    ,"side" : {"en" : "Start Side" , "fa" : "پوزیشن شروع"},
-
-    "pause" : {"en" : "Pause" , "fa" : "توقف"}
-    ,"startSell" : {"en" : "Resume Sell" , "fa" : "شروع با فروش"}
-    ,"startBuy" : {"en" : "Resume Buy" , "fa" : "شروع با خرید"}
-    ,"buy" : {"en" : "Buy" , "fa" : "خرید"}
-    ,"sell" : {"en" : "Sell" , "fa" : "فروش"}
-    ,"delete" : {"en" : "Delete" , "fa" : "حذف"}
-
+    ,"successCreated" : {"en" : "Grids created successfully. Wait a seccond" , "fa" : "گریدها ساخته شدند. صبر کنید"}
 }
