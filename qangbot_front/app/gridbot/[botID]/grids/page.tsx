@@ -5,15 +5,14 @@ import { useAppSelector } from "@/GlobalStates/hooks";
 import { language } from "@/GlobalStates/Slices/languageSlice";
 import dictionary from "./dictionary.json";
 import AddGrids from "./AddGrids";
-
+export type TabType = "info" | "add";
 export default ({ params }: { params: { botID: number } }) => {
-  type TabType = "info" | "add";
   const lang = useAppSelector(language).lang;
   const [tab, setTab] = useState<TabType>("info");
 
   const tabs: { [key in TabType]: JSX.Element } = {
-    info: <GridsTable botID={Number(params.botID)} />,
-    add: <AddGrids botID={Number(params.botID)}/>,
+    info: <GridsTable botID={Number(params.botID)}  />,
+    add: <AddGrids botID={Number(params.botID)} setTab={setTab}/>,
   };
 
   return (
