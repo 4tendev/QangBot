@@ -92,7 +92,7 @@ class Grid(models.Model):
     size = models.FloatField()
     nextPosition = models.IntegerField(choices=positions)
     status = models.IntegerField(choices=stats)
-    bot = models.ForeignKey(GridBot, related_name=(
+    gridbot = models.ForeignKey(GridBot, related_name=(
         "Grids"), on_delete=models.PROTECT)
     order = models.ForeignKey("gridbot.Order", related_name="Grids",
                               on_delete=models.PROTECT, null=True, blank=True)
