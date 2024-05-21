@@ -1,7 +1,7 @@
 import json
 from django.http import JsonResponse
-from .models import GridBot, Exchange
-from .forms import CreateBotForm, BotActions
+from .models import GridBot, Exchange ,Grid
+from .forms import CreateBotForm, BotActions ,CreateGridsForm
 # Create your views here.
 serverErrorResponse = {
     "code": "500",
@@ -358,6 +358,23 @@ def grids(request, botID):
                         data["data"].append(
                             getGridData(grid)
                         )
+            case "POST" :
+                form_data = json.loads(request.body)
+                form = CreateGridsForm(form_data)
+                data = {
+                    "code": "400",
+                    "message": "invalid  Input"
+                }
+                if not form.is_valid():
+                    return JsonResponse(data)   
+                grids=form.cleaned_data.get("grids")
+                if not gridbot.canCreateNewGrids(len(grids))  :
+                    return JsonResponse({"code":"4003"})  
+                instances = [Grid(sell=grid["sell"] , buy = grid["buy"] , gridbot = gridbot ,status=0 ,nextPosition=grid["nextPosition"],size=grid["size"]) for grid in grids]
+                grids=Grid.objects.bulk_create(instances)    
+                data = { "code" : "200" ,"data" : [] } 
+                for grid in grids :
+                    data["data"].append (getGridData(grid))  
             case "DELETE":
                 if not gridbot.removeAllGrids():
                     data =serverErrorResponse
