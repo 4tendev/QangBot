@@ -6,7 +6,7 @@ import { useAppSelector } from "@/GlobalStates/hooks";
 import { language } from "@/GlobalStates/Slices/languageSlice";
 import Link from "next/link";
 
-type Contract = {
+export type Contract = {
   name: string;
   id: number;
   url: string;
@@ -18,8 +18,7 @@ const SelectContract = (props: {
 }) => {
   const [fetching, setFetching] = useState(true);
   const [contracts, setContracts] = useState<Contract[]>([]);
-  const [contract, setContract]: [ContractState, Function] =
-    useState<ContractState>(undefined);
+  const [contract, setContract] = useState<ContractState>(undefined);
   const lang = useAppSelector(language).lang;
   async function getContracts() {
     fetching
