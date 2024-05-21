@@ -325,7 +325,7 @@ def gridbot(request, id):
     return JsonResponse(data)
 
 
-def grids(request, id):
+def grids(request, botID):
     user = request.user
 
     data = {
@@ -336,13 +336,13 @@ def grids(request, id):
         return JsonResponse(
             data
         )
-    if not id > 0:
+    if not botID > 0:
         return JsonResponse(
             data
         )
 
     try:
-        gridbot = GridBot.objects.filter(user=user, id=id)
+        gridbot = GridBot.objects.filter(user=user, id=botID)
         if not gridbot:
             return JsonResponse(data)
         gridbot=gridbot[0]
