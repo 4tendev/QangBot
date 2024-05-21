@@ -243,7 +243,8 @@ def auth(request):
                         login(request, user)
                         data = {
                             "code": "200",
-                            "message": "Password Changed"
+                            "message": "Password Changed",
+                            data : userData(user)
                         }
                         if not trustedDevice:
                             request.session.set_expiry(0)

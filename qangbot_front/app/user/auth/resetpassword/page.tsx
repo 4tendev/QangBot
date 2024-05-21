@@ -64,7 +64,7 @@ const Page = () => {
         switch (code) {
           case "200":
             setModalVerification(undefined);
-            setGlobalState(newUserState(true));
+            setGlobalState(newUserState(response.data));
             router.push("/user");
             break;
           case "400":

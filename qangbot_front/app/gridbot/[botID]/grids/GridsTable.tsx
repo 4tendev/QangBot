@@ -15,9 +15,8 @@ type GridsTableProps =
 
 const GridsTable = (props: GridsTableProps) => {
   const botID = props.botID;
-  const gridbot = botID
-    ? useAppSelector((state) => getBot(state, props.botID))
-    : undefined;
+  const gridbot = useAppSelector((state) => getBot(state, props.botID))
+
   const grids = props?.grids ?? (gridbot?.grids as Bot["grids"]);
   const thClassName = "max-[360px]:p-1.5 text-center";
   const tdClassName = "max-[320px]: p-1 text-center";

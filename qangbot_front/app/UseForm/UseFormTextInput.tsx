@@ -35,7 +35,7 @@ const TextInput = (props: { input: Input; register: any; errors: any }) => {
           (validationKey, vIndex) =>
             errors[input.name]?.type == validationKey && (
               <p key={vIndex} className={errorClassName}>
-                {input.validationsMSG[validationKey]}
+                {(input.validationsMSG &&input.validationsMSG[validationKey] )}
               </p>
             )
         )}

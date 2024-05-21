@@ -26,7 +26,7 @@ const UseFormCheckBox = (props: {
             (validationKey, vIndex) =>
               errors[input.name]?.type == validationKey && (
                 <p key={vIndex} className="pt-3 px-5 text-red-600 text-sm">
-                  {input.validationsMSG[validationKey]}
+                  {(input.validationsMSG &&input.validationsMSG[validationKey] )}
                 </p>
               )
           )}

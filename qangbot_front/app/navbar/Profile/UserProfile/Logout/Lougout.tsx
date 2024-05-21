@@ -22,7 +22,7 @@ const Lougout = () => {
       try {
         const response = await fetchapi("/user/", "DELETE");
         if (response.code == "200") {
-          setGlobalState(newUserState(false));
+          setGlobalState(newUserState({isKnown:false ,isVIP:false,vipExpiration:undefined}));
           setGlobalState(
             newAlert({
               message: dictionary.logedout[lang],
