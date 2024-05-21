@@ -1,6 +1,6 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
-import {  Bot ,Grid } from "@/app/gridbot/types";
+import { Bot, Grid } from "@/app/gridbot/types";
 export type BotInfo = {
   bots: Bot[];
   canCreateBot: boolean | undefined;
@@ -26,17 +26,33 @@ export const botSlice = createSlice({
       );
       state.bots = [...oldstate, action.payload];
     }),
-
+    addGrids: create.reducer(
+      (
+        state,
+        action: PayloadAction<{ botID: number; grids: Bot["grids"] }>
+      ) => {
+        const oldstate = [...state.bots].filter(
+          (bot) => bot.id !== action.payload.botID
+        );
+        const selectedBot = [...state.bots].find(
+          (bot) => bot.id === action.payload.botID
+        );
+        selectedBot && (selectedBot.grids = action.payload.grids);
+        if (selectedBot) {
+          state.bots = [...oldstate, selectedBot];
+        }
+      }
+    ),
   }),
 
   selectors: {
     botInfo: (botInfo) => botInfo,
     bots: (botInfo) => botInfo.bots,
     canAddBot: (botInfo) => botInfo.canCreateBot,
-    getBot: (botInfo, id) => botInfo.bots.find(bot => bot.id === id),
+    getBot: (botInfo, id) => botInfo.bots.find((bot) => bot.id === id),
   },
 });
 
-export const { newBotInfo, updateBot } = botSlice.actions;
+export const {addGrids, newBotInfo, updateBot } = botSlice.actions;
 
-export const {getBot, bots, canAddBot, botInfo } = botSlice.selectors;
+export const { getBot, bots, canAddBot, botInfo } = botSlice.selectors;
