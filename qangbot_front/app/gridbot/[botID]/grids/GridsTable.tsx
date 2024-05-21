@@ -10,7 +10,7 @@ import TotalGrids from "./TotalGrids";
 import CoveredRange from "./CoveredRange";
 
 type GridsTableProps =
-  | { botID: number; grids?: never }
+  | { botID: number; grids?: never  }
   | { botID?: never; grids: Bot["grids"] };
 
 const GridsTable = (props: GridsTableProps) => {
