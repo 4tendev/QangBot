@@ -1,0 +1,22 @@
+{
+    "counts" : {"en" : "counts" , "fa" : "تعداد"}
+    ,"countHelp" : {"en" : "Total Grids (Grid Number)" , "fa" : "تعداد گریدها"}
+    ,"count" : {"en" : "Count" , "fa" : "تعداد"}
+    ,"startPriceHelp" : {"en" : "Buy Price of the first Grid" , "fa" : "قیمت خرید اولین گرید"}
+    ,"startPrice" : {"en" : "Start Price" , "fa" : "قیمت اولیه"}
+    ,"dynamicSizeHelp" : {"en" : "increase volume by  price" , "fa" : "افزایش حجم بر اساس قیمت"}
+    ,"dynamicRangeHelp" : {"en" : "Increase Range by  price" , "fa" : "افزایش محدوده بر اساس قیمت"}
+    ,"constantRangeHelp" : {"en" : "Constant range for all Grids" , "fa" : "محدوده ثابت برای همه گریدها"}
+    ,"constantSizeHelp" : {"en" : "Constant volume for all Grids" , "fa" : "حجم ثابت برای همه گریدها"}
+    ,"constant" : {"en" : "Fix" , "fa" : "ثابت"}
+    ,"dynamic" : {"en" : "Dynamic" , "fa" : "پویا"}
+    ,"review" : {"en" : "Review" , "fa" : "بازبینی"}
+    ,"sellPosition" : {"en" : "Start with Sell Position" , "fa" : "شروع با پوزیشن فروش"}
+    ,"buyPosition" : {"en" : "Start with Buy Positon" , "fa" : "شروع با پوزیشن خرید"}
+    ,"gridRange" : {"en" : "Range" , "fa" : "محدوده  "}
+    ,"gridSize" : {"en" : "Size" , "fa" : "حجم"}
+    ,"minus" : {"en" : "Positive only" , "fa" : "اعداد مثبت فقط"}
+    ,"required" : {"en" : "Please fill all the inputs" , "fa" : "همه اطلاعات رو پرکنید"}
+    ,"maxLeft" : {"en" : "Maximum Grids Left to create : " , "fa" : "تعداد گرید قابل ساخت : "}
+
+}
