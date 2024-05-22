@@ -6,7 +6,7 @@ import { language } from "@/GlobalStates/Slices/languageSlice";
 import { getBot } from "@/GlobalStates/Slices/botSlice";
 import { Bot } from "../../types";
 import CoveredRange from "./CoveredRange";
-import TotalGrids from "@/app/gridbot/[botID]/grids/TotalGrids";
+import TotalGrids from "./TotalGrids";
 
 type GridsTableProps =
   | { botID: number; grids?: never  }
