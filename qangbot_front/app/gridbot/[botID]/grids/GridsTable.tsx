@@ -6,7 +6,7 @@ import { language } from "@/GlobalStates/Slices/languageSlice";
 import { getBot } from "@/GlobalStates/Slices/botSlice";
 import { Bot } from "../../types";
 import CoveredRange from "./CoveredRange";
-import TotalGrids from "./TotalGrids";
+import GridsCount from "./GridsCount";
 
 type GridsTableProps =
   | { botID: number; grids?: never }
@@ -38,7 +38,7 @@ const GridsTable = (props: GridsTableProps) => {
           <CoveredRange grids={grids} />
         </li>
         <li>
-          <TotalGrids botID={botID} grids={grids} />
+          <GridsCount botID={botID} grids={grids} />
         </li>
       </ul>
       <div className="overflow-x-auto  max-h-96">
