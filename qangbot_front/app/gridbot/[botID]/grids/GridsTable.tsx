@@ -5,7 +5,6 @@ import { useAppSelector } from "@/GlobalStates/hooks";
 import { language } from "@/GlobalStates/Slices/languageSlice";
 import { getBot } from "@/GlobalStates/Slices/botSlice";
 import { Bot } from "../../types";
-
 import TotalGrids from "./TotalGrids";
 import CoveredRange from "./CoveredRange";
 

@@ -4,7 +4,10 @@ import { useAppDispatch, useAppSelector } from "@/GlobalStates/hooks";
 import { fetchapi } from "@/commonTsBrowser/fetchAPI";
 import React from "react";
 import { Bot } from "../../types";
+
 type TotalGridsProps = { botID?: number; grids: Bot["grids"] };
+
+
 const TotalGrids = (props: TotalGridsProps) => {
   const bot = useAppSelector((state) => getBot(state, props.botID)) as Bot;
   const grids = props.grids;
