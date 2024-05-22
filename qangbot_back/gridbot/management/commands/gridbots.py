@@ -49,7 +49,6 @@ class Command(BaseCommand):
                     redis_client.setex(gridBOTkey, gridBot.interval, 1)
                     gridBot.checkOpenGrids()
                     gridBot.makeOrders()
-                    print("HERE")
             except Exception as e:
                 print(e)
                 print("200 SEC SLEEP EXEPTION")

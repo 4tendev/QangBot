@@ -32,7 +32,7 @@ class GridBot(models.Model):
         return False
     
     def gridCreationLimit(self):
-        return None if self.account.user.isVIP() else (GridBot.noneVIPGridsCreationLimit - Grid.objects.filter(bot=self).count())
+        return None if self.account.user.isVIP() else (GridBot.noneVIPGridsCreationLimit - Grid.objects.filter(gridbot=self).count())
 
     def canCreate(user: User):
         return (user.isVIP() or GridBot.objects.filter(user=user).count() < GridBot.noneVIPCreationLimit)
@@ -96,7 +96,7 @@ class Grid(models.Model):
         "Grids"), on_delete=models.PROTECT)
     order = models.ForeignKey("gridbot.Order", related_name="Grids",
                               on_delete=models.PROTECT, null=True, blank=True)
-    orders = models.ManyToManyField("gridbot.Order",  blank=True)
+    orders = models.ManyToManyField("gridbot.Order",related_name="grid" , blank=True)
     is_active = models.BooleanField(default=True)
     objects = ActiveProxyManager()
 
@@ -105,9 +105,9 @@ class Grid(models.Model):
         grid = Grid.objects.filter(id=self.id, status__in=[0, 2])
         if not grid:
             return
-        contract = self.bot.contract
+        contract = self.gridbot.contract
         price = self.sell if self.nextPosition == 1 else self.buy
-        order = self.bot.account.createOrder(
+        order = self.gridbot.account.createOrder(
             price, self.nextPosition, self.size, contract)
         if order:
             self.orders.add(order)
@@ -139,7 +139,7 @@ class Order(models.Model):
         return self.contract.name
 
     def isFinished(self):
-        account = self.Grids.all()[0].bot.account
+        account = self.grid.gridbot.account
         isFinished = account.isOrderFinished(
             self.orderID, self.contract)
         self.executed = isFinished
@@ -148,7 +148,7 @@ class Order(models.Model):
 
     def cancelOrder(self):
         contract = self.contract
-        isOrderCanceled = self.grid.bot.account.cancelOrder(
+        isOrderCanceled = self.grid.gridbot.account.cancelOrder(
             self.orderID, contract)
         if isOrderCanceled:
             self.executed = False
