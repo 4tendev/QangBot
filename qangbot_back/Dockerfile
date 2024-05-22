@@ -18,6 +18,4 @@ RUN echo "gunicorn -b [::]:8000 core.wsgi:application &" >> startup.sh
 RUN echo "python manage.py gridbots" >> startup.sh
 RUN chmod +x startup.sh
 
-RUN python manage.py migrate gridbot
-
 CMD ["./startup.sh"] 
