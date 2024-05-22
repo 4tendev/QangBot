@@ -14,6 +14,7 @@ class GridbotConfig(AppConfig):
 
         @receiver(post_migrate)
         def create_default_exchange(sender, **kwargs):
+            if sender.name == 'gridbot':
                 coinexFutureExchange = Exchange.objects.get_or_create(
                     name="Coinex Future", account_model=ContentType.objects.get_for_model(CoinexAccount))
                 CoinexFutureContracts = [
