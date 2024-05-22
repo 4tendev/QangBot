@@ -5,7 +5,7 @@ import { useAppSelector } from "@/GlobalStates/hooks";
 import { language } from "@/GlobalStates/Slices/languageSlice";
 import { getBot } from "@/GlobalStates/Slices/botSlice";
 import { Bot } from "../../types";
-import TotalGrids from "./TotalGrids";
+import TotalGrids from "@/app/gridbot/[botID]/grids/TotalGrids";
 import CoveredRange from "./CoveredRange";
 
 type GridsTableProps =
