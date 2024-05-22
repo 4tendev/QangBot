@@ -13,7 +13,8 @@ RUN npm install
 # Copy the rest of the application code to the container
 COPY . .
 
-# Build the Next.js app
+RUN echo "NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}" > .env.local
+
 RUN npm run build
 
 # Expose the application's port (Next.js default is 3000)
