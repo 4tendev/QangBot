@@ -10,9 +10,7 @@ export const Site_MENU : {name :Name , link :Link}[] =[
     {
         "name" : "gridbot" , "link" : "/gridbot"
     },
-    {
-        "name" : "strategy" , "link" : "/strategy"
-    },
+
     {
         "name" : "aboutus" , "link" : "/aboutus"
     }
