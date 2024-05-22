@@ -1,0 +1,24 @@
+FROM python:3.10
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 8000
+
+
+RUN echo "#!/bin/bash" >> startup.sh
+RUN echo "python manage.py makemigrations" >> startup.sh
+RUN echo "python manage.py migrate" >> startup.sh
+RUN echo "gunicorn -b [::]:8000 core.wsgi:application &" >> startup.sh
+RUN echo "python manage.py gridbots" >> startup.sh
+
+
+RUN chmod +x startup.sh
+
+
+CMD ["./startup.sh"] 
