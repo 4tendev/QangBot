@@ -13,7 +13,7 @@ RUN npm install
 # Copy the rest of the application code to the container
 COPY . .
 
-RUN echo "NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}" > .env.local
+RUN echo "NEXT_PUBLIC_BACKEND_URL=https://stellar-fulfillment-production.up.railway.app" > .env.local
 
 RUN npm run build
 
