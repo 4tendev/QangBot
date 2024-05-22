@@ -12,8 +12,13 @@ RUN npm install
 
 # Copy the rest of the application code to the container
 COPY . .
+ARG NEXT_PUBLIC_BACKEND_URL
+
+# Set the environment variable based on the build argument
+ENV NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
 
 RUN echo "NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}" > .env.local
+
 
 RUN npm run build
 
