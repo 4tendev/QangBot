@@ -32,7 +32,7 @@ def create_default_exchange():
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        time.sleep(60)
+        time.sleep(10)
         create_default_exchange()
         while True:
             time.sleep(5)
@@ -49,6 +49,7 @@ class Command(BaseCommand):
                     redis_client.setex(gridBOTkey, gridBot.interval, 1)
                     gridBot.checkOpenGrids()
                     gridBot.makeOrders()
+                    print("HERE")
             except Exception as e:
                 print(e)
                 print("200 SEC SLEEP EXEPTION")
