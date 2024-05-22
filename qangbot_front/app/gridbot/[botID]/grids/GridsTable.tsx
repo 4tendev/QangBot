@@ -9,12 +9,12 @@ import CoveredRange from "./CoveredRange";
 import TotalGrids from "./TotalGrids";
 
 type GridsTableProps =
-  | { botID: number; grids?: never  }
+  | { botID: number; grids?: never }
   | { botID?: never; grids: Bot["grids"] };
 
 const GridsTable = (props: GridsTableProps) => {
   const botID = props.botID;
-  const gridbot = useAppSelector((state) => getBot(state, props.botID))
+  const gridbot = useAppSelector((state) => getBot(state, props.botID));
 
   const grids = props?.grids ?? (gridbot?.grids as Bot["grids"]);
   const thClassName = "max-[360px]:p-1.5 text-center";
@@ -35,11 +35,10 @@ const GridsTable = (props: GridsTableProps) => {
     <>
       <ul className="ps-10 flex py-2 flex-col gap-1 text-sm">
         <li>
-          <TotalGrids botID={botID} grids={grids} />
-        </li>
-
-        <li>
           <CoveredRange grids={grids} />
+        </li>
+        <li>
+          <TotalGrids botID={botID} grids={grids} />
         </li>
       </ul>
       <div className="overflow-x-auto  max-h-96">
