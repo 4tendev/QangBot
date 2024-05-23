@@ -139,7 +139,7 @@ class Order(models.Model):
         return self.contract.name
 
     def isFinished(self):
-        account = self.grid.gridbot.account
+        account = self.Grids.all()[0].gridbot.account
         isFinished = account.isOrderFinished(
             self.orderID, self.contract)
         self.executed = isFinished
