@@ -37,7 +37,7 @@ export const botSlice = createSlice({
         const selectedBot = [...state.bots].find(
           (bot) => bot.id === action.payload.botID
         );
-        selectedBot && (selectedBot.grids = action.payload.grids);
+        selectedBot && (selectedBot.grids = [ ...selectedBot.grids, ...action.payload.grids]);
         if (selectedBot) {
           state.bots = [...oldstate, selectedBot];
         }
