@@ -94,9 +94,9 @@ class Grid(models.Model):
     status = models.IntegerField(choices=stats)
     gridbot = models.ForeignKey(GridBot, related_name=(
         "Grids"), on_delete=models.PROTECT)
-    order = models.ForeignKey("gridbot.Order", related_name="Grids",
+    order = models.OneToOneField("gridbot.Order", related_name="grid",
                               on_delete=models.PROTECT, null=True, blank=True)
-    orders = models.ManyToManyField("gridbot.Order",related_name="grid" , blank=True)
+    orders = models.ManyToManyField("gridbot.Order", related_name="Grids", blank=True)
     is_active = models.BooleanField(default=True)
     objects = ActiveProxyManager()
 
@@ -125,6 +125,16 @@ class Grid(models.Model):
             elif isFinished == False:
                 Grid.objects.filter(id=self.id).update(status=3)
 
+    def pause(self) :
+        grid = Grid.objects.filter(id=self.id, status__in=[0, 2 ,1])
+        if not grid or not self.order :
+            return
+        if self.order.cancelOrder() :
+            grid.update(status=3)
+            return True
+
+
+
 
 class Order(models.Model):
     exactCreationtResponse = models.TextField(unique=True)
@@ -139,7 +149,7 @@ class Order(models.Model):
         return self.contract.name
 
     def isFinished(self):
-        account = self.Grids.all()[0].gridbot.account
+        account = self.grid.gridbot.account
         isFinished = account.isOrderFinished(
             self.orderID, self.contract)
         self.executed = isFinished
