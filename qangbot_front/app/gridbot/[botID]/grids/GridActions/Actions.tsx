@@ -4,7 +4,7 @@ import dictionary from "./dictionary.json";
 import { useAppDispatch, useAppSelector } from "@/GlobalStates/hooks";
 import { language } from "@/GlobalStates/Slices/languageSlice";
 import { fetchapi } from "@/commonTsBrowser/fetchAPI";
-import {serverErrorAlert } from "@/GlobalStates/Slices/alert/Slice";
+import { serverErrorAlert } from "@/GlobalStates/Slices/alert/Slice";
 import { getBot, updateGrid } from "@/GlobalStates/Slices/botSlice";
 
 const Actions = (props: { botID: number; grid: Grid }) => {

@@ -22,7 +22,6 @@ const GridsTable = (props: GridsTableProps) => {
   const tdClassName = "max-[320px]: p-1 text-center";
   const lang = useAppSelector(language).lang;
 
-
   const [sort, setSort] = useState<[boolean, "status" | "buy" | "size"]>([
     false,
     "status",
@@ -111,8 +110,7 @@ const GridsTable = (props: GridsTableProps) => {
                     </td>
 
                     <td className={tdClassName}>
-                      <Actions  botID={botID}  grid={grid}></Actions>
-                      
+                      <Actions botID={botID} grid={grid}></Actions>
                     </td>
                   </>
                 )}
