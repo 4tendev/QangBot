@@ -7,6 +7,7 @@ import { getBot } from "@/GlobalStates/Slices/botSlice";
 import { Bot } from "../../types";
 import CoveredRange from "./CoveredRange";
 import GridsCount from "./GridsCount";
+import Actions from "./GridActions/Actions";
 
 type GridsTableProps =
   | { botID: number; grids?: never }
@@ -20,7 +21,7 @@ const GridsTable = (props: GridsTableProps) => {
   const thClassName = "max-[360px]:p-1.5 text-center";
   const tdClassName = "max-[320px]: p-1 text-center";
   const lang = useAppSelector(language).lang;
-  const [acting, setActing] = useState(false);
+
 
   const [sort, setSort] = useState<[boolean, "status" | "buy" | "size"]>([
     false,
@@ -110,25 +111,8 @@ const GridsTable = (props: GridsTableProps) => {
                     </td>
 
                     <td className={tdClassName}>
-                      {acting ? (
-                        <span className="loading loading-ring loading-xs"></span>
-                      ) : grid.status === 3 ? (
-                        <div className="w-fit flex flex-col gap-1 mx-auto">
-                          <button className=" btn btn-success btn-xs w-fit">
-                            {dictionary.startBuy[lang]}
-                          </button>
-                          <button className=" btn btn-xs  bg-rose-600 w-fit">
-                            {dictionary.startSell[lang]}
-                          </button>
-                          <button className=" btn btn-xs btn-warning w-full">
-                            {dictionary.delete[lang]}
-                          </button>
-                        </div>
-                      ) : (
-                        <button className=" btn btn-xs btn-warning w-full">
-                          {dictionary.pause[lang]}
-                        </button>
-                      )}
+                      <Actions  botID={botID}  grid={grid}></Actions>
+                      
                     </td>
                   </>
                 )}

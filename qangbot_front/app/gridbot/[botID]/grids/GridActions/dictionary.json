@@ -1,0 +1,18 @@
+{
+    "pause": {
+        "en": "Pause",
+        "fa": "توقف"
+    },
+    "startSell": {
+        "en": "Resume Sell",
+        "fa": "شروع با فروش"
+    },
+    "startBuy": {
+        "en": "Resume Buy",
+        "fa": "شروع با خرید"
+    },
+    "delete": {
+        "en": "Delete",
+        "fa": "حذف"
+    }
+}

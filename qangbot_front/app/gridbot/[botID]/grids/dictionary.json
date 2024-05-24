@@ -39,18 +39,7 @@
         "en": "Start Side",
         "fa": "پوزیشن شروع"
     },
-    "pause": {
-        "en": "Pause",
-        "fa": "توقف"
-    },
-    "startSell": {
-        "en": "Resume Sell",
-        "fa": "شروع با فروش"
-    },
-    "startBuy": {
-        "en": "Resume Buy",
-        "fa": "شروع با خرید"
-    },
+    
     "buy": {
         "en": "Buy",
         "fa": "خرید"
@@ -59,10 +48,7 @@
         "en": "Sell",
         "fa": "فروش"
     },
-    "delete": {
-        "en": "Delete",
-        "fa": "حذف"
-    },
+
     "option": {
         "en": "Grid Options",
         "fa": "کنترل گریدها"
