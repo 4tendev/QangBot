@@ -1,7 +1,7 @@
 import json
 from django.http import JsonResponse
-from .models import GridBot, Exchange ,Grid
-from .forms import CreateBotForm, BotActions ,CreateGridsForm
+from .models import GridBot, Exchange, Grid
+from .forms import CreateBotForm, BotActions, CreateGridsForm, GridActions
 # Create your views here.
 serverErrorResponse = {
     "code": "500",
@@ -345,7 +345,7 @@ def grids(request, botID):
         gridbot = GridBot.objects.filter(user=user, id=botID)
         if not gridbot:
             return JsonResponse(data)
-        gridbot=gridbot[0]
+        gridbot = gridbot[0]
         grids = gridbot.Grids.all()
         data = {
             "code": "200",
@@ -358,7 +358,7 @@ def grids(request, botID):
                         data["data"].append(
                             getGridData(grid)
                         )
-            case "POST" :
+            case "POST":
                 form_data = json.loads(request.body)
                 form = CreateGridsForm(form_data)
                 data = {
@@ -366,19 +366,77 @@ def grids(request, botID):
                     "message": "invalid  Input"
                 }
                 if not form.is_valid():
-                    return JsonResponse(data)   
-                grids=form.cleaned_data.get("grids")
-                if not gridbot.canCreateNewGrids(len(grids))  :
-                    return JsonResponse({"code":"4003"})  
-                instances = [Grid(sell=grid["sell"] , buy = grid["buy"] , gridbot = gridbot ,status=0 ,nextPosition=grid["nextPosition"],size=grid["size"]) for grid in grids]
-                grids=Grid.objects.bulk_create(instances)    
-                data = { "code" : "200" ,"data" : [] } 
-                for grid in grids :
-                    data["data"].append (getGridData(grid))  
+                    return JsonResponse(data)
+                grids = form.cleaned_data.get("grids")
+                if not gridbot.canCreateNewGrids(len(grids)):
+                    return JsonResponse({"code": "4003"})
+                instances = [Grid(sell=grid["sell"], buy=grid["buy"], gridbot=gridbot, status=0,
+                                  nextPosition=grid["nextPosition"], size=grid["size"]) for grid in grids]
+                grids = Grid.objects.bulk_create(instances)
+                data = {"code": "200", "data": []}
+                for grid in grids:
+                    data["data"].append(getGridData(grid))
             case "DELETE":
                 if not gridbot.removeAllGrids():
-                    data =serverErrorResponse
+                    data = serverErrorResponse
     except Exception as e:
         print(e)
+        return JsonResponse(serverErrorResponse)
+    return JsonResponse(data)
+
+
+def grid(request, gridID):
+    user = request.user
+
+    data = {
+        "code": "400",
+        "message": "BAD REQUEST"
+    }
+    if not user.is_authenticated:
+        return JsonResponse(
+            data
+        )
+    if not gridID > 0:
+        return JsonResponse(
+            data
+        )
+
+    try:
+        grid = Grid.objects.filter(id=gridID, gridbot__user=user)
+
+        if not grid:
+            return JsonResponse(
+                data
+            )
+        grid = grid[0]
+        match request.method:
+            case "GET":
+                data = {
+                    "code": "200",
+                    "data": getGridData(grid)
+                }
+            case "OPTIONS":
+                form_data = json.loads(request.body)
+                form = GridActions(form_data)
+                data = {
+                    "code": "400",
+                    "message": "invalid  Input"
+                }
+                if not form.is_valid():
+                    return JsonResponse(data)
+                match form.cleaned_data.get("action"):
+                    case "pause":
+                        grid = grid.pause()
+                        data = {
+                            "code": "200",
+                            "data":  getGridData(grid)
+                        }
+                    case "resumeSell":
+                        pass
+                    case "resumeBuy":
+                        pass 
+                    case "delete"   :
+                        pass                    
+    except:
         return JsonResponse(serverErrorResponse)
     return JsonResponse(data)

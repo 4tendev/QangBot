@@ -25,12 +25,12 @@ class GridBot(models.Model):
     noneVIPCreationLimit = int(NONE_VIP_CREATION_LIMIT)
     noneVIPGridsCreationLimit = int(NONE_VIP_GRIDS_CREATION_LIMIT)
 
-    def removeAllGrids(self) ->bool :
-        if  self.account.cancelAllOrders(self.contract) : 
+    def removeAllGrids(self) -> bool:
+        if self.account.cancelAllOrders(self.contract):
             self.Grids.all().update(is_active=False)
             return True
         return False
-    
+
     def gridCreationLimit(self):
         return None if self.account.user.isVIP() else (GridBot.noneVIPGridsCreationLimit - Grid.objects.filter(gridbot=self).count())
 
@@ -95,11 +95,11 @@ class Grid(models.Model):
     gridbot = models.ForeignKey(GridBot, related_name=(
         "Grids"), on_delete=models.PROTECT)
     order = models.OneToOneField("gridbot.Order", related_name="grid",
-                              on_delete=models.PROTECT, null=True, blank=True)
-    orders = models.ManyToManyField("gridbot.Order", related_name="Grids", blank=True)
+                                 on_delete=models.PROTECT, null=True, blank=True)
+    orders = models.ManyToManyField(
+        "gridbot.Order", related_name="Grids", blank=True)
     is_active = models.BooleanField(default=True)
     objects = ActiveProxyManager()
-
 
     def createOrder(self):
         grid = Grid.objects.filter(id=self.id, status__in=[0, 2])
@@ -125,15 +125,12 @@ class Grid(models.Model):
             elif isFinished == False:
                 Grid.objects.filter(id=self.id).update(status=3)
 
-    def pause(self) :
-        grid = Grid.objects.filter(id=self.id, status__in=[0, 2 ,1])
-        if not grid or not self.order :
-            return
-        if self.order.cancelOrder() :
-            grid.update(status=3)
-            return True
-
-
+    def pause(self):
+        grid = Grid.objects.filter(id=self.id, status__in=[0, 2, 1])
+        if grid:
+            if not self.order or self.order.cancelOrder():
+                grid.update(status=3)
+        return Grid.objects.get(id=self.id)
 
 
 class Order(models.Model):

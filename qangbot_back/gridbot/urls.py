@@ -7,6 +7,8 @@ urlpatterns = [
     path('<str:exchangeName>/contract/', views.contracts , name = "contracts"),
     path('<int:id>/', views.gridbot , name = "gridbot"),
     path('<int:botID>/grids/', views.grids , name = "grids"),
+    path('grid/<int:gridID>/', views.grid , name = "grid"),
+
 
     
 ]
