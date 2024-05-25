@@ -131,6 +131,18 @@ class Grid(models.Model):
             if not self.order or self.order.cancelOrder():
                 grid.update(status=3)
         return Grid.objects.get(id=self.id)
+    
+    def resume( self,nextPosition  ) :
+        grid = Grid.objects.filter(id=self.id, status=3)
+        if grid :
+            grid.update(nextPosition =nextPosition ,status=0)
+        return Grid.objects.get(id=self.id)
+    
+    def  delete( self  ) :
+        grid = Grid.objects.filter(id=self.id, status=3)
+        if grid :
+            grid.update(is_active=False)
+
 
 
 class Order(models.Model):

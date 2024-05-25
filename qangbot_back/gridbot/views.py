@@ -432,11 +432,23 @@ def grid(request, gridID):
                             "data":  getGridData(grid)
                         }
                     case "resumeSell":
-                        pass
+                        grid = grid.resume(1)
+                        data = {
+                            "code": "200",
+                            "data":  getGridData(grid)
+                        }
                     case "resumeBuy":
-                        pass 
-                    case "delete"   :
-                        pass                    
+                        grid = grid.resume(2)
+                        data = {
+                            "code": "200",
+                            "data":  getGridData(grid)
+                        }
+            case "DELETE":
+                        grid.delete()
+                        data = {
+                            "code": "200",
+                            "message":  "deleted"
+                        }                        
     except:
         return JsonResponse(serverErrorResponse)
     return JsonResponse(data)
