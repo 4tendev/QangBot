@@ -39,13 +39,11 @@ const AddGrids = (props: {
 
   return (
     <div className="py-2">
-      <h5 className="text-xl text-warning px-3">  
-      {dictionary.notice[lang]}
-      </h5>
+      <h5 className="text-xl text-warning px-3">{dictionary.notice[lang]}</h5>
       <p className="px-5 mb-2">
-      {dictionary.check[lang]}
-        <Link className="link block link-info" href={gridbot?.contract.url}>
-        {dictionary.contractInfo[lang]}
+        {dictionary.check[lang]}
+        <Link className="link block link-error my-1" href={gridbot?.contract.url}>
+          {dictionary.contractInfo[lang]}
         </Link>
       </p>
       <GridForm
