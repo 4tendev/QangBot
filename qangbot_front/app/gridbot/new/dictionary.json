@@ -31,14 +31,6 @@
         "en": "All Bots will work on future contracts",
         "fa": "همه بات ها روی قراردهای فیوچر کار خواهند کرد"
     },
-    "vipRequired": {
-        "en": "To create more bots you need to become VIP.",
-        "fa": "برای ساخت بات جدید باید VIP شوید."
-    },
-    "becomeVIP": {
-        "en": "Become VIP member",
-        "fa": "عضویت VIP"
-    },
     "myBot": {
         "en": "my Bots",
         "fa": "باتهای من"

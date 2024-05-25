@@ -102,5 +102,14 @@
     "freeCreate": {
         "en": "Create Free GridBot",
         "fa": "ساخت رایگان گرید بات"
+    },
+    "vipRequired": {
+        "en": "To create more bots you need to become VIP.",
+        "fa": "برای ساخت بات جدید باید VIP شوید."
+    },
+
+    "becomeVIP": {
+        "en": "Become VIP member",
+        "fa": "عضویت VIP"
     }
 }
