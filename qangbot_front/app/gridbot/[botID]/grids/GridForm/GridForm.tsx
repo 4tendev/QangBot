@@ -12,8 +12,8 @@ const GridForm = (props: {
   grids: Bot["grids"];
   reviewMode: boolean;
   setReviewMode: Function;
-  setGrids :Function ,
-  creationLimit : number | null
+  setGrids: Function;
+  creationLimit: number | null;
 }) => {
   const setGrids = props.setGrids;
   const grids = props.grids;
@@ -79,7 +79,7 @@ const GridForm = (props: {
     <>
       <GridsTable grids={grids} />
     </>
-  ) :props.creationLimit !== null && props.creationLimit < 1   ? (
+  ) : props.creationLimit !== null && props.creationLimit < 1 ? (
     <VIPRequired />
   ) : (
     <div className=" flex flex-col gap-3 max-[300px]:w-gap-1 px-3">
@@ -90,20 +90,27 @@ const GridForm = (props: {
             className="input input-sm input-bordered w-full "
             placeholder={dictionary.startPrice[lang]}
             value={startPrice}
-            onChange={(event) => setStartPrice(Number(event.target.value)  )}
+            onChange={(event) =>
+              setStartPrice(
+                event.target.value ? Number(event.target.value) : ""
+              )
+            }
           />
         </Help>
-        <Help
-          props={{ direction: true, message: dictionary.countHelp[lang] }}
-        >
+        <Help props={{ direction: true, message: dictionary.countHelp[lang] }}>
           <input
             value={count}
             onChange={(event) =>
-              setCount(
-                props.creationLimit
-                  ? Math.min(Number(event.target.value ), Number(props.creationLimit))
-                  : Number(event.target.value )
-              )
+              Number(event.target.value) > 0
+                ? setCount(
+                    props.creationLimit
+                      ? Math.min(
+                          Number(event.target.value),
+                          Number(props.creationLimit)
+                        )
+                      : Number(event.target.value)
+                  )
+                : setCount("")
             }
             type="number"
             placeholder={dictionary.count[lang]}
@@ -116,7 +123,9 @@ const GridForm = (props: {
           className="input min-[375px]:grow input-sm input-bordered w-1/2 max-[320px]:w-2/5  "
           type="number"
           placeholder={dictionary.gridSize[lang]}
-          onChange={(event) => setSize(Number(event.target.value ))}
+          onChange={(event) =>
+            setSize(event.target.value ? Number(event.target.value) : "")
+          }
           value={size}
         />
         <div className="flex w-1/2 items-center  justify-start  gap-1 text-xs ms-3">
@@ -150,7 +159,9 @@ const GridForm = (props: {
           className="input min-[375px]:grow input-sm input-bordered w-1/2 max-[320px]:w-2/5  "
           type="number"
           placeholder={dictionary.gridRange[lang]}
-          onChange={(event) => setRange(Number(event.target.value ))}
+          onChange={(event) =>
+            setRange(event.target.value ? Number(event.target.value) : "")
+          }
           value={range}
         />
         <div className="flex w-1/2 items-center  justify-start  gap-1 text-xs ms-3">
@@ -181,18 +192,17 @@ const GridForm = (props: {
       </div>
       <select
         value={startPosition}
-        onChange={(event) => setStartPosition(Number(event.target.value ))}
+        onChange={(event) => setStartPosition(Number(event.target.value))}
         className="select select-sm select-bordered"
       >
         <option value="1">{dictionary.sellPosition[lang]}</option>
         <option value="2">{dictionary.buyPosition[lang]}</option>
       </select>
-      {requiredMessage ? (
-       "asdasd"
-      ) : null}
-      {minusMessage ? (
-       "Asdasdasda"
-      ) : null}
+      <div className="px-4 text-rose-400">
+        {requiredMessage && dictionary.required[lang]}
+        {minusMessage && dictionary.minus[lang]}
+      </div>
+
       <button
         onClick={review}
         className="btn max-w-sm mx-auto btn-primary block w-full "
