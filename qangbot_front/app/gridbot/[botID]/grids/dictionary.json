@@ -39,7 +39,6 @@
         "en": "Start Side",
         "fa": "پوزیشن شروع"
     },
-    
     "buy": {
         "en": "Buy",
         "fa": "خرید"
@@ -48,7 +47,6 @@
         "en": "Sell",
         "fa": "فروش"
     },
-
     "option": {
         "en": "Grid Options",
         "fa": "کنترل گریدها"
@@ -61,9 +59,29 @@
         "en": "Add Grids",
         "fa": "افزودن گرید"
     },
-    
-    "create" : {"en" : "Create All" , "fa" : "همه رو بساز"}
-    ,"dismiss" : {"en" : "Dismiss" , "fa" : "منصرف شدم"}
-
-    ,"successCreated" : {"en" : "Grids created successfully. Wait a seccond" , "fa" : "گریدها ساخته شدند. صبر کنید"}
+    "create": {
+        "en": "Create All",
+        "fa": "همه رو بساز"
+    },
+    "dismiss": {
+        "en": "Dismiss",
+        "fa": "منصرف شدم"
+    },
+    "successCreated": {
+        "en": "Grids created successfully. Wait a seccond",
+        "fa": "گریدها ساخته شدند. صبر کنید"
+    },
+    "notice": {
+        "en": "important notice",
+        "fa": "توجه مهم"
+    },
+    "check": {
+        "en": " To determine the Unit of size and price, please refer to the contract information below",
+        "fa": "از لینک زیر واحد حجم و قیمت را ببینید."
+    }
+    ,
+    "contractInfo": {
+        "en": "Contract(paire) Info",
+        "fa": "اطلاعت قرارداد (جفت ارز)"
+    }
 }

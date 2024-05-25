@@ -5,15 +5,17 @@ import { useAppDispatch, useAppSelector } from "@/GlobalStates/hooks";
 import { language } from "@/GlobalStates/Slices/languageSlice";
 import { Bot } from "../../types";
 import { fetchapi } from "@/commonTsBrowser/fetchAPI";
-import { addGrids } from "@/GlobalStates/Slices/botSlice";
+import { addGrids, getBot } from "@/GlobalStates/Slices/botSlice";
 import { newAlert } from "@/GlobalStates/Slices/alert/Slice";
 import { TabType } from "./page";
+import Link from "next/link";
 
 const AddGrids = (props: {
   botID: number;
   setTab: React.Dispatch<React.SetStateAction<TabType>>;
 }) => {
   const lang = useAppSelector(language).lang;
+  const gridbot = useAppSelector((state) => getBot(state, props.botID)) as Bot;
 
   const [reviewMode, setReviewMode] = useState<boolean>(false);
   const [creating, setCreating] = useState(false);
@@ -37,9 +39,14 @@ const AddGrids = (props: {
 
   return (
     <div className="py-2">
-      <h5 className="text-xl text-warning px-3">important notice</h5>
+      <h5 className="text-xl text-warning px-3">  
+      {dictionary.notice[lang]}
+      </h5>
       <p className="px-5 mb-2">
-        To check size and price Unit u must check contract information in below
+      {dictionary.check[lang]}
+        <Link className="link block link-info" href={gridbot?.contract.url}>
+        {dictionary.contractInfo[lang]}
+        </Link>
       </p>
       <GridForm
         creationLimit={null}
