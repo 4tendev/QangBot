@@ -142,7 +142,7 @@ const Robot = () => {
                 </div>
 
                 <div>{bot.exchangeName}</div>
-                {bot.contractName}
+                {bot.contract.name}
               </Link>
             </li>
           ))}

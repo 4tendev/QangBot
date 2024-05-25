@@ -62,7 +62,7 @@ const Info = ({ params }: { params: { botID: number } }) => {
 
               <td className="flex flex-col justify-center items-center h-full">
                 <div className="font-bold">{gridbot.exchangeName}</div>
-                <div className="text-xs opacity-60">{gridbot.contractName}</div>
+                <div className="text-xs opacity-60">{gridbot.contract.name}</div>
               </td>
               <td className="text-center">
                 {gridbot.status === undefined ? (

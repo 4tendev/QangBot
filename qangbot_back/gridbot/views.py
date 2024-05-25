@@ -30,7 +30,6 @@ def getBotData(gridtBot: GridBot):
         "id": gridtBot.id,
         "name": gridtBot.name,
         "contract" : getContractData(gridtBot.contract),
-        "contractName": gridtBot.contract.name,
         "exchangeName": gridtBot.contract.exchange.name,
         "status": gridtBot.status,
         "interval": gridtBot.interval,
