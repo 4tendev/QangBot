@@ -2,11 +2,11 @@
     "all": {
         "en": "Total Grids",
         "fa": "تعداد کل گریدها"
+    },    "firstOrder": {
+        "en": "Grids first order : ",
+        "fa": "اولین سفارش گریدها : "
     },
-    "totalWorking": {
-        "en": "Total working Grids",
-        "fa": "گریدهای باز"
-    },
+
     "covered": {
         "en": "Covered Range",
         "fa": "رنج در حال پوشش"
@@ -15,10 +15,7 @@
         "en": "Total Margin",
         "fa": "مارجین مورد نیاز"
     },
-    "leverage": {
-        "en": "(1x Leverage)",
-        "fa": "(لورج 1x)"
-    },
+
     "size": {
         "en": "Size",
         "fa": "حجم"
