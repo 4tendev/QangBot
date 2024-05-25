@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/GlobalStates/hooks";
 import { language } from "@/GlobalStates/Slices/languageSlice";
 import { fetchapi } from "@/commonTsBrowser/fetchAPI";
 import { serverErrorAlert } from "@/GlobalStates/Slices/alert/Slice";
-import { getBot, updateGrid } from "@/GlobalStates/Slices/botSlice";
+import { deleteGrid, getBot, updateGrid } from "@/GlobalStates/Slices/botSlice";
 
 const Actions = (props: { botID: number; grid: Grid }) => {
   const [acting, setActing] = useState(false);
@@ -13,7 +13,7 @@ const Actions = (props: { botID: number; grid: Grid }) => {
   const dispatch = useAppDispatch();
   const gridbot = useAppSelector((state) => getBot(state, props.botID));
 
-  async function act(action: "pause" | "resumeSell" | "resumeBuy" | "delete") {
+  async function act(action: "pause" | "resumeSell" | "resumeBuy") {
     setActing(true);
     await fetchapi(`/gridbot/grid/${props.grid.id}/`, "OPTIONS", {
       action: action,
@@ -24,18 +24,35 @@ const Actions = (props: { botID: number; grid: Grid }) => {
     });
     setActing(false);
   }
+  async function remove() {
+    setActing(true);
+    await fetchapi(`/gridbot/grid/${props.grid.id}/`, "DELETE").then(
+      (response) => {
+        if (response.code === "200") {
+          dispatch(deleteGrid({ botID: props.botID, gridID: props.grid.id }));
+        } else dispatch(serverErrorAlert(lang));
+      }
+    );
+    setActing(false);
+  }
 
   return acting ? (
     <span className="loading loading-ring loading-xs"></span>
   ) : props.grid.status === 3 ? (
     <div className="w-fit flex flex-col gap-1 mx-auto">
-      <button className=" btn btn-success btn-xs w-fit">
+      <button
+        onClick={() => act("resumeBuy")}
+        className=" btn btn-success btn-xs w-fit"
+      >
         {dictionary.startBuy[lang]}
       </button>
-      <button className=" btn btn-xs  bg-rose-600 w-fit">
+      <button
+        onClick={() => act("resumeSell")}
+        className=" btn btn-xs  bg-rose-600 w-fit"
+      >
         {dictionary.startSell[lang]}
       </button>
-      <button className=" btn btn-xs btn-warning w-full">
+      <button onClick={remove} className=" btn btn-xs btn-warning w-full">
         {dictionary.delete[lang]}
       </button>
     </div>

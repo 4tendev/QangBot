@@ -26,6 +26,26 @@ export const botSlice = createSlice({
       );
       state.bots = [...oldstate, action.payload];
     }),
+    deleteGrid: create.reducer(
+      (state, action: PayloadAction<{ botID: number; gridID: Grid["id"] }>) => {
+        const oldstate = [...state.bots].filter(
+          (bot) => bot.id !== action.payload.botID
+        );
+        const selectedBot = [...state.bots].find(
+          (bot) => bot.id === action.payload.botID
+        );
+        selectedBot &&
+          (selectedBot.grids = [
+            ...selectedBot.grids.filter(
+              (grid) => grid.id !== action.payload.gridID
+            ),
+          ]);
+        if (selectedBot) {
+          state.bots = [...oldstate, selectedBot];
+        }
+      }
+    )
+    ,
     updateGrid: create.reducer(
       (state, action: PayloadAction<{ botID: number; grid: Grid }>) => {
         const oldstate = [...state.bots].filter(
@@ -74,6 +94,6 @@ export const botSlice = createSlice({
   },
 });
 
-export const { addGrids, newBotInfo, updateBot,updateGrid } = botSlice.actions;
+export const { addGrids, newBotInfo, updateBot,updateGrid ,deleteGrid } = botSlice.actions;
 
 export const { getBot, bots, canAddBot, botInfo } = botSlice.selectors;
