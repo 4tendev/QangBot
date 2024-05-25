@@ -57,9 +57,9 @@ const AddGrids = (props: {
       {reviewMode && (
         <>
           {grids && (
-            <div>
-              All grids Start with{" "}
-              {grids[0].nextPosition === 1 ? "Selling " : "Buying "}
+            <div className="mt-1">
+             {dictionary.firstOrder[lang]}
+              {grids[0].nextPosition === 1 ? dictionary.sell[lang] : dictionary.buy[lang]}
             </div>
           )}
           <div>
