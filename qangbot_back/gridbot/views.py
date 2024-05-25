@@ -19,11 +19,17 @@ def getGridData(grid):
         "nextPosition": grid.nextPosition
     }
 
+def getContractData(contract):
+    return {
+        "name" : contract.name,
+        "url" : contract.url,
+    }
 
 def getBotData(gridtBot: GridBot):
     return {
         "id": gridtBot.id,
         "name": gridtBot.name,
+        "contract" : getContractData(gridtBot.contract),
         "contractName": gridtBot.contract.name,
         "exchangeName": gridtBot.contract.exchange.name,
         "status": gridtBot.status,
@@ -444,11 +450,11 @@ def grid(request, gridID):
                             "data":  getGridData(grid)
                         }
             case "DELETE":
-                        grid.delete()
-                        data = {
-                            "code": "200",
-                            "message":  "deleted"
-                        }                        
+                grid.delete()
+                data = {
+                    "code": "200",
+                    "message":  "deleted"
+                }
     except:
         return JsonResponse(serverErrorResponse)
     return JsonResponse(data)
