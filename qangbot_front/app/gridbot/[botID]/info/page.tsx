@@ -51,9 +51,7 @@ const Info = ({ params }: { params: { botID: number } }) => {
               <th className={thClassName}>{dictionary.accountName[lang]}</th>
               <th className={thClassName}>{dictionary.exchange[lang]}</th>
               <th className={thClassName}>{dictionary.lastheck[lang]}</th>
-
               <th className={thClassName}>{dictionary.interval[lang]}</th>
-
               <th className={thClassName}>{dictionary.status[lang]}</th>
               <th className={thClassName}>{dictionary.action[lang]}</th>
             </tr>
@@ -65,16 +63,18 @@ const Info = ({ params }: { params: { botID: number } }) => {
 
               <td className="flex flex-col justify-center items-center h-full">
                 <div className="font-bold">{gridbot.exchangeName}</div>
-                <div className="text-xs opacity-60">{gridbot.contract.name}</div>
+                <div className="text-xs opacity-60">
+                  {gridbot.contract.name}
+                </div>
               </td>
               <td className="text-center">
                 {gridbot.lastheck} {dictionary.seconds[lang]}
               </td>
-              
+
               <td className="text-center">
                 {gridbot.interval} {dictionary.seconds[lang]}
               </td>
-              
+
               <td className="text-center">
                 {gridbot.status === undefined ? (
                   <span className="loading loading-dots loading-xs"></span>
@@ -120,7 +120,6 @@ const Info = ({ params }: { params: { botID: number } }) => {
                   </button>
                 )}
               </td>
-              
             </tr>
           </tbody>
         </table>
