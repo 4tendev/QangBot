@@ -7,6 +7,7 @@ from core.settings import DEFAULT_PROXY_USERNAME, DEFAULT_PROXY_PASSWORD, DEFAUL
 from .forms import CreateCoinexAccountForm
 from django.core import signing
 
+from django.core.cache import cache
 
 class GridBot(models.Model):
     name = models.CharField(max_length=50)
@@ -24,6 +25,12 @@ class GridBot(models.Model):
         "GridBots"), on_delete=models.PROTECT)
     noneVIPCreationLimit = int(NONE_VIP_CREATION_LIMIT)
     noneVIPGridsCreationLimit = int(NONE_VIP_GRIDS_CREATION_LIMIT)
+
+    workerCachName="GridBotWorking"
+    workerCachTime=350
+
+    def cachWorkerWorking():
+        cache.set(GridBot.workerCachName, 1, timeout=GridBot.workerCachTime)  
 
     def removeAllGrids(self) -> bool:
         if self.account.cancelAllOrders(self.contract):

@@ -35,6 +35,7 @@ class Command(BaseCommand):
         time.sleep(10)
         create_default_exchange()
         while True:
+            GridBot.cachWorkerWorking()
             time.sleep(5)
             try:
                 gridBots = GridBot.objects.filter(status=True)
