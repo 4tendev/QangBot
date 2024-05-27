@@ -2,7 +2,7 @@ from django.db import models
 from user.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from .coinexlib import CoinexPerpetualApi
+from coinexlib import CoinexPerpetualApi
 from core.settings import DEFAULT_PROXY_USERNAME, DEFAULT_PROXY_PASSWORD, DEFAULT_PROXY_URL, NONE_VIP_CREATION_LIMIT, NONE_VIP_GRIDS_CREATION_LIMIT
 from .forms import CreateCoinexAccountForm
 from django.core import signing
