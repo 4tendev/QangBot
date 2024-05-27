@@ -15,6 +15,7 @@ class GridBot(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     interval = models.IntegerField(default=60)
+    lastTimeCheck=models.DateTimeField(blank=True, null=True , auto_now=False, auto_now_add=False)
     account_model = models.ForeignKey(
         ContentType, on_delete=models.PROTECT, related_name="GridBots")
     account_id = models.IntegerField()
