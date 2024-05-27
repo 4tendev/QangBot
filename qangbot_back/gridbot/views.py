@@ -36,7 +36,7 @@ def getBotData(gridtBot: GridBot):
         "exchangeName": gridtBot.contract.exchange.name,
         "status": gridtBot.status,
         "interval": gridtBot.interval,
-        "lastTimeCheck": int((datetime.datetime.now() - gridtBot.lastTimeCheck).total_seconds()) if gridtBot.lastTimeCheck else None,
+        "lastheck": int((datetime.datetime.now() - gridtBot.lastTimeCheck).total_seconds()) if gridtBot.lastTimeCheck else 0,
         "accountName": gridtBot.account.name,
         "grids": [getGridData(grid) for grid in gridtBot.Grids.all()]
     }
