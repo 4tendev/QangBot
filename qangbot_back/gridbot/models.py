@@ -208,20 +208,22 @@ class CoinexAccount(models.Model):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if self.id:
-            self.robot = CoinexPerpetualApi(signing.loads(self.access_ID), signing.loads(self.secret_key), {
-                'https': f'http://{DEFAULT_PROXY_USERNAME}:{ DEFAULT_PROXY_PASSWORD}@{DEFAULT_PROXY_URL}'
-            })
-        else:
-            self.robot = CoinexPerpetualApi(self.access_ID, self.secret_key, {
-                'https': f'http://{DEFAULT_PROXY_USERNAME}:{ DEFAULT_PROXY_PASSWORD}@{DEFAULT_PROXY_URL}'
-            })
+        if self.access_ID :
+            if self.id:
+                self.robot = CoinexPerpetualApi(signing.loads(self.access_ID), signing.loads(self.secret_key), {
+                    'https': f'http://{DEFAULT_PROXY_USERNAME}:{ DEFAULT_PROXY_PASSWORD}@{DEFAULT_PROXY_URL}'
+                })
+            else:
+                self.robot = CoinexPerpetualApi(self.access_ID, self.secret_key, {
+                    'https': f'http://{DEFAULT_PROXY_USERNAME}:{ DEFAULT_PROXY_PASSWORD}@{DEFAULT_PROXY_URL}'
+                })
 
     def save(self, *args, **kwargs):
         if not self.pk:
             self.access_ID = signing.dumps(self.access_ID)
             self.secret_key = signing.dumps(self.secret_key)
         super().save(*args, **kwargs)
+
 
     def cancelOrder(self, orderID, contract):
         market = contract.apiIdentifier
