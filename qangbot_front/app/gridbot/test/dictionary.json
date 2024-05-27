@@ -1,0 +1,50 @@
+{
+       "considerations": {
+              "en": "Considerations :",
+              "fa": "ملاحظات :"
+       },
+       "testDecide": {
+              "en": "TEST THEN DECIDE",
+              "fa": "تصمیم بعد از تست"
+       },
+       "testDecideExplain": {
+              "en": "Test and decide with confidence by using the Qang Bot tool to assess grids. Define your grids and observe their potential profits based on past data",
+              "fa": "  تصمیم‌گیری با اطمینان با استفاده از ابزار Qang Bot برای ارزیابی گریدها. گریدهای خود را تعریف کنید و با توجه به داده‌های گذشته، سودهای  آنها را مشاهده کنید."
+       },
+       "gridGain": {
+              "en": "Total Grids Effect",
+              "fa": "تاثیر  تعداد گریدها"
+       },
+       "example": {
+              "en": "Example",
+              "fa": "نمونه"
+       },
+       "exampleintro": {
+              "en": " Let's define a specific situation to understand how testing grids can benefit you the most. Imagine you possess divine knowledge of both the highest and lowest prices of Bitcoin. In this hypothetical scenario, you decide to purchase 1 BTC at $3,200 on December 17, 2018. Anticipating a peak price of $69,000, you create grids ranging from $3,200 to $69,000.Now, let's experiment with a grid bot, starting with 10X grids and gradually increasing up to 400X grids. We will analyze how altering the grid settings affects your profit and loss throughout the entire four-year bull run of Bitcoin.",
+              "fa": "بیایید یک شرایط خاص را تعریف کنیم تا درک کنیم چگونه آزمایش گریدها می‌تواند به شما بیشترین سود را برساند. تصور کنید که شما دانش الهی در مورد هم آخرین و هم پایین‌ترین قیمت‌های بیت‌کوین دارید. در این سناریو تصوری، شما تصمیم می‌گیرید تا در تاریخ 17 دسامبر 2018، 1 بیت‌کوین را با قیمت 3,200 دلار خریداری کنید. با پیش‌بینی ارتفاع قیمت به 69,000 دلار، شما گریدهایی را ایجاد می‌کنید که از 3,200 تا 69,000 دلار باشند. حالا بیایید آزمایش کنیم، از 10X  گرید شروع کنیم و به تدریج تا 400X  گرید افزایش دهیم. ما به تحلیل اینکه چگونه تغییرات در تنظیمات شبکه سود و زیان شما را در طول چهار سال روند صعودی بیت‌کوین، از 3,200 تا 16,660 دلار، تحت تأثیر قرار می‌دهد، خواهیم پرداخت."
+       },
+       "grid3-7": {
+              "en": "Grid ranges were set between $3,200 and $69,000, operating under Bitcoin margin with a total margin requirement of 1 BTC and 1X leverage.",
+              "fa": "محدوده‌های گرید بین ۳,۲۰۰ تا ۶۹,۰۰۰ دلار تنظیم شده بودند، که با استفاده از مارجین بیت‌کوین و نیاز کلی به مارجین ۱ بیت‌کوین و اهرم ۱X عمل می‌کرد."
+       },
+       "gainLose": {
+              "en": "The Gain/Max-Loss metric indicates the potential Win(3 means 3btc for 1 btc margin) achievable (without liquidation) during the specified period.",
+              "fa": "سنجه Gain/Max-Loss ، بردهای ممکن (که 3 به معنای ۳ بیت‌کوین به ازای هر ۱ بیت‌کوین مارجین را نشان می‌دهد و بدون لیکویدیشن) در طول دوره مشخص شده را نشان می‌دهد."
+       },
+       "grid10-7": {
+              "en": "Grid ranges were set between $10,000 and $69,000, operating under Bitcoin margin with a total margin requirement of 1 BTC and 1X leverage.",
+              "fa": "محدوده‌های گرید بین ۱۰,۰۰۰ تا ۶۹,۰۰۰ دلار تنظیم شده بودند، که با استفاده از مارجین بیت‌کوین و نیاز کلی به مارجین ۱ بیت‌کوین و اهرم ۱X عمل می‌کرد."
+       },
+       "vip": {
+              "en": "Become Qang VIP !",
+              "fa": "عضو وی آی پی کنگ شو"
+       },
+       "testwithVIP": {
+              "en": "Become a VIP member to conduct tests! Unlock the ability to perform all the desired tests by joining as a VIP member.",
+              "fa": " با عضویت به عنوان عضو ویژه، قابلیت انجام تمامی تستهای مورد نظر را بدست آورید."
+       },
+       "offGrids": {
+              "en": "Now, the challenge lies in the fact that we are not divine beings; otherwise, opting for 100X leverage with just one grid to sell at the peak would result in infinite money. So, this time, let's approach it more realistically with a 30% discount. Recall the 100K hype? This time, we'll consider a range from $10,000 to $100,000 USD for a more practical analysis.",
+              "fa": "اکنون چالش در این واقعیت است که ما موجودات الهی نیستیم؛ در غیر این صورت، انتخاب 100 برابر اهرم با فقط یک گرید برای فروش در قله باعث بی‌نهایت درآمد می‌شد. بنابراین، این بار، با یک دقت 30٪ به طور واقع‌بینانه‌تر تست کنیم هیجان 100 هزار دلار یادتان هست؟ این بار، یک رنج از ۱۰٬۰۰۰ تا ۱۰۰٬۰۰۰ دلار  را برای یک تجزیه و تحلیل عملی‌تر در نظر می‌گیریم."
+       }
+}
