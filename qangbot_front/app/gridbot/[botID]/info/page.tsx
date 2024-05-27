@@ -50,6 +50,8 @@ const Info = ({ params }: { params: { botID: number } }) => {
               <th className={thClassName}>{dictionary.botName[lang]}</th>
               <th className={thClassName}>{dictionary.accountName[lang]}</th>
               <th className={thClassName}>{dictionary.exchange[lang]}</th>
+              <th className={thClassName}>{dictionary.lastheck[lang]}</th>
+
               <th className={thClassName}>{dictionary.interval[lang]}</th>
 
               <th className={thClassName}>{dictionary.status[lang]}</th>
@@ -66,8 +68,13 @@ const Info = ({ params }: { params: { botID: number } }) => {
                 <div className="text-xs opacity-60">{gridbot.contract.name}</div>
               </td>
               <td className="text-center">
+                {gridbot.lastheck} {dictionary.seconds[lang]}
+              </td>
+              
+              <td className="text-center">
                 {gridbot.interval} {dictionary.seconds[lang]}
               </td>
+              
               <td className="text-center">
                 {gridbot.status === undefined ? (
                   <span className="loading loading-dots loading-xs"></span>

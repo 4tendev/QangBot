@@ -15,6 +15,11 @@
         "en": "State",
         "fa": "وضعیت"
     },
+    
+    "lastheck": {
+        "en": "Last Check",
+        "fa": "آخرین چک"
+    },
     "title": {
         "en": "Bot Info",
         "fa": "اطلاعات بات"
