@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 import time
 from gridbot.models import GridBot, Exchange, ContentType, CoinexAccount, Contract
 from django.core.cache import cache
-
+import datetime
 
 def create_default_exchange():
     coinexFutureExchange = Exchange.objects.get_or_create(
@@ -50,6 +50,7 @@ class Command(BaseCommand):
                     cache.set(gridBOTkey, 1, timeout=gridBot.interval)
                     gridBot.checkOpenGrids()
                     gridBot.makeOrders()
+                    GridBot.objects.filter(id=gridBot.id).update(lastCheckTime= datetime.datetime.now())
             except Exception as e:
                 print(e)
                 print("200 SEC SLEEP EXEPTION")
