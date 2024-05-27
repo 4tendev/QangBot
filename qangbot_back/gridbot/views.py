@@ -1,4 +1,5 @@
-import json , datetime
+import json
+import datetime
 from django.http import JsonResponse
 from .models import GridBot, Exchange, Grid
 from .forms import CreateBotForm, BotActions, CreateGridsForm, GridActions
@@ -19,21 +20,23 @@ def getGridData(grid):
         "nextPosition": grid.nextPosition
     }
 
+
 def getContractData(contract):
     return {
-        "name" : contract.name,
-        "url" : contract.url,
+        "name": contract.name,
+        "url": contract.url,
     }
+
 
 def getBotData(gridtBot: GridBot):
     return {
         "id": gridtBot.id,
         "name": gridtBot.name,
-        "contract" : getContractData(gridtBot.contract),
+        "contract": getContractData(gridtBot.contract),
         "exchangeName": gridtBot.contract.exchange.name,
         "status": gridtBot.status,
         "interval": gridtBot.interval,
-        "lastTimeCheck": int((datetime.datetime.now() - gridtBot.lastTimeCheck).total_seconds())  if gridtBot.lastTimeCheck else None ,
+        "lastTimeCheck": int((datetime.datetime.now() - gridtBot.lastTimeCheck).total_seconds()) if gridtBot.lastTimeCheck else None,
         "accountName": gridtBot.account.name,
         "grids": [getGridData(grid) for grid in gridtBot.Grids.all()]
     }
