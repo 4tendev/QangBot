@@ -50,7 +50,7 @@ class Command(BaseCommand):
                     cache.set(gridBOTkey, 1, timeout=gridBot.interval)
                     gridBot.checkOpenGrids()
                     gridBot.makeOrders()
-                    GridBot.objects.filter(id=gridBot.id).update(lastCheckTime= datetime.datetime.now())
+                    GridBot.objects.filter(id=gridBot.id).update(lastTimeCheck= datetime.datetime.now())
             except Exception as e:
                 print(e)
                 print("200 SEC SLEEP EXEPTION")
