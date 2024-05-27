@@ -15,6 +15,7 @@ export interface Bot {
   name: string;
   id: number;
   contract: Contract;
+  lastTimeCheck: number;
   exchangeName: string;
   status: boolean;
   interval: number;
