@@ -42,7 +42,7 @@ class Command(BaseCommand):
                 if not gridBots:
                     continue
                 for gridBot in gridBots:
-                    gridBOTkey = f"GridBot {gridBot.id}"
+                    gridBOTkey = f"GridBot{gridBot.id}"
                     if cache.get(gridBOTkey):
                         continue
                     if not gridBot.account.checkAccount():
