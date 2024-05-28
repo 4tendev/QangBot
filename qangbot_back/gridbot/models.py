@@ -33,6 +33,9 @@ class GridBot(models.Model):
     def cachWorkerWorking():
         cache.set(GridBot.workerCachName, 1, timeout=GridBot.workerCachTime)  
 
+    def checkWorkerWorking():
+        return cache.get(GridBot.workerCachName)  
+
     def removeAllGrids(self) -> bool:
         if self.account.cancelAllOrders(self.contract):
             self.Grids.all().update(is_active=False)
