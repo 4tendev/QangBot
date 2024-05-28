@@ -66,7 +66,7 @@ const Chart = (props: { data: History[] }) => {
 
   const lang = useAppSelector(language).lang;
   const [elementWidth, setElementWidth] = useState<number>(0);
-  const [maxDrawDownUSD, setMaxDrawDownUSD] = useState(0);
+  const [maxDrawDownUSD, setMaxDrawDownUSD] = useState<number>(0);
 
   function setmaxDD() {
     let maxUSD = 0;
