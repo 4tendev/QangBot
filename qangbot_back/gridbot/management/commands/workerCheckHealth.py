@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 import time
 from gridbot.models import GridBot
-from gridbot.redeploy import redeploy
+from qangbot_back.gridbot.restartWorker import restart
 
 
 
@@ -10,7 +10,7 @@ class Command(BaseCommand):
             time.sleep(10)
             try:
                 if not GridBot.checkWorkerWorking() :
-                    redeploy()
+                    restart()
                 print("BOT HEALTHY")
             except Exception as e:
                 print(e)

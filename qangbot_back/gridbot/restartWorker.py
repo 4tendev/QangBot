@@ -1,6 +1,7 @@
 import requests
 import os
 
+"This File need to change acording of you production enviroment"
 
 def getDeploymentID(API_TOKEN, SERVICE_ID):
     try:
@@ -47,3 +48,46 @@ def getDeploymentID(API_TOKEN, SERVICE_ID):
     except Exception as e:
         print(e)
         return None
+
+
+def restart():
+    API_TOKEN = os.getenv("API_TOKEN")
+    SERVICE_ID = os.getenv("SERVICE_ID")
+    deployment_id = getDeploymentID(API_TOKEN, SERVICE_ID)
+    if not deployment_id:
+        return None
+    query = """
+    mutation deploymentRedeploy($id: String!) {
+    deploymentRedeploy(id: $id) {
+        __typename
+        canRedeploy
+        canRollback
+        createdAt
+        environmentId
+        id
+        meta
+        projectId
+        serviceId
+        snapshotId
+        staticUrl
+        status
+        suggestAddServiceDomain
+        url
+    }
+    }
+    """
+    variables = {
+        "id": deployment_id
+    }
+    payload = {
+        "query": query,
+        "variables": variables
+    }
+    endpoint = "https://backboard.railway.app/graphql/v2"
+    headers = {
+        "Authorization": f"Bearer {API_TOKEN}",
+        "Content-Type": "application/json"
+    }
+    response = requests.post(endpoint, json=payload, headers=headers)
+    print(response.json())
+    return True
