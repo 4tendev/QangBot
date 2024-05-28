@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["python", "manage.py", "migratest"]
+CMD ["python", "manage.py", "updateHistory"]
