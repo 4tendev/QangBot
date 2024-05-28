@@ -23,12 +23,13 @@ const Participation = () => {
 
   return UserIsKnown === undefined || value === undefined ? (
     <span className="loading loading-ring loading-xs mt-3 ms-11"></span>
-
   ) : UserIsKnown === false ? null : (
-    <div className="ps-5 mt-3">
-      {dictionary.yourShare[lang]}
-      <small className="text-success text-lg ">{value}USD</small>
-    </div>
+    value > 0 && (
+      <div className="ps-5 mt-3">
+        {dictionary.yourShare[lang]}
+        <small className="text-success text-lg ">{value}USD</small>
+      </div>
+    )
   );
 };
 
