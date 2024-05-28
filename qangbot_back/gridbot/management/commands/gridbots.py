@@ -4,6 +4,7 @@ from gridbot.models import GridBot, Exchange, ContentType, CoinexAccount, Contra
 from django.core.cache import cache
 import datetime
 
+
 def create_default_exchange():
     coinexFutureExchange = Exchange.objects.get_or_create(
         name="Coinex Future", account_model=ContentType.objects.get_for_model(CoinexAccount))
@@ -35,7 +36,6 @@ class Command(BaseCommand):
         time.sleep(10)
         create_default_exchange()
         while True:
-            GridBot.cachWorkerWorking()
             time.sleep(5)
             try:
                 gridBots = GridBot.objects.filter(status=True)
@@ -50,7 +50,9 @@ class Command(BaseCommand):
                     cache.set(gridBOTkey, 1, timeout=gridBot.interval)
                     gridBot.checkOpenGrids()
                     gridBot.makeOrders()
-                    GridBot.objects.filter(id=gridBot.id).update(lastTimeCheck= datetime.datetime.now())
+                    GridBot.objects.filter(id=gridBot.id).update(
+                        lastTimeCheck=datetime.datetime.now())
+                GridBot.cachWorkerWorking()
             except Exception as e:
                 print(e)
                 print("200 SEC SLEEP EXEPTION")
