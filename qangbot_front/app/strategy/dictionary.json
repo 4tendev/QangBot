@@ -44,8 +44,8 @@
         "fa": "نگه‌داشتن تقریباً 20-35٪ دارایی‌ها در صرافی‌ها."
     },
     "strategyFrom": {
-        "en": "Qang Strategy ROI From",
-        "fa": "بازده استراتژی از "
+        "en": "Strategy  From",
+        "fa": " استراتژی از "
     },
     "BTCROI": {
         "en": "percentage return BTC",
@@ -66,6 +66,10 @@
     "yourShare": {
         "en": "Your share Value : ~",
         "fa": "میزان سهم شما : "
+    },
+    "to": {
+        "en": " To",
+        "fa": "تا "
     },
     "cryptocurrency": {
         "en": "Reliance on the cryptocurrency market.",

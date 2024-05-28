@@ -36,9 +36,34 @@ function formatDate(dateString: string) {
 }
 
 const Chart = (props: { data: History[] }) => {
-  const data = props.data.map((history: any) => {
+  const [startDate, setSartDate] = useState<string>(props.data[0].date);
+  const [ednDate, setEndDate] = useState<string>(
+    props?.data?.at(-1)?.date ?? ""
+  );
+
+  const rawData = props.data.filter(
+    (history) => history.date >= startDate && history.date <= ednDate
+  );
+
+  const normalizedData = rawData.map((history) => {
+    return {
+      ...history,
+      btcROI: Math.floor(
+        (100 * (100 + history.btcROI)) / (100 + rawData[0].btcROI) - 100
+      ),
+      ethROI: Math.floor(
+        (100 * (100 + history.ethROI)) / (100 + rawData[0].ethROI) - 100
+      ),
+      usdROI: Math.floor(
+        (100 * (100 + history.usdROI)) / (100 + rawData[0].usdROI) - 100
+      ),
+    };
+  });
+
+  const data = normalizedData.map((history: History) => {
     return { ...history, date: formatDate(history.date).substring(0, 6) };
   });
+
   const lang = useAppSelector(language).lang;
   const [elementWidth, setElementWidth] = useState<number>(0);
 
@@ -58,8 +83,28 @@ const Chart = (props: { data: History[] }) => {
   }, []);
   return (
     <div id="chart" className="w-full max-w-5xl mx-auto  py-5">
-      <div className="sm:text-lg text-info mb-4 ps-8">
-        {dictionary.strategyFrom[lang]} {data[0].date}
+      <div className="sm:text-lg text-info mb-4 ps-8 flex flex-wrap gap-1">
+        <div className="flex flex-wrap gap-2">
+          <input
+            onChange={(event) => setSartDate(event.target.value)}
+            value={startDate}
+            max={ednDate}
+            type="date"
+            min={props.data[0].date}
+            className="input input-sm input-primary text-primary"
+          />
+          <input
+            onChange={(event) => setEndDate(event.target.value)}
+            max={props?.data?.at(-1)?.date}
+            min={startDate}
+            value={ednDate}
+            type="date"
+            className="input input-sm input-primary text-primary"
+          />
+        </div>
+      </div>
+      <div className="text-primary ps-11">
+        Total selected Days : {data.length}
       </div>
       <div className="ps-2">
         <LineChart
@@ -83,8 +128,6 @@ const Chart = (props: { data: History[] }) => {
           />
 
           <Tooltip animationDuration={100} allowEscapeViewBox={{ x: false }} />
-          <Legend />
-
           <Line
             yAxisId="date"
             type="monotone"
@@ -109,8 +152,10 @@ const Chart = (props: { data: History[] }) => {
             dataKey="ethROI"
             stroke="red"
           />
+          <Legend />
         </LineChart>
       </div>
+      <div className="mt-2 px-2 ps-9"></div>
     </div>
   );
 };
