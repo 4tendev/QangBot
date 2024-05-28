@@ -1,0 +1,74 @@
+{
+    "QANGStrategy": {
+        "en": "QANG's Strategy for Navigating the BTC Market",
+        "fa": "استراتژی QANG برای مدیریت در بازار بیت‌کوین"
+    },
+    "assumptions": {
+        "en": "Assumptions :",
+        "fa": "فرضیات :"
+    },
+    "adoption": {
+        "en": "Crypto Assets are in the adoption phase.",
+        "fa": " کریپتو در فاز فراگیری قرار دارد."
+    },
+    "cycle": {
+        "en": "Crypto Assets has a four-year cycles.",
+        "fa": "کریپتو  چرخه های چهار ساله دارد."
+    },
+    "volatile": {
+        "en": "Crypto Assets are very volatile.",
+        "fa": "کریپتو بسیار نوسانی است."
+    },
+    "considerations": {
+        "en": "Considerations :",
+        "fa": "ملاحظات :"
+    },
+    "averages": {
+        "en": "Moving averages.",
+        "fa": "میانگین‌های متحرک."
+    },
+    "log": {
+        "en": "Logarithmic growth curves.",
+        "fa": "منحنی رشد لگاریتمی."
+    },
+    "hype": {
+        "en": "Community Hype.",
+        "fa": "هیجانات بازار."
+    },
+    "risk": {
+        "en": "Risks :",
+        "fa": "ریسکها :"
+    },
+    "exchange": {
+        "en": "Keeping almost 20-35% of assets in exchanges.",
+        "fa": "نگه‌داشتن تقریباً 20-35٪ دارایی‌ها در صرافی‌ها."
+    },
+    "jan": {
+        "en": "Qang Strategy ROI From 9 jan 2024",
+        "fa": "بازده استراتژی از 9 ژانویه 2024"
+    },
+    "BTCROI": {
+        "en": "percentage return BTC",
+        "fa": "درصد سود بر اساس بیت کوین"
+    },
+    "USDROI": {
+        "en": "percentage return USD",
+        "fa": "درصد سود بر اساس دلار "
+    },
+    "maxDDUSD": {
+        "en": "Max USD DrawDown : ",
+        "fa": "بیشترین ضرر به نسبت  دلار : "
+    },
+    "maxDDBTC": {
+        "en": "Max BTC DrawDown : ",
+        "fa": "بیشترین ضرر به نسبت بیت کویت : "
+    },
+    "yourShare": {
+        "en": "Your share Value : ~",
+        "fa": "میزان سهم شما : "
+    },
+    "cryptocurrency": {
+        "en": "Reliance on the cryptocurrency market.",
+        "fa": "وابستگی به بازار رمزارز."
+    }
+}
