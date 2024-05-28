@@ -12,6 +12,7 @@ class Command(BaseCommand):
             if strategies:
                 for strategy in strategies:
                     currentUSDValue = strategy.currentUSDValue()
+                    print(currentUSDValue)
 
                     currentETHValue = currentUSDValue / asstUSDRate("ETH")
                     time.sleep(5)

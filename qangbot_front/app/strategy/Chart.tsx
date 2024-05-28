@@ -66,7 +66,26 @@ const Chart = (props: { data: History[] }) => {
 
   const lang = useAppSelector(language).lang;
   const [elementWidth, setElementWidth] = useState<number>(0);
+  const [maxDrawDownUSD, setMaxDrawDownUSD] = useState(0);
+  useEffect(() => {
+    let maxUSD = 0;
+    let maxDDUSD = 0;
+    for (let index = 0; index < data.length; index++) {
+      maxUSD = Math.max(maxUSD, Number(data[index]["usdROI"]));
 
+      maxDDUSD = Math.max(
+        maxDDUSD,
+        Number(
+          (
+            100 *
+            (1 - (Number(data[index]["usdROI"]) + 100) / (maxUSD + 100))
+          ).toFixed(0)
+        )
+      );
+    }
+    setMaxDrawDownUSD(maxDDUSD);
+    return () => {};
+  }, []);
   useEffect(() => {
     const updateElementWidth = () => {
       const element = document.getElementById("chart");
@@ -83,8 +102,9 @@ const Chart = (props: { data: History[] }) => {
   }, []);
   return (
     <div id="chart" className="w-full max-w-5xl mx-auto  py-5">
-      <div className="sm:text-lg text-info mb-4 ps-8 flex flex-wrap gap-1">
-        <div className="flex flex-wrap gap-2">
+      <div className="sm:text-lg text-info mb-4 ps-5 flex flex-wrap gap-1">
+        <div className="flex items-center text-xs flex-wrap gap-2">
+           Date Range :
           <input
             onChange={(event) => setSartDate(event.target.value)}
             value={startDate}
@@ -103,8 +123,9 @@ const Chart = (props: { data: History[] }) => {
           />
         </div>
       </div>
-      <div className="text-primary ps-11">
-        Total selected Days : {data.length}
+      <div className="text-primary px-5 flex  flex-col">
+        <small> Total selected Days : {data.length}</small>
+        <small className="text-rose-600"> Max USD DrawDown : {maxDrawDownUSD}</small>
       </div>
       <div className="ps-2">
         <LineChart
