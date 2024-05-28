@@ -4,6 +4,7 @@ import getLanguage from "@/commonTsServer/getLanguage";
 import getData from "@/commonTsServer/getData";
 import Image from "next/image";
 import dictionary from "./dictionary.json";
+import Participation from "./participation";
 
 const page = async () => {
   const history = await getData("/strategy/");
@@ -13,7 +14,9 @@ const page = async () => {
   const lang = getLanguage().lang;
   return (
     <div className="w-full max-w-6xl mx-auto felx flex-col justify-start">
+      <Participation/>
       <Chart data={data} />
+      
       <div className="w-full px-6 sm:px-11">
         <div className="flex w-full justify-between">
           <div className="flex  flex-col justify-center ">

@@ -106,7 +106,7 @@ const Chart = (props: { data: History[] }) => {
     };
   }, []);
   return (
-    <div id="chart" className="w-full max-w-5xl mx-auto  py-5">
+    <div id="chart" className="w-full max-w-5xl mx-auto  py-3">
       <div className="sm:text-lg text-info mb-4 ps-5 flex flex-wrap gap-1">
         <div className="flex items-center text-xs flex-wrap gap-2">
           Date Range :
