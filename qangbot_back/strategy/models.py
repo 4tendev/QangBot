@@ -5,6 +5,7 @@ from coinexlib import CoinexPerpetualApi
 from core.settings import DEFAULT_PROXY_USERNAME, DEFAULT_PROXY_PASSWORD, DEFAULT_PROXY_URL
 from django.core import signing
 from django.core.cache import cache
+from user.models import User
 
 
 def asstUSDRate(name):
@@ -42,9 +43,10 @@ class Asset(models.Model):
     def USDRate(self):
         name = self.name
         return asstUSDRate(name)
+
     def __str__(self):
         return self.name
-    
+
 
 class AssetValue(models.Model):
     asset = models.ForeignKey(Asset, related_name=(
@@ -53,19 +55,20 @@ class AssetValue(models.Model):
 
     def currentUSDValue(self):
         return round(self.amount * self.asset.USDRate(), 2)
-    def __str__(self):
-        return str(self.asset.name) 
 
-class CoinexFutureAccount(models.Model) :
+    def __str__(self):
+        return str(self.asset.name)
+
+
+class CoinexFutureAccount(models.Model):
 
     access_ID = models.CharField(max_length=200)
     secret_key = models.CharField(max_length=200)
 
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if self.access_ID :
-            if self.id :
+        if self.access_ID:
+            if self.id:
                 self.robot = CoinexPerpetualApi(signing.loads(self.access_ID), signing.loads(self.secret_key), {
                     'https': f'http://{DEFAULT_PROXY_USERNAME}:{ DEFAULT_PROXY_PASSWORD}@{DEFAULT_PROXY_URL}'
                 })
@@ -99,12 +102,11 @@ class CoinexFutureAccount(models.Model) :
                 print(response)
                 print(" get_assets Coinex  unknown CODE")
                 return None
-            return round(totalUSD ,2) 
+            return round(totalUSD, 2)
         except Exception as e:
             print(response)
             print(str(e) + " get_assets Coinex ")
             return None
-
 
 
 class Account(models.Model):
@@ -119,7 +121,8 @@ class Account(models.Model):
 
 class Strategy(models.Model):
     name = models.CharField(max_length=50)
-    baseAssetValues = models.ManyToManyField(AssetValue  ,related_name="Strategies" , blank=True)
+    baseAssetValues = models.ManyToManyField(
+        AssetValue, related_name="Strategies", blank=True)
     accounts = models.ManyToManyField(Account, blank=True)
     currentAssetValues = models.ManyToManyField(AssetValue, blank=True)
 
@@ -134,14 +137,21 @@ class Strategy(models.Model):
                 accountUSDValue = account.USDValue()
                 USDValue += accountUSDValue
         currentAssets = self.currentAssetValues.all()
-        if currentAssets :
+        if currentAssets:
             for currentAsset in currentAssets:
                 USDValue += currentAsset.currentUSDValue()
         return USDValue
 
+
 class History(models.Model):
-    btcROI=models.IntegerField()
-    usdROI=models.IntegerField()
-    ethROI=models.IntegerField()
-    date =models.DateField(auto_now=False, auto_now_add=False)
-    strategy=models.ForeignKey(Strategy, related_name="Histories", on_delete=models.PROTECT)
+    btcROI = models.IntegerField()
+    usdROI = models.IntegerField()
+    ethROI = models.IntegerField()
+    date = models.DateField(auto_now=False, auto_now_add=False)
+    strategy = models.ForeignKey(
+        Strategy, related_name="Histories", on_delete=models.PROTECT)
+
+class Participant(models.Model):
+    strategy=models.ForeignKey(Strategy,  on_delete=models.PROTECT)
+    user=models.ForeignKey(User,related_name="Participants",on_delete=models.PROTECT)
+    share=models.FloatField()
