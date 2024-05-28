@@ -11,6 +11,7 @@ class Command(BaseCommand):
             try:
                 if not GridBot.checkWorkerWorking() :
                     redeploy()
+                print("BOT HEALTHY")
             except Exception as e:
                 print(e)
 
