@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 import time
-from strategy.models import Strategy, Asset, asstUSDRate, History
+from strategy.models import Strategy, asstUSDRate, History
 from django.utils import timezone
 
 
