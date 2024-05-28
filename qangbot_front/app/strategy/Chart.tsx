@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import { Language } from "@/settings";
 import { useEffect, useState } from "react";
+import { History } from "./types";
 const monthNames = [
   "January",
   "February",
@@ -34,7 +35,7 @@ function formatDate(dateString: string) {
   return formattedDate;
 }
 
-const Chart = (props: { data: any; lang: Language }) => {
+const Chart = (props: { data: History[]; lang: Language }) => {
   const data = props.data.map((history: any) => {
     return { ...history, date: formatDate(history.date).substring(0, 6) };
   });
