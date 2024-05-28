@@ -36,7 +36,7 @@ function formatDate(dateString: string) {
 
 const Chart = (props: { data: any; lang: Language }) => {
   const data = props.data.map((history: any) => {
-    return { ...history, date: formatDate(history.date) };
+    return { ...history, date: formatDate(history.date).substring(0, 6) };
   });
   const lang = props.lang;
   const [elementWidth, setElementWidth] = useState<number>(0);
@@ -59,7 +59,7 @@ const Chart = (props: { data: any; lang: Language }) => {
     <div className="w-full max-w-6xl mx-auto felx flex-col justify-start">
       <div id="chart" className="w-full max-w-5xl mx-auto  py-5">
         <div className="sm:text-lg text-info mb-4 ps-8">
-          {dictionary.jan[lang]}
+          {dictionary.strategyFrom[lang]} {data[0].date}
         </div>
         <div className="ps-2">
           <LineChart
@@ -74,7 +74,7 @@ const Chart = (props: { data: any; lang: Language }) => {
             }}
           >
             <CartesianGrid strokeDasharray="3 10" />
-            <XAxis dataKey="date" tickMargin={10} />
+            <XAxis dataKey="date" tickMargin={3} />
             <YAxis
               tickMargin={15}
               orientation={"left"}
@@ -92,19 +92,25 @@ const Chart = (props: { data: any; lang: Language }) => {
               yAxisId="date"
               type="monotone"
               dataKey="btcROI"
-              stroke="red"
+              stroke="orange"
+              dot={false}
+              strokeWidth={2}
             />
             <Line
               yAxisId="date"
               type="monotone"
               dataKey="usdROI"
               stroke="green"
+              strokeWidth={5}
+              dot={false}
             />
             <Line
+              strokeWidth={2}
+              dot={false}
               yAxisId="date"
               type="monotone"
               dataKey="ethROI"
-              stroke="blue"
+              stroke="red"
             />
           </LineChart>
         </div>

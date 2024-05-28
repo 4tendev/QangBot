@@ -43,9 +43,9 @@
         "en": "Keeping almost 20-35% of assets in exchanges.",
         "fa": "نگه‌داشتن تقریباً 20-35٪ دارایی‌ها در صرافی‌ها."
     },
-    "jan": {
-        "en": "Qang Strategy ROI From 9 jan 2024",
-        "fa": "بازده استراتژی از 9 ژانویه 2024"
+    "strategyFrom": {
+        "en": "Qang Strategy ROI From",
+        "fa": "بازده استراتژی از "
     },
     "BTCROI": {
         "en": "percentage return BTC",
