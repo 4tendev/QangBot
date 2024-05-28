@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from coinexlib import CoinexPerpetualApi
-from core.settings import DEFAULT_PROXY_USERNAME, DEFAULT_PROXY_PASSWORD, DEFAULT_PROXY_URL, NONE_VIP_CREATION_LIMIT, NONE_VIP_GRIDS_CREATION_LIMIT
+from core.settings import DEFAULT_PROXY_USERNAME, DEFAULT_PROXY_PASSWORD, DEFAULT_PROXY_URL
 from django.core import signing
 from django.core.cache import cache
 
@@ -19,7 +19,6 @@ def asstUSDRate(name):
     match name:
         case "BTC":
             response = api.get_market_state(market="BTCUSD")
-            print(response)
             if response["code"] == 0:
                 rate = float(response["data"]['ticker']["index_price"])
         case "USD":
@@ -43,7 +42,9 @@ class Asset(models.Model):
     def USDRate(self):
         name = self.name
         return asstUSDRate(name)
-
+    def __str__(self):
+        return self.name
+    
 
 class AssetValue(models.Model):
     asset = models.ForeignKey(Asset, related_name=(
@@ -52,7 +53,8 @@ class AssetValue(models.Model):
 
     def currentUSDValue(self):
         return round(self.amount * self.asset.USDRate(), 2)
-
+    def __str__(self):
+        return str(self.asset.name) 
 
 class CoinexFutureAccount(models.Model) :
 
@@ -137,3 +139,9 @@ class Strategy(models.Model):
                 USDValue += currentAsset.currentUSDValue()
         return USDValue
 
+class History(models.Model):
+    btcROI=models.IntegerField()
+    usdROI=models.IntegerField()
+    ethROI=models.IntegerField()
+    date =models.DateField(auto_now=False, auto_now_add=False)
+    strategy=models.ForeignKey(Strategy, related_name="Histories", on_delete=models.PROTECT)
