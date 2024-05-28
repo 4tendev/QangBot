@@ -10,9 +10,4 @@ COPY . .
 
 EXPOSE 8000
 
-
-
-RUN echo "#!/bin/bash" >> startup.sh
-RUN echo "python manage.py workerCheckHealth" >> startup.sh
-
-CMD ["./startup.sh"] 
+CMD ["python", "manage.py", "workerCheckHealth"]
