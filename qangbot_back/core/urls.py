@@ -15,9 +15,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path ,include
-from django.shortcuts import  redirect 
-from .settings import FRONT_HOST_HTTPS ,DEBUG
+from django.urls import path, include
+from django.shortcuts import redirect
+from .settings import FRONT_HOST_HTTPS, DEBUG
 
 
 def reject(request):
@@ -28,6 +28,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/',  include("user.urls")),
     path('gridbot/',  include("gridbot.urls")),
+    path('strategy/',  include("strategy.urls")),
 ]
-if not DEBUG :
-    urlpatterns.insert(0,path('admin/login/',reject ),)
+if not DEBUG:
+    urlpatterns.insert(0, path('admin/login/', reject),)
