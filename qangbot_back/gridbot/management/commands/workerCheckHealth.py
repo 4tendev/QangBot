@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 import time
 from gridbot.models import GridBot
-from qangbot_back.gridbot.restartWorker import restart
+from gridbot.restartWorker import restart
 
 
 
