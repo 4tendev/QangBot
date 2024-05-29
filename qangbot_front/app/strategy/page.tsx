@@ -18,7 +18,7 @@ const page = async () => {
 
       <div className="w-full ">
         <div className="flex w-full justify-between pe-5">
-          <div className="flex sm:ps-11 ps-5 flex-col justify-center py-4">
+          <div className="flex sm:ps-11 ps-5 flex-col justify-center py-1">
             <div className=" sm:text-xl  text-md ">{dictionary.OurStrategy[lang]}</div>
             <div className="flex flex-wrap justify-between gap-y-3 gap-x-10 ps-3 py-2 max-w-2xl">
               <div className="py-1">
