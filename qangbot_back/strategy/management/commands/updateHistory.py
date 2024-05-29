@@ -23,7 +23,7 @@ class Command(BaseCommand):
             if strategies:
                 for strategy in strategies:
                     currentUSDValue = strategy.currentUSDValue()
-                    print(currentUSDValue)
+                    Strategy.objects.filter(id=strategy.id).update(lastUSDCheck=round(currentUSDValue,2))
 
                     currentETHValue = currentUSDValue / asstUSDRate("ETH")
                     time.sleep(5)

@@ -136,6 +136,7 @@ class Strategy(models.Model):
         AssetValue, related_name="Strategies", blank=True)
     accounts = models.ManyToManyField(Account, blank=True)
     currentAssetValues = models.ManyToManyField(AssetValue, blank=True)
+    lastUSDCheck=models.FloatField(default=1)
 
     def __str__(self):
         return self.name
@@ -192,7 +193,7 @@ class Participant(models.Model):
     user = models.ForeignKey(
         User, related_name="Participants", on_delete=models.PROTECT)
     share = models.FloatField()
-    created = models.DateField( auto_now_add=False)
+    created = models.DateField( auto_now_add=True )
     baseAssetValues = models.ManyToManyField(
         AssetValue, related_name="Participants", blank=True)
 
