@@ -8,6 +8,16 @@ from django.core.cache import cache
 from user.models import User
 
 
+def getHistoryDate(history):
+    return {
+        "id": history.id,
+        "btcROI": history.btcROI,
+        "ethROI": history.ethROI,
+        "usdROI": history.usdROI,
+        "date":  history.date
+    }
+
+
 def asstUSDRate(name):
     cachName = name + "asstUSDRate"
     cachedRate = cache.get(cachName)
@@ -142,6 +152,27 @@ class Strategy(models.Model):
                 USDValue += currentAsset.currentUSDValue()
         return USDValue
 
+    def cachHistory(self):
+        try:
+            histrories = self.Histories.all().order_by("date")
+            data = [getHistoryDate(history) for history in histrories
+                    ]if histrories else []
+            cachName = str(self.id) + str(self.name)
+            cache.set(cachName, data, timeout=None)
+        except Exception as e:
+            print(e)
+            print("CACHING Failed")
+
+    def chachedHistory(self):
+        try:
+            cachName = str(self.id) + str(self.name)
+            data = cache.get(cachName)
+            return data
+        except Exception as e:
+            print(e)
+            print("get Caching Failed")
+            return None
+
 
 class History(models.Model):
     btcROI = models.IntegerField()
@@ -151,7 +182,11 @@ class History(models.Model):
     strategy = models.ForeignKey(
         Strategy, related_name="Histories", on_delete=models.PROTECT)
 
+
+
+
 class Participant(models.Model):
-    strategy=models.ForeignKey(Strategy,  on_delete=models.PROTECT)
-    user=models.ForeignKey(User,related_name="Participants",on_delete=models.PROTECT)
-    share=models.FloatField()
+    strategy = models.ForeignKey(Strategy,  on_delete=models.PROTECT)
+    user = models.ForeignKey(
+        User, related_name="Participants", on_delete=models.PROTECT)
+    share = models.FloatField()

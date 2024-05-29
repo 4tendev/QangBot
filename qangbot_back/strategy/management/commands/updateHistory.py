@@ -2,6 +2,17 @@ from django.core.management.base import BaseCommand
 import time
 from strategy.models import Strategy, asstUSDRate, History
 from django.utils import timezone
+from django.core.cache import cache
+
+
+def getHistoryDate(history: History):
+    return {
+        "id": history.id,
+        "btcROI": history.btcROI,
+        "ethROI": history.ethROI,
+        "usdROI": history.usdROI,
+        "date":  history.date
+    }
 
 
 class Command(BaseCommand):
@@ -39,7 +50,9 @@ class Command(BaseCommand):
                         history.save()
                     else:
                         History.objects.create(
-                            ethROI=ETHROI,date=today_date , btcROI=BTCROI, usdROI=USDROI, strategy=strategy)
+                            ethROI=ETHROI, date=today_date, btcROI=BTCROI, usdROI=USDROI, strategy=strategy)
+                    
+                    strategy.cachHistory()
 
         except Exception as e:
             print(e)
