@@ -60,7 +60,7 @@ const page = async () => {
               src={"/risk.png"}
             ></Image>
 
-            <div className="p-0  md:btn-xs left-0 md:absolute  md:top-[85px] md:left-1/2 bottom-0 w-full md:max-w-60 rounded-none ">
+            <div className="p-0  md:btn-xs left-0 md:absolute  md:top-[85px] md:left-[37%] bottom-0 w-full md:max-w-64 rounded-none ">
             <Participation />
 
             </div>

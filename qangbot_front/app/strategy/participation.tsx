@@ -31,7 +31,7 @@ const Participation = () => {
       </div>
 
       <Link href={"/strategy/participant"} className="md:btn-xs h-14 btn w-1/2 absolute right-0 rounded-none md:rounded btn-success ">
-        modify Share
+        Modify  Share
       </Link>
     </button>
   ) : (
