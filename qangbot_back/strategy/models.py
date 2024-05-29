@@ -153,7 +153,7 @@ class Strategy(models.Model):
         return USDValue
 
     def cachHistoryName(self):
-        return  str(self.id) + str(self.name).strip()
+        return  str(self.id) + str(self.name).replace(" ", "")
 
     def cachHistory(self):
         try:
