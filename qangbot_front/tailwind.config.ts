@@ -21,10 +21,10 @@ const config: Config = {
   daisyui: {
     themes : [
       "dark",
-      "nord",
-      "synthwave",
       "light",
       "night",
+      "nord",
+      "synthwave",
       "coffee",
       "cupcake",
       "garden",

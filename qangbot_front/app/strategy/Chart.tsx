@@ -110,11 +110,11 @@ const Chart = (props: { data: History[] }) => {
     };
   }, []);
   return (
-    <div id="chart" className="w-full max-w-5xl mx-auto  py-3">
+    <div id="chart" className="w-full max-w-5xl mx-auto  pt-3">
       <div className="sm:text-lg  ps-5 flex flex-wrap gap-1">
         <div className="flex items-center text-xs flex-wrap gap-2">
-          <div className="flex flex-col gap-1 items-center">
-            <div className="flex gap-2">
+          <div className="flex ms-6 flex-col gap-1 items-center">
+            <div className="flex flex-wrap gap-2">
               <input
                 onChange={(event) => setSartDate(event.target.value)}
                 value={startDate}
@@ -143,7 +143,7 @@ const Chart = (props: { data: History[] }) => {
           height={400}
           data={data}
           margin={{
-            top: 10,
+            top: 3,
             right: 5,
             left: -20,
             bottom: 0,
@@ -189,17 +189,27 @@ const Chart = (props: { data: History[] }) => {
       <div className="ps-8 ">
         <div className="flex flex-wrap">
           <small className=" flex items-center ps-3">
-            DrawDown : 
-            <div className="text-rose-600 inline-block ms-1">
+            DrawDown :
+            <div className="text-error inline-block ms-1">
               {maxDrawDownUSD}%
             </div>
           </small>
           <small className=" flex items-center ps-3">
-          APY : 
-            <div className={"inline-block ms-1 " + (apy > 0 ? "text-success" : "text-rose-600"   )}>
-            {apy}%
+            APY :
+            <div
+              className={
+                "inline-block ms-1 " + (apy > 0 ? "text-success" : "text-error")
+              }
+            >
+              {apy}%
             </div>
           </small>
+          
+
+        </div>
+        <div className="text-xl font-bold m-3">
+        ROI : Return On Investment
+
         </div>
       </div>
 
