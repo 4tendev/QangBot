@@ -33,7 +33,11 @@ class VIP:
     price = 0.0025
 
 
+
+
+
 class User(AbstractBaseUser, PermissionsMixin):
+
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     TOTPKey = models.CharField(
@@ -76,7 +80,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.save()
 
     def isVIP(self):
-        return  self.is_superuser or (self.vipExpiration > datetime.now()  if self.vipExpiration else False)
+        return self.is_superuser or (self.vipExpiration > datetime.now() if self.vipExpiration else False)
 
     def __str__(self):
         return self.email
+
+
