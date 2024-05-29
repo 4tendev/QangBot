@@ -114,7 +114,7 @@ const Chart = (props: { data: History[] }) => {
       <div className="sm:text-lg  ps-5 flex flex-wrap gap-1">
         <div className="flex items-center text-xs flex-wrap gap-2 w-full">
           <div className="flex w-full flex-col gap-1 items-center">
-            <div className="flex justify-between w-full gap-1 px-4">
+            <div className="flex justify-between w-full gap-1 pe-4">
               <input
                 onChange={(event) => setSartDate(event.target.value)}
                 value={startDate}
@@ -137,7 +137,7 @@ const Chart = (props: { data: History[] }) => {
         </div>
       </div>
       <div className="text-primary px-5 flex  flex-col"></div>
-      <div className="ps-2">
+      <div className="">
         <LineChart
           width={elementWidth - 20}
           height={400}
