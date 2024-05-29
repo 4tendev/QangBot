@@ -114,7 +114,7 @@ const Chart = (props: { data: History[] }) => {
       <div className="sm:text-lg  ps-5 flex flex-wrap gap-1">
         <div className="flex items-center text-xs flex-wrap gap-2 w-full">
           <div className="flex w-full flex-col gap-1 items-center">
-            <div className="flex justify-between w-full gap-1 px-1">
+            <div className="flex justify-between w-full gap-1 px-4">
               <input
                 onChange={(event) => setSartDate(event.target.value)}
                 value={startDate}
@@ -144,8 +144,8 @@ const Chart = (props: { data: History[] }) => {
           data={data}
           margin={{
             top: 3,
-            right: 5,
-            left: -20,
+            right: 15,
+            left: 0,
             bottom: 0,
           }}
         >
@@ -186,9 +186,9 @@ const Chart = (props: { data: History[] }) => {
           <Legend />
         </LineChart>
       </div>
-      <div className="ps-8 ">
+      <div className="ps-16 my-2">
         <div className="flex flex-wrap">
-          <small className=" flex items-center ps-3">
+          <small className=" flex items-center ">
             DrawDown :
             <div className="text-error inline-block ms-1">
               {maxDrawDownUSD}%
@@ -207,7 +207,7 @@ const Chart = (props: { data: History[] }) => {
           
 
         </div>
-        <div className="text-xl font-bold m-3">
+        <div className="text-sm   font-bold ">
         ROI : Return On Investment
 
         </div>
