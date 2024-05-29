@@ -51,7 +51,7 @@ const page = async () => {
               </div>
             </div>
           </div>
-          <div className="w-full md:w-fit flex-col absolute bottom-0 md:static  block md:flex  items-center justify-center  ">
+          <div className="w-full md:w-fit flex-col fixed bottom-0 md:static  block md:flex  items-center justify-center  ">
             <Image
               className="hidden md:block"
               alt="Risk"
@@ -60,7 +60,7 @@ const page = async () => {
               src={"/risk.png"}
             ></Image>
 
-            <div className="p-0  md:btn-xs left-0 md:absolute md:top-[85px] md:left-1/2 bottom-0 w-full md:max-w-56 rounded-none ">
+            <div className="p-0  md:btn-xs left-0 md:absolute  md:top-[85px] md:left-1/2 bottom-0 w-full md:max-w-56 rounded-none ">
             <Participation />
 
             </div>
