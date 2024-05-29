@@ -152,12 +152,15 @@ class Strategy(models.Model):
                 USDValue += currentAsset.currentUSDValue()
         return USDValue
 
+    def cachHistoryName(self):
+        return  str(self.id) + str(self.name).strip()
+
     def cachHistory(self):
         try:
             histrories = self.Histories.all().order_by("date")
             data = [getHistoryDate(history) for history in histrories
                     ]if histrories else []
-            cachName = str(self.id) + str(self.name)
+            cachName = self.cachHistoryName()
             cache.set(cachName, data, timeout=None)
         except Exception as e:
             print(e)
@@ -165,7 +168,7 @@ class Strategy(models.Model):
 
     def chachedHistory(self):
         try:
-            cachName = str(self.id) + str(self.name)
+            cachName = self.cachHistoryName()
             data = cache.get(cachName)
             return data
         except Exception as e:
