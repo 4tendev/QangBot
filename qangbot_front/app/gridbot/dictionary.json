@@ -16,8 +16,8 @@
         "fa": "گرید بات چیست؟"
     },
     "explain": {
-        "en": "Grid Bots are  trading algorithms designed to automate your trading strategies. The core concept lies in creating a grid of buy and sell orders, enabling you to capitalize on market fluctuations without the need for constant manual supervision.brToday, exchanges offer grid bots for their users, and at QangBot, we provide grid bots that operate within exchanges. This allows you to manage all your grid bots in one centralized platform.",
-        "fa": "بات‌های گرید الگوریتم‌های معاملاتی هستند که برای اتوماسیون استراتژی‌های معاملاتی شما طراحی شده‌اند. مفهوم اصلی در ایجاد یک گرید از اردرهای خرید و فروش است، که به شما امکان می‌دهد بدون نیاز به نظارت دستی مداوم از نوسانات بازار بهره‌مند شوید . امروزه، صرافی‌ها برای کاربران خود بات‌های گرید را ارائه می‌دهند، و در کنگ بات ما بات‌های گرید ارائه می‌دهیم که در داخل صرافی‌ها عمل می‌کنند. این به شما این امکان را می‌دهد که تمام بات‌های گرید خود را در یک پلتفرم متمرکز مدیریت کنید."
+        "en": "Grid Bots are  trading algorithms designed to automate your trading strategies. The core concept lies in creating a grid of buy and sell orders, enabling you to capitalize on market fluctuations without the need for constant manual supervision.brToday, exchanges offer grid bots for their users, and Here, we provide grid bots that operate within exchanges. This allows you to manage all your grid bots in one centralized platform.",
+        "fa": "بات‌های گرید الگوریتم‌های معاملاتی هستند که برای اتوماسیون استراتژی‌های معاملاتی شما طراحی شده‌اند. مفهوم اصلی در ایجاد یک گرید از اردرهای خرید و فروش است، که به شما امکان می‌دهد بدون نیاز به نظارت دستی مداوم از نوسانات بازار بهره‌مند شوید . امروزه، صرافی‌ها برای کاربران خود بات‌های گرید را ارائه می‌دهند، و در اینجا ما بات‌های گرید ارائه می‌دهیم که در داخل صرافی‌ها عمل می‌کنند. این به شما این امکان را می‌دهد که تمام بات‌های گرید خود را در یک پلتفرم متمرکز مدیریت کنید."
     },
     "benefits": {
         "en": "Benefits of Grid Bots",
@@ -96,8 +96,8 @@
         "fa": "عملکرد را نظارت کنید و تنظیمات لازم را اعمال کنید. شما امکان دارید به صورت مداوم گریدها را اضافه یا حذف کنید ."
     },
     "action": {
-        "en": "Feel free to initiate your inaugural Grid Bot within the QangBot and explore how it can bring advantages to your trades.",
-        "fa": "گرید بات  خود را درون کنگ بات شروع کنید و بررسی کنید که چگونه می‌تواند مزایای زیادی برای شما ایجاد کند."
+        "en": "Feel free to initiate your inaugural Grid Bot and explore how it can bring advantages to your trades.",
+        "fa": "گرید بات  خود را بسازید و بررسی کنید که چگونه می‌تواند مزایای زیادی برای شما ایجاد کند."
     },
     "freeCreate": {
         "en": "Create Free GridBot",

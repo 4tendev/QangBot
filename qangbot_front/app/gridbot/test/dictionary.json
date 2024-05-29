@@ -8,8 +8,8 @@
               "fa": "تصمیم بعد از تست"
        },
        "testDecideExplain": {
-              "en": "Test and decide with confidence by using the Qang Bot tool to assess grids. Define your grids and observe their potential profits based on past data",
-              "fa": "  تصمیم‌گیری با اطمینان با استفاده از ابزار Qang Bot برای ارزیابی گریدها. گریدهای خود را تعریف کنید و با توجه به داده‌های گذشته، سودهای  آنها را مشاهده کنید."
+              "en": "Test and decide with confidence by using the Our tool to assess grids. Define your grids and observe their potential profits based on past data",
+              "fa": "  تصمیم‌گیری با اطمینان با استفاده از ابزار ما برای ارزیابی گریدها. گریدهای خود را تعریف کنید و با توجه به داده‌های گذشته، سودهای  آنها را مشاهده کنید."
        },
        "gridGain": {
               "en": "Total Grids Effect",
@@ -36,8 +36,8 @@
               "fa": "محدوده‌های گرید بین ۱۰,۰۰۰ تا ۶۹,۰۰۰ دلار تنظیم شده بودند، که با استفاده از مارجین بیت‌کوین و نیاز کلی به مارجین ۱ بیت‌کوین و اهرم ۱X عمل می‌کرد."
        },
        "vip": {
-              "en": "Become Qang VIP !",
-              "fa": "عضو وی آی پی کنگ شو"
+              "en": "Become VIP !",
+              "fa": "عضو وی آی پی  شو"
        },
        "testwithVIP": {
               "en": "Become a VIP member to conduct tests! Unlock the ability to perform all the desired tests by joining as a VIP member.",
