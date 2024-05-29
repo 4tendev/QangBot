@@ -13,20 +13,15 @@ const page = async () => {
 
   const lang = getLanguage().lang;
   return (
-    <div className="w-full max-w-6xl mx-auto felx flex-col justify-start">
-      {
-        data.length >0 &&  <Chart data={data} />
-      }
-    
+    <div className="w-full max-w-6xl mx-auto felx flex-col justify-start pb-12">
+      {data.length > 0 && <Chart data={data} />}
 
-      <div className="w-full px-6 sm:px-11">
-        <div className="flex w-full justify-between">
-          <div className="flex  flex-col justify-center ">
-            <div className=" text-lg ">
-              {dictionary.OurStrategy[lang]}
-            </div>
-            <div className="flex flex-wrap justify-between gap-y-6 gap-x-10 ps-3 py-3  max-w-2xl">
-              <div>
+      <div className="w-full ">
+        <div className="flex w-full justify-between pe-5">
+          <div className="flex sm:ps-11 ps-5 flex-col justify-center py-4">
+            <div className=" sm:text-xl  text-md ">{dictionary.OurStrategy[lang]}</div>
+            <div className="flex flex-wrap justify-between gap-y-3 gap-x-10 ps-3 py-2 max-w-2xl">
+              <div className="py-1">
                 <h3 className="text-primary">{dictionary.assumptions[lang]}</h3>
 
                 <ul className="ps-2">
@@ -56,18 +51,22 @@ const page = async () => {
               </div>
             </div>
           </div>
-          <div className="flex items-center max-[835px]:hidden  justify-center grow">
+          <div className="w-full md:w-fit flex-col absolute bottom-0 md:static  block md:flex  items-center justify-center  ">
             <Image
+              className="hidden md:block"
               alt="Risk"
-              width={300}
-              height={300}
+              width={350}
+              height={350}
               src={"/risk.png"}
             ></Image>
+
+            <button className="btn  md:btn-xs left-0 md:absolute md:shadow-lg md:top-[85px] md:left-1/2 bottom-0 w-full md:max-w-32  rounded-none btn-success">
+              Participate
+            </button>
           </div>
         </div>
       </div>
-      <Participation/>
-
+      <Participation />
     </div>
   );
 };
