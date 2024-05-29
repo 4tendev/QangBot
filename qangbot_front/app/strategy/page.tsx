@@ -14,13 +14,13 @@ const page = async () => {
   const lang = getLanguage().lang;
   return (
     <div className="w-full max-w-6xl mx-auto felx flex-col justify-start">
-      <Participation/>
       <Chart data={data} />
-      
+      <Participation/>
+
       <div className="w-full px-6 sm:px-11">
         <div className="flex w-full justify-between">
           <div className="flex  flex-col justify-center ">
-            <div className="text-accent text-lg font-bold">
+            <div className=" text-lg font-bold">
               {dictionary.QANGStrategy[lang]}
             </div>
             <div className="flex flex-wrap justify-between gap-y-6 gap-x-10 ps-3 py-3  max-w-2xl">

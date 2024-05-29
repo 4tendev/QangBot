@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { History } from "./types";
 import { useAppSelector } from "@/GlobalStates/hooks";
 import { language } from "@/GlobalStates/Slices/languageSlice";
@@ -44,6 +44,7 @@ const Chart = (props: { data: History[] }) => {
   const rawData = props.data.filter(
     (history) => history.date >= startDate && history.date <= ednDate
   );
+  const [apy, setAPY] = useState(0);
 
   const normalizedData = rawData.map((history) => {
     return {
@@ -87,10 +88,13 @@ const Chart = (props: { data: History[] }) => {
     setMaxDrawDownUSD(maxDDUSD);
   }
 
-  useEffect(() => {
+  useMemo(() => {
     setmaxDD();
-    return () => {};
+    setAPY(
+      Number(((365 * (data?.at(-1)?.usdROI ?? 1)) / data.length).toFixed(2))
+    );
   }, [ednDate, startDate]);
+
   useEffect(() => {
     const updateElementWidth = () => {
       const element = document.getElementById("chart");
@@ -107,41 +111,39 @@ const Chart = (props: { data: History[] }) => {
   }, []);
   return (
     <div id="chart" className="w-full max-w-5xl mx-auto  py-3">
-      <div className="sm:text-lg text-info mb-4 ps-5 flex flex-wrap gap-1">
+      <div className="sm:text-lg  ps-5 flex flex-wrap gap-1">
         <div className="flex items-center text-xs flex-wrap gap-2">
-          Date Range :
-          <input
-            onChange={(event) => setSartDate(event.target.value)}
-            value={startDate}
-            max={ednDate}
-            type="date"
-            min={props.data[0].date}
-            className="input input-sm input-primary text-primary"
-          />
-          <input
-            onChange={(event) => setEndDate(event.target.value)}
-            max={props?.data?.at(-1)?.date}
-            min={startDate}
-            value={ednDate}
-            type="date"
-            className="input input-sm input-primary text-primary"
-          />
+          <div className="flex flex-col gap-1 items-center">
+            <div className="flex gap-2">
+              <input
+                onChange={(event) => setSartDate(event.target.value)}
+                value={startDate}
+                max={ednDate}
+                type="date"
+                min={props.data[0].date}
+                className="input input-xs input-bordered"
+              />
+              <input
+                onChange={(event) => setEndDate(event.target.value)}
+                max={props?.data?.at(-1)?.date}
+                min={startDate}
+                value={ednDate}
+                type="date"
+                className="input input-xs input-bordered"
+              />
+            </div>
+            <small className="text-xs">selected Days : {data.length}</small>
+          </div>
         </div>
       </div>
-      <div className="text-primary px-5 flex  flex-col">
-        <small> Total selected Days : {data.length}</small>
-        <small className="text-rose-600">
-          {" "}
-          Max USD DrawDown : {maxDrawDownUSD}
-        </small>
-      </div>
+      <div className="text-primary px-5 flex  flex-col"></div>
       <div className="ps-2">
         <LineChart
           width={elementWidth - 20}
           height={400}
           data={data}
           margin={{
-            top: 20,
+            top: 10,
             right: 5,
             left: -20,
             bottom: 0,
@@ -184,6 +186,23 @@ const Chart = (props: { data: History[] }) => {
           <Legend />
         </LineChart>
       </div>
+      <div className="ps-8 ">
+        <div className="flex flex-wrap">
+          <small className=" flex items-center ps-3">
+            DrawDown : 
+            <div className="text-rose-600 inline-block ms-1">
+              {maxDrawDownUSD}%
+            </div>
+          </small>
+          <small className=" flex items-center ps-3">
+          APY : 
+            <div className={"inline-block ms-1 " + (apy > 0 ? "text-success" : "text-rose-600"   )}>
+            {apy}%
+            </div>
+          </small>
+        </div>
+      </div>
+
       <div className="mt-2 px-2 ps-9"></div>
     </div>
   );
