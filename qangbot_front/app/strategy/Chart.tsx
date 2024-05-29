@@ -112,16 +112,16 @@ const Chart = (props: { data: History[] }) => {
   return (
     <div id="chart" className="w-full max-w-5xl mx-auto  pt-3">
       <div className="sm:text-lg  ps-5 flex flex-wrap gap-1">
-        <div className="flex items-center text-xs flex-wrap gap-2">
-          <div className="flex ms-6 flex-col gap-1 items-center">
-            <div className="flex flex-wrap gap-2">
+        <div className="flex items-center text-xs flex-wrap gap-2 w-full">
+          <div className="flex w-full flex-col gap-1 items-center">
+            <div className="flex justify-between w-full gap-1 px-1">
               <input
                 onChange={(event) => setSartDate(event.target.value)}
                 value={startDate}
                 max={ednDate}
                 type="date"
                 min={props.data[0].date}
-                className="input input-xs input-bordered"
+                className="input input-xs input-bordered border-4"
               />
               <input
                 onChange={(event) => setEndDate(event.target.value)}
@@ -129,7 +129,7 @@ const Chart = (props: { data: History[] }) => {
                 min={startDate}
                 value={ednDate}
                 type="date"
-                className="input input-xs input-bordered"
+                className="input input-xs input-bordered  border-4"
               />
             </div>
             <small className="text-xs">selected Days : {data.length}</small>
