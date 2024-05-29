@@ -192,9 +192,9 @@ class Participant(models.Model):
     user = models.ForeignKey(
         User, related_name="Participants", on_delete=models.PROTECT)
     share = models.FloatField()
-    created = models.DateField(null=True, auto_now_add=False)
+    created = models.DateField( auto_now_add=False)
     baseAssetValues = models.ManyToManyField(
-        AssetValue, related_name="Participants",null=True, blank=True)
+        AssetValue, related_name="Participants", blank=True)
 
 
 class BTCAddress(models.Model):
