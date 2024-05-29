@@ -68,7 +68,7 @@ class AssetValue(models.Model):
         return round(self.amount * self.asset.USDRate(), 2)
 
     def __str__(self):
-        return str(self.asset.name)
+        return str(self.amount) + str(self.asset.name)
 
 
 class CoinexFutureAccount(models.Model):
@@ -186,7 +186,9 @@ class History(models.Model):
     date = models.DateField(auto_now=False, auto_now_add=False)
     strategy = models.ForeignKey(
         Strategy, related_name="Histories", on_delete=models.PROTECT)
-
+    def __str__(self):
+        return str( self.usdROI)+" " +str( self.date)
+    
 
 class Participant(models.Model):
     strategy = models.ForeignKey(Strategy,  on_delete=models.PROTECT)
@@ -196,6 +198,9 @@ class Participant(models.Model):
     created = models.DateField( auto_now_add=True )
     baseAssetValues = models.ManyToManyField(
         AssetValue, related_name="Participants", blank=True)
+    def __str__(self):
+        return str(self.share) + str(self.user.email)
+    
 
 
 class BTCAddress(models.Model):
