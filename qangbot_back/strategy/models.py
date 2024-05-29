@@ -6,6 +6,7 @@ from core.settings import DEFAULT_PROXY_USERNAME, DEFAULT_PROXY_PASSWORD, DEFAUL
 from django.core import signing
 from django.core.cache import cache
 from user.models import User
+import datetime
 
 
 def getHistoryDate(history):
@@ -153,7 +154,7 @@ class Strategy(models.Model):
         return USDValue
 
     def cachHistoryName(self):
-        return  str(self.id) + str(self.name).replace(" ", "")
+        return str(self.id) + str(self.name).replace(" ", "")
 
     def cachHistory(self):
         try:
@@ -186,10 +187,32 @@ class History(models.Model):
         Strategy, related_name="Histories", on_delete=models.PROTECT)
 
 
-
-
 class Participant(models.Model):
     strategy = models.ForeignKey(Strategy,  on_delete=models.PROTECT)
     user = models.ForeignKey(
         User, related_name="Participants", on_delete=models.PROTECT)
     share = models.FloatField()
+    created = models.DateField(null=True, auto_now_add=False)
+    baseAssetValues = models.ManyToManyField(
+        AssetValue, related_name="Participants",null=True, blank=True)
+
+
+class BTCAddress(models.Model):
+    address = models.CharField(unique=True, max_length=100)
+
+
+class ParticipantBill(models.Model):
+    btcAddress = models.OneToOneField(BTCAddress, related_name=(
+        "ParticipantBill"), on_delete=models.PROTECT)
+    user = models.ForeignKey(User, related_name=(
+        "ParticipantBills"), on_delete=models.PROTECT)
+    amount = models.FloatField(null=True)
+    paid = models.BooleanField(null=True)
+
+    def createBill(user):
+        btcAddress = BTCAddress.objects.filter(ParticipantBill__isnull=True)
+        if not btcAddress:
+            return None
+        btcAddress = btcAddress[0]
+        bill = ParticipantBill.objects.create(btcAddress=btcAddress, user=user)
+        return bill
