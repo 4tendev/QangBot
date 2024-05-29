@@ -14,7 +14,10 @@ const page = async () => {
   const lang = getLanguage().lang;
   return (
     <div className="w-full max-w-6xl mx-auto felx flex-col justify-start">
-      <Chart data={data} />
+      {
+        data.length >0 &&  <Chart data={data} />
+      }
+    
 
       <div className="w-full px-6 sm:px-11">
         <div className="flex w-full justify-between">
