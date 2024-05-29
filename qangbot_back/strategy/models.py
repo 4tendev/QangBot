@@ -136,7 +136,7 @@ class Strategy(models.Model):
         AssetValue, related_name="Strategies", blank=True)
     accounts = models.ManyToManyField(Account, blank=True)
     currentAssetValues = models.ManyToManyField(AssetValue, blank=True)
-    lastUSDCheck=models.FloatField(default=1)
+    lastUSDCheck=models.IntegerField()
 
     def __str__(self):
         return self.name

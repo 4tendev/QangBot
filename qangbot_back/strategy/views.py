@@ -13,11 +13,10 @@ def participant(request):
         if participants:
             for participant in participants:
                 strategy = participant.strategy
-                value += participant.share * (strategy.baseAssetValues.get(
-                    asset__name="USD").amount) * ((strategy.Histories.all().order_by("-date")[0].usdROI + 100)/100)
+                value += participant.share *  strategy.lastUSDCheck
     data = {
         "code": "200",
-        "data": {"value": round(value , 2)}
+        "data": {"value": round(value ,0)}
     }
     return JsonResponse(data=data)
 
