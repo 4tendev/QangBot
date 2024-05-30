@@ -213,12 +213,20 @@ class ParticipantBill(models.Model):
     user = models.ForeignKey(User, related_name=(
         "ParticipantBills"), on_delete=models.PROTECT)
     amount = models.FloatField(null=True)
-    paid = models.BooleanField(null=True)
+    accepted = models.BooleanField(null=True)
+    userIsDone =models.BooleanField(default=False)
 
-    def createBill(user):
+    def createBill(user : User):
         btcAddress = BTCAddress.objects.filter(ParticipantBill__isnull=True)
         if not btcAddress:
             return None
         btcAddress = btcAddress[0]
         bill = ParticipantBill.objects.create(btcAddress=btcAddress, user=user)
         return bill
+    
+    def deposit(user) :
+        currentBill= ParticipantBill.objects.filter(userIsDone=False)
+        if currentBill :
+            return currentBill[0]
+        else :
+            return ParticipantBill.createBill(user=user)

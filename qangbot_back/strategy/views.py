@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from .models import Strategy, History, Participant
+from .models import Strategy, ParticipantBill
 
 
 
@@ -20,9 +20,35 @@ def participant(request):
     }
     return JsonResponse(data=data)
 
+def depositData(bill):
+    return {
+        "id" : bill.id,
+        "address" : bill.btcAddress.address,
+    
+    }
 
-def history(request):
-    strategy = Strategy.objects.all()[0]
+def deposit(request) : 
+    data={
+        "code" : "400",
+        "message" : "NOT Authurized"
+    }
+    user=request.user
+    if not user.is_authenticated:
+        return JsonResponse(data)
+    bill = ParticipantBill.deposit(user)
+    if not bill :
+        return JsonResponse({"code" : "500"})
+    return JsonResponse(
+        {
+            "code" : "200",
+            "data" : depositData(bill)
+        }
+    )
+
+
+
+def history(request ,strategyID ):
+    strategy = Strategy.objects.get(id =strategyID)
     data = {"code": "200",
             "data":(strategy.chachedHistory() or [])
             }
