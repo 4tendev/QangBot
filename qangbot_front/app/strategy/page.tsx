@@ -15,15 +15,15 @@ const page = async () => {
   return (
     <div className="w-full max-w-6xl mx-auto felx flex-col justify-start pb-12">
       {data.length > 0 && <Chart data={data} />}
-
       <div className="w-full ">
         <div className="flex w-full justify-between pe-5">
           <div className="flex sm:ps-11 ps-5 flex-col justify-center py-1">
-            <div className=" sm:text-xl  text-md ">{dictionary.OurStrategy[lang]}</div>
+            <div className=" sm:text-xl  text-md ">
+              {dictionary.OurStrategy[lang]}
+            </div>
             <div className="flex flex-wrap justify-between gap-y-3 gap-x-10 ps-3 py-2 max-w-2xl">
               <div className="py-1">
                 <h3 className="text-primary">{dictionary.assumptions[lang]}</h3>
-
                 <ul className="ps-2">
                   <li>{dictionary.adoption[lang]}</li>
                   <li>{dictionary.cycle[lang]} </li>
@@ -34,7 +34,6 @@ const page = async () => {
                 <h3 className="text-primary">
                   {dictionary.considerations[lang]}
                 </h3>
-
                 <ul className="ps-2">
                   <li>{dictionary.averages[lang]}</li>
                   <li>{dictionary.log[lang]} </li>
@@ -43,7 +42,6 @@ const page = async () => {
               </div>
               <div>
                 <h3 className="text-primary">{dictionary.risk[lang]}</h3>
-
                 <ul className="ps-2">
                   <li>{dictionary.exchange[lang]}</li>
                   <li>{dictionary.cryptocurrency[lang]}</li>
@@ -59,10 +57,8 @@ const page = async () => {
               height={350}
               src={"/risk.png"}
             ></Image>
-
             <div className="p-0  md:btn-xs left-0 md:absolute  md:top-[85px] md:left-[37%] bottom-0 w-full md:max-w-64 rounded-none ">
-            <Participation />
-
+              <Participation />
             </div>
           </div>
         </div>

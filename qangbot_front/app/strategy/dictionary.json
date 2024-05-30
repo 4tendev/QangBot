@@ -14,6 +14,9 @@
     "cycle": {
         "en": "Crypto Assets has a four-year cycles.",
         "fa": "کریپتو  چرخه های چهار ساله دارد."
+    },    "selectedDays": {
+        "en": "Selected Days Count : ",
+        "fa": "تعداد روزهای انتخاب شده"
     },
     "volatile": {
         "en": "Crypto Assets are very volatile.",
@@ -56,20 +59,32 @@
         "fa": "درصد سود بر اساس دلار "
     },
     "maxDDUSD": {
-        "en": "Max USD DrawDown : ",
+        "en": "USD DrawDown : ",
         "fa": "بیشترین ضرر به نسبت  دلار : "
     },
-    "maxDDBTC": {
-        "en": "Max BTC DrawDown : ",
-        "fa": "بیشترین ضرر به نسبت بیت کویت : "
+    "apy": {
+        "en": "APY : ",
+        "fa": "سود سالانه : "
     },
-    "yourShare": {
-        "en": "Your share Value : ~",
-        "fa": "میزان سهم شما : "
+    "roi": {
+        "en": "ROI : Return On Investment",
+        "fa": "ROI : سود به نسبت میزان سرمایه"
     },
-    "to": {
-        "en": " To",
-        "fa": "تا "
+    "share": {
+        "en": "Share ~ ",
+        "fa": "سهم ~ "
+    },
+    "participate": {
+        "en": "Participate",
+        "fa": "سهیم شدن"
+    },
+    "modify": {
+        "en": "Modify Share",
+        "fa": "اصلاح سهم"
+    },
+    "usd": {
+        "en": "USD",
+        "fa": "دلار"
     },
     "cryptocurrency": {
         "en": "Reliance on the cryptocurrency market.",
