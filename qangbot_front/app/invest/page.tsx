@@ -7,10 +7,8 @@ import dictionary from "./dictionary.json";
 import Participation from "./participation";
 
 const page = async () => {
-  const history = await getData("/strategy/");
-
+  const history = await getData("/strategy/1/history/");
   const data = history.data;
-
   const lang = getLanguage().lang;
   return (
     <div className="w-full max-w-6xl mx-auto felx flex-col justify-start pb-12">

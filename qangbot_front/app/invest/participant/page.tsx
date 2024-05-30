@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const Page = () => {
@@ -13,7 +14,7 @@ const Page = () => {
       </div>
 
       <div className="w-full fixed  left-0 md:top-20 md:mt-2 md:left-1/2 bottom-0 md:flex gap-3">
-        <button className="w-1/3 md:w-24 md:btn-sm md:rounded btn btn-success rounded-none">Deposit</button>
+        <Link href={"/invest/participant/deposit"} className="w-1/3 md:w-24 md:btn-sm md:rounded btn btn-success rounded-none">Deposit</Link>
         <button className="w-1/3 md:w-24 md:btn-sm md:rounded btn btn-info rounded-none">History</button>
         <button className="w-1/3 md:w-24 md:btn-sm md:rounded btn btn-primary rounded-none">Withdraw</button>
       </div>
