@@ -234,12 +234,6 @@ class ParticipantBTCAddress(models.Model):
         btcAddress = self.address
         txsResponse = cache.get(btcAddress)
         if not txsResponse:
-            response = requests.get(
-                f"https://blockchain.info/rawaddr/{btcAddress}")
-            if response.status_code == 200:
-                txsResponse = response.json()["txs"]
-                cache.set(btcAddress, txsResponse, timeout=600)
-            else:
                 response = requests.get(
                     f"https://mempool.space/api/address/{btcAddress}/txs/chain").json()
                 txsResponse = [
