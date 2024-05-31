@@ -5,7 +5,6 @@ import {
   Line,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   Legend,
 } from "recharts";
@@ -149,8 +148,7 @@ const Chart = (props: { data: History[] }) => {
             bottom: 0,
           }}
         >
-          <CartesianGrid strokeDasharray="3 10" />
-          <XAxis dataKey="date" tickMargin={3} />
+          <XAxis  dataKey="date" tickMargin={3} />
           <YAxis
             tickMargin={15}
             orientation={"left"}
