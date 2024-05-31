@@ -3,12 +3,9 @@ import time
 from strategy.models import Strategy, asstUSDRate, History ,ParticipantBTCAddress
 from django.utils import timezone
 from django.core.cache import cache
-import json
-
-# Step 2: Open the JSON file
 
 
-# Now you can use the 'data' variable
+
 def getHistoryDate(history: History):
     return {
         "id": history.id,
@@ -61,14 +58,3 @@ class Command(BaseCommand):
         except Exception as e:
             print(e)
         print("OK STRATEGT script")
-
-        try :
-            with open('strategy/btcAddress.json', 'r') as file:
-            # Step 3: Load the JSON data into a Python variable
-                data = json.load(file)
-                for address in data :
-                    ParticipantBTCAddress.objects.get_or_create(address=address)
-
-
-        except Exception as e:
-            print(e)

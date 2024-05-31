@@ -210,7 +210,7 @@ class ParticipantBTCAddress(models.Model):
 
     def createParticipantBTCAddress(user: User):
         unUsedparticipantBTCAddress = ParticipantBTCAddress.objects.filter(
-            address__isnull=True)
+            user__isnull=True)
         if not unUsedparticipantBTCAddress:
             print("Please add reciving btc address so users can deposit")
             return None
@@ -221,6 +221,7 @@ class ParticipantBTCAddress(models.Model):
 
     def depositAddress(user):
         participantBTCAddress = ParticipantBTCAddress.objects.filter(user=user)
+        
         if participantBTCAddress:
             return participantBTCAddress[0]
         else:
