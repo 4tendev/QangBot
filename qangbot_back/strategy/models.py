@@ -207,7 +207,9 @@ class ParticipantBTCAddress(models.Model):
     address = models.CharField(unique=True, blank=True, max_length=100)
     user =models.OneToOneField(User, null=True ,blank=True, related_name=(
         "ParticipantBTCAddress"), on_delete=models.PROTECT)
-
+    def __str__(self):
+        return self.user.email + self.address
+    
     def createParticipantBTCAddress(user: User):
         unUsedparticipantBTCAddress = ParticipantBTCAddress.objects.filter(
             user__isnull=True)
@@ -235,7 +237,7 @@ class ParticipantBTCAddress(models.Model):
                 f"https://blockchain.info/rawaddr/{btcAddress}")
             if response.status_code == 200:
                 txsResponse = response.json()["txs"]
-                cache.set(btcAddress, txsResponse, timeout=300)
+                cache.set(btcAddress, txsResponse, timeout=600)
         if txsResponse:
             for tx in txsResponse:
                 if tx["result"] > 0:
@@ -255,3 +257,7 @@ class Transaction(models.Model):
         ParticipantBTCAddress, related_name="Transactions", on_delete=models.PROTECT)
     participants = models.ManyToManyField(
         Participant, related_name="Transactions")
+    
+    def __str__(self):
+        return self.txHash
+    
