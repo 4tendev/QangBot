@@ -1,9 +1,12 @@
 {
-    "year" : {"en" : "1 Year QangBot VIP Plan" , "fa" :"یک سال پلن VIP کنگ بات"}
-    ,"scan" : {"en" : "Please scan the QR code below to make the payment." , "fa" :"برای پرداخت QR کد را اسکن کنید."}
+    "processTime" : {"en" : "This process may take up to one day." , "fa" :"تبدیل ممکن است 1 روز طول بکشد."}
+    ,"recentTransactions" : {"en" : " Recent Transactions : " , "fa" :"آخرین تراکنشها : "}
     ,"address" : {"en" : "Receiving Address : " , "fa" :"آدرس دریافت : "}
-    ,"amount" : {"en" : "Amount : " , "fa" :" مقدار : "}
-    ,"dismiss" : {"en" : "Dismiss" , "fa" :"انصراف"}
+    ,"convertProcess" : {"en" : " Any BTC received by the address below will be converted to the equivalent shares." , "fa" :"هر بیت کوین واریز شده به این آدرس تبدیل به سهم می شود."}
+    ,"deposit" : {"en" : "Deposit BTC To invest" , "fa" :"واریز بیت کوین برای سرمایه گذاری"}
+    ,"equivalentShare" : {"en" : "Equivalent Share Value" , "fa" :"ارزش معادل سهم"}
+    ,"fee" : {"en" : "Fee : 20$ + 1.2% Share/Year" , "fa" :"کارمزد 20دلار + 1.2% سال/سهم"}
 
+    ,"BTC" : {"en" : "BTC" , "fa" :"بیت کوین"}
 
 }

@@ -48,27 +48,28 @@ const Page = () => {
     <>
       <div className="px-5 sm:px-11 max-w-md mx-auto flex flex-col items-center justify-center gap-2">
         <div className="text-accent text-xl font-bold my-1 text-center">
-          Deposit BTC To invest
+          {dictionary.deposit[lang]}
         </div>
         <div>
           <small className="block">
-            Any BTC reieved by Address Below will convert to equavalent Share
-          </small>
 
-          <small>it may take 1 day to process</small>
+           {dictionary.convertProcess[lang]}
+          </small>
+           
+          <small>{dictionary.processTime[lang]}</small>
           <small className="block">
             <small className="text-lg text-info">
-              Fee : 20$ + 1.2% Share/Year
+            {dictionary.fee[lang]}
             </small>
           </small>
         </div>
         <div className="bg-white p-3 m-2 my-3 w-fit mx-auto">
           <QRCode size={200} value={URI(depositAddress)} />
         </div>
-        <div className="relative w-full">
-          <div className=" hidden sm:block absolute top-[-6px] left-[-0px]">
+        <div className="relative w-full p-0">
+          <div className="p-0 hidden sm:block absolute top-[-6px] left-[0]">
             <div
-              className=" border rounded alert alert-warning p-1"
+              className="mx-0 bg-warning text-black text-start  rounded  p-1 px-1"
             >
         
               {depositAddress.address}
@@ -100,12 +101,12 @@ const Page = () => {
         {depositAddress.transactions.length > 0 && (
           <>
             <div className="text-start w-full text-xl">
-              Recent Transactions :
+              {dictionary.recentTransactions[lang]}
             </div>
             <div className=" flex flex-col gap-3 py-3 border rounded-2xl w-full text-xs">
               <div className="flex justify-between    px-3">
-                <div>BTC </div>
-                <div>Equivalent Share</div>
+                <div>{dictionary.BTC[lang]} </div>
+                <div>{dictionary.equivalentShare[lang]}</div>
               </div>
               {depositAddress.transactions.map((transaction) => (
                 <div
