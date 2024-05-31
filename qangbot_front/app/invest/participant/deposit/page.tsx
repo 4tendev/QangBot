@@ -65,11 +65,21 @@ const Page = () => {
         <div className="bg-white p-3 m-2 my-3 w-fit mx-auto">
           <QRCode size={200} value={URI(depositAddress)} />
         </div>
-        <div>
+        <div className="relative w-full">
+          <div className=" hidden sm:block absolute top-[-6px] left-[-0px]">
+            <div
+              className=" border rounded alert alert-warning p-1"
+            >
+        
+              {depositAddress.address}
+        
+
+            </div>
+          </div>
           <small> {dictionary.address[lang]}</small>
-          <small
-            className="unselectable border rounded mx-1 btn px-1 btn-xs btn-warning"
+          <button
             onClick={copyToClipboard}
+            className="unselectable border rounded mx-1 btn px-1 btn-xs btn-warning"
           >
             {" "}
             {depositAddress.address.substring(0, 5) +
@@ -82,11 +92,10 @@ const Page = () => {
               viewBox="0 0 448 512"
               className="w-3 inline-block mx-1"
               fill="currentColor"
-              onClick={copyToClipboard}
             >
               <path d="M208 0H332.1c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9V336c0 26.5-21.5 48-48 48H208c-26.5 0-48-21.5-48-48V48c0-26.5 21.5-48 48-48zM48 128h80v64H64V448H256V416h64v48c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V176c0-26.5 21.5-48 48-48z" />
             </svg>
-          </small>
+          </button>
         </div>
         {depositAddress.transactions.length > 0 && (
           <>
@@ -99,7 +108,10 @@ const Page = () => {
                 <div>Equivalent Share</div>
               </div>
               {depositAddress.transactions.map((transaction) => (
-                <div key={transaction.txHash} className="flex justify-between relative mx-4">
+                <div
+                  key={transaction.txHash}
+                  className="flex justify-between relative mx-4"
+                >
                   {Math.abs(transaction.amount)} BTC
                   {transaction.share ? (
                     <>
