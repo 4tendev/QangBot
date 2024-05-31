@@ -26,7 +26,7 @@ const Page = () => {
             {shareValue?.toLocaleString() ?? (
               <span className="loading loading-ring loading-xs"></span>
             )}
-            USD
+            { " USD"}
           </button>
         </div>
       </div>

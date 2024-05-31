@@ -13,15 +13,16 @@ const Participation = () => {
   const [value, setValue] = useState<number | undefined>(undefined);
   function getUserShare() {
     fetchapi("/strategy/participant/", "GET").then((response) => {
-      response.code === "200" && setValue(response.data.value);
+      response.code === "200" ? setValue(response.data.value) :setValue(0) ;
     });
   }
 
   useEffect(() => {
-    UserIsKnown && getUserShare();
+    UserIsKnown !==undefined && getUserShare();
     return () => {};
   }, [UserIsKnown]);
 
+  
   return UserIsKnown === undefined || value === undefined ? (
     <span className="loading loading-ring loading-xs "></span>
   ) : value > 0 ? (
