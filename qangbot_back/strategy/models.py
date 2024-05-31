@@ -205,8 +205,8 @@ class Participant(models.Model):
 
 class ParticipantBTCAddress(models.Model):
     address = models.CharField(unique=True, blank=True, max_length=100)
-    user = models.ForeignKey(User, related_name=(
-        "ParticipantBTCAddresses"), null=True, on_delete=models.PROTECT)
+    user =models.OneToOneField(User,  related_name=(
+        "ParticipantBTCAddress"), on_delete=models.PROTECT)
 
     def createParticipantBTCAddress(user: User):
         unUsedparticipantBTCAddress = ParticipantBTCAddress.objects.filter(
