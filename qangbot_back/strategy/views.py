@@ -1,8 +1,5 @@
 from django.http import JsonResponse
-from .models import Strategy, ParticipantBill
-
-
-
+from .models import Strategy, ParticipantBTCAddress
 
 
 def participant(request):
@@ -13,43 +10,58 @@ def participant(request):
         if participants:
             for participant in participants:
                 strategy = participant.strategy
-                value += participant.share *  strategy.lastUSDCheck
+                value += participant.share * strategy.lastUSDCheck
     data = {
         "code": "200",
-        "data": {"value": round(value ,0)}
+        "data": {"value": round(value, 0)}
     }
     return JsonResponse(data=data)
 
-def depositData(bill):
+
+def transactionData(transaction):
     return {
-        "id" : bill.id,
-        "address" : bill.btcAddress.address,
-    
+        "txHash": transaction.txHash,
+        "id": transaction.id,
+        "amount":transaction.assetValue.filter(asset__name="BTC")[0].amount if transaction.assetValue.filter(asset__name="BTC") else None,
+        "share": transaction.assetValue.filter(asset__name="USD")[0].amount if transaction.assetValue.filter(asset__name="USD") else None
     }
 
-def deposit(request) : 
-    data={
-        "code" : "400",
-        "message" : "NOT Authurized"
+
+def depositData(depositAddress):
+    return {
+        "id": depositAddress.id,
+        "address": depositAddress.address,
+        "transactions": [transactionData(transaction) for transaction in depositAddress.Transactions.all().order_by("-pk")]
     }
-    user=request.user
+
+
+def deposit(request):
+    data = {
+        "code": "400",
+        "message": "NOT Authurized"
+    }
+    user = request.user
     if not user.is_authenticated:
         return JsonResponse(data)
-    bill = ParticipantBill.deposit(user)
-    if not bill :
-        return JsonResponse({"code" : "500"})
+
+    depositAddress = ParticipantBTCAddress.depositAddress(user)
+    if not depositAddress:
+        return JsonResponse({"code": "500"})
+    try:
+        depositAddress.checkTransaction()
+    except Exception as e:
+        print(e)
     return JsonResponse(
         {
-            "code" : "200",
-            "data" : depositData(bill)
+            "code": "200",
+            "data": depositData(depositAddress)
         }
     )
 
 
-
-def history(request ,strategyID ):
-    strategy = Strategy.objects.get(id =strategyID)
+def history(request, strategyID):
+    strategy = Strategy.objects.get(id=strategyID)
     data = {"code": "200",
-            "data":(strategy.chachedHistory() or [])
+            "data": (strategy.chachedHistory() or [])
             }
     return JsonResponse(data=data)

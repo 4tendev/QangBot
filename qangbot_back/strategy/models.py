@@ -6,7 +6,8 @@ from core.settings import DEFAULT_PROXY_USERNAME, DEFAULT_PROXY_PASSWORD, DEFAUL
 from django.core import signing
 from django.core.cache import cache
 from user.models import User
-import datetime
+import requests
+from django.core.cache import cache
 
 
 def getHistoryDate(history):
@@ -136,7 +137,7 @@ class Strategy(models.Model):
         AssetValue, related_name="Strategies", blank=True)
     accounts = models.ManyToManyField(Account, blank=True)
     currentAssetValues = models.ManyToManyField(AssetValue, blank=True)
-    lastUSDCheck=models.IntegerField()
+    lastUSDCheck = models.IntegerField()
 
     def __str__(self):
         return self.name
@@ -186,47 +187,70 @@ class History(models.Model):
     date = models.DateField(auto_now=False, auto_now_add=False)
     strategy = models.ForeignKey(
         Strategy, related_name="Histories", on_delete=models.PROTECT)
+
     def __str__(self):
-        return str( self.usdROI)+" " +str( self.date)
-    
+        return str(self.usdROI)+" " + str(self.date)
+
 
 class Participant(models.Model):
     strategy = models.ForeignKey(Strategy,  on_delete=models.PROTECT)
     user = models.ForeignKey(
         User, related_name="Participants", on_delete=models.PROTECT)
     share = models.FloatField()
-    created = models.DateField( auto_now_add=True )
-    baseAssetValues = models.ManyToManyField(
-        AssetValue, related_name="Participants", blank=True)
+    created = models.DateField(auto_now_add=True)
+
     def __str__(self):
         return str(self.share) + str(self.user.email)
-    
 
 
-class BTCAddress(models.Model):
-    address = models.CharField(unique=True, max_length=100)
-
-
-class ParticipantBill(models.Model):
-    btcAddress = models.OneToOneField(BTCAddress, related_name=(
-        "ParticipantBill"), on_delete=models.PROTECT)
+class ParticipantBTCAddress(models.Model):
+    address = models.CharField(unique=True, blank=True, max_length=100)
     user = models.ForeignKey(User, related_name=(
-        "ParticipantBills"), on_delete=models.PROTECT)
-    amount = models.FloatField(null=True)
-    accepted = models.BooleanField(null=True)
-    userIsDone =models.BooleanField(default=False)
+        "ParticipantBTCAddresses"), null=True, on_delete=models.PROTECT)
 
-    def createBill(user : User):
-        btcAddress = BTCAddress.objects.filter(ParticipantBill__isnull=True)
-        if not btcAddress:
+    def createParticipantBTCAddress(user: User):
+        unUsedparticipantBTCAddress = ParticipantBTCAddress.objects.filter(
+            address__isnull=True)
+        if not unUsedparticipantBTCAddress:
+            print("Please add reciving btc address so users can deposit")
             return None
-        btcAddress = btcAddress[0]
-        bill = ParticipantBill.objects.create(btcAddress=btcAddress, user=user)
-        return bill
-    
-    def deposit(user) :
-        currentBill= ParticipantBill.objects.filter(userIsDone=False)
-        if currentBill :
-            return currentBill[0]
-        else :
-            return ParticipantBill.createBill(user=user)
+        unUsedparticipantBTCAddress = unUsedparticipantBTCAddress[0]
+        unUsedparticipantBTCAddress.user = user
+        unUsedparticipantBTCAddress.save()
+        return unUsedparticipantBTCAddress
+
+    def depositAddress(user):
+        participantBTCAddress = ParticipantBTCAddress.objects.filter(user=user)
+        if participantBTCAddress:
+            return participantBTCAddress[0]
+        else:
+            return ParticipantBTCAddress.createParticipantBTCAddress(user=user)
+
+    def checkTransaction(self):
+        btcAddress = self.address
+        txsResponse = cache.get(btcAddress)
+        if not txsResponse:
+            response = requests.get(
+                f"https://blockchain.info/rawaddr/{btcAddress}")
+            if response.status_code == 200:
+                txsResponse = response.json()["txs"]
+                cache.set(btcAddress, txsResponse, timeout=300)
+        if txsResponse:
+            for tx in txsResponse:
+                if tx["result"] > 0:
+                    transaction = Transaction.objects.get_or_create(
+                        txHash=tx["hash"], address=self)
+                    if transaction[1]:
+                        assetValue = AssetValue.objects.create(amount=(
+                            tx["result"]/100000000), asset=Asset.objects.get_or_create(strSymbol="BTC", name="BTC")[0])
+                        transaction[0].assetValue.add(assetValue)
+
+
+class Transaction(models.Model):
+    txHash = models.CharField(unique=True, max_length=255)
+    assetValue = models.ManyToManyField(
+        AssetValue, related_name="Transactions")
+    address = models.ForeignKey(
+        ParticipantBTCAddress, related_name="Transactions", on_delete=models.PROTECT)
+    participants = models.ManyToManyField(
+        Participant, related_name="Transactions")
