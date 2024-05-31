@@ -99,7 +99,7 @@ const Page = () => {
                 <div>Equivalent Share</div>
               </div>
               {depositAddress.transactions.map((transaction) => (
-                <div className="flex justify-between relative mx-4">
+                <div key={transaction.txHash} className="flex justify-between relative mx-4">
                   {Math.abs(transaction.amount)} BTC
                   {transaction.share ? (
                     <>
