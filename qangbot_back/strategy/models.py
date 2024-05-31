@@ -205,7 +205,7 @@ class Participant(models.Model):
 
 class ParticipantBTCAddress(models.Model):
     address = models.CharField(unique=True, blank=True, max_length=100)
-    user =models.OneToOneField(User,  related_name=(
+    user =models.OneToOneField(User, null=True ,blank=True, related_name=(
         "ParticipantBTCAddress"), on_delete=models.PROTECT)
 
     def createParticipantBTCAddress(user: User):
