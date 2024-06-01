@@ -200,7 +200,7 @@ class Participant(models.Model):
     created = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.share) + str(self.user.email)
+        return str(self.share) + str(self.user.email) if self.user else ""
 
 
 class ParticipantBTCAddress(models.Model):
@@ -261,4 +261,4 @@ class Transaction(models.Model):
         Participant, related_name="Transactions")
 
     def __str__(self):
-        return self.txHash
+        return str( self.txHash)[-5:-1]
