@@ -209,7 +209,7 @@ class ParticipantBTCAddress(models.Model):
         "ParticipantBTCAddress"), on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.user.email + self.address
+        return (self.user.email if self.user else "" )+ self.address
 
     def createParticipantBTCAddress(user: User):
         unUsedparticipantBTCAddress = ParticipantBTCAddress.objects.filter(
