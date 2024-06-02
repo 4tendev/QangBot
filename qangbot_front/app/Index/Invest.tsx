@@ -1,12 +1,12 @@
 import React from "react";
-import "./.css";
+import "./style.css";
 import Link from "next/link";
 import dictionary from "./dictionary.json";
 import getLanguage from "@/commonTsServer/getLanguage";
 const Invest = () => {
   const lang = getLanguage().lang;
   return (
-    <div className="text-start  gap-x-2 w-full items-center justify-center flex sm:flex-col gorow px-9 mt-3">
+    <div className="text-start  gap-x-2 w-full items-center justify-center flex sm:flex-col gorow px-9 mt-5">
       <div className="">
         <h4 className="text-[22vw] md:text-[160px] font-bold py-0 text-error leading-none w-fit">
           {dictionary.risk[lang]}
@@ -24,7 +24,7 @@ const Invest = () => {
         </Link>
         <Link
           href={"/invest/participant"}
-          className="btn btn-xs btn-success max-w-[135px] shadow-2xl sm:grow"
+          className="btn btn-xs btn-primary max-w-[135px] shadow-2xl sm:grow"
         >
           {dictionary.participate[lang]}
         </Link>
