@@ -1,9 +1,7 @@
 {
-    "currentShare" : {"en" : "Current Shares's Value  : " , "fa" :"ارزش روز سهام : "}
+    "currentShare" : {"en" : "Value of Your Shares: " , "fa" :"ارزش روز سهم شما : "}
     ,"USD" : {"en" : "USD" , "fa" :" دلار "}
     ,"history" : {"en" : "History" , "fa" :" تاریخجه "}
     ,"modify" : {"en" : "Modify" , "fa" :" اصلاح "}
     ,"withdraw" : {"en" : "Withdraw" , "fa" :" برداشت "}
-
-
 }
