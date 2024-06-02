@@ -5,8 +5,13 @@
     "backTest" : {"en" : "Back Tests" , "fa" :"بک تست"},
     "createFree" : {"en" : "Create Free" , "fa" :"شروع رایگان"},
 
-    "GridBot" : {"en" : "Grid Bots" , "fa" :"گرید بات"}
-        
-    
+    "GridBot" : {"en" : "Grid Bots" , "fa" :"گرید بات"},
+    "participate" : {"en" : "Participate" , "fa" :"مشارکت"}
 
+    ,
+    "performance" : {"en" : "Performance" , "fa" :"بازدهی"}
+    ,
+    "risk" : {"en" : "Risk" , "fa" :"ریسک"}
+    ,
+    "ourway" : {"en" : "In Our Way" , "fa" :"به روش ما"}
 }

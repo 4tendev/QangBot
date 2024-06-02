@@ -1,0 +1,7 @@
+@media (min-width: 420px) {
+    .gorow {
+       justify-content: center;
+       flex: row;
+    }
+
+ }
