@@ -253,6 +253,7 @@ class ParticipantBTCAddress(models.Model):
 
 class Transaction(models.Model):
     txHash = models.CharField(unique=True, max_length=255)
+    created=models.DateField(auto_now_add=True)
     assetValue = models.ManyToManyField(
         AssetValue, related_name="Transactions")
     address = models.ForeignKey(
