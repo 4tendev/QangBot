@@ -349,5 +349,7 @@ def updateVIP(request):
                     "data": {"paid": userBTCModel.checkPaid()}
                 }
     except Exception as e:
+        print("You may need add btc addresses so they can update their plan")
         print(e)
+        data={"code" : "500"}
     return JsonResponse(data)

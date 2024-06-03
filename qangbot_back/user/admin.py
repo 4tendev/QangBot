@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import User
+from .models import User , VIPBTCAddress
 
 
-# Register your models here.
+admin.site.register(VIPBTCAddress)
 admin.site.register(User)
 
