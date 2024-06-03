@@ -31,3 +31,5 @@ class ChangePasswordForm(forms.Form):
     password = passwordField
     newPassword = forms.CharField(max_length=100, min_length=8, required=False)
 
+class CheckPaidForm(forms.Form):
+    address=forms.CharField( required=True)

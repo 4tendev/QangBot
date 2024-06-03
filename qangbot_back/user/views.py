@@ -5,8 +5,8 @@ from django.contrib.auth import login, authenticate, logout, update_session_auth
 
 from django_ratelimit.decorators import ratelimit
 
-from .forms import LoginForm, RegisterForm, ResetPasswordForm, ChangePasswordForm
-from .models import User
+from .forms import LoginForm, RegisterForm, ResetPasswordForm, ChangePasswordForm, CheckPaidForm
+from .models import User, VIPBTCAddress
 from .EmailOTP import createCode, checkCode
 
 
@@ -244,7 +244,7 @@ def auth(request):
                         data = {
                             "code": "200",
                             "message": "Password Changed",
-                            data : userData(user)
+                            data: userData(user)
                         }
                         if not trustedDevice:
                             request.session.set_expiry(0)
@@ -303,4 +303,51 @@ def auth(request):
             "message": "Server Error"
         }
 
+    return JsonResponse(data)
+
+
+def updateVIP(request):
+    user = request.user
+    data = {
+        "code": "400",
+        "message": "User Unknown",
+    }
+    if not user.is_authenticated:
+        return JsonResponse(data)
+    try:
+        data = {
+            "code": "405",
+            "message": "Method not Allowed"
+        }
+        method = request.method
+        match method:
+            case "GET":
+                data = {
+                    "code": "200",
+                    "data": {
+                        "address": VIPBTCAddress.depositAddress(user)
+                    }
+                }
+            case "POST":
+                form_data = json.loads(request.body)
+                form = CheckPaidForm(form_data)
+                data = {
+                    "code": "400",
+                    "message": "Invalid  Input"
+                }
+                if not form.is_valid():
+                    return JsonResponse(data)
+                address = form.cleaned_data.get("address")
+                userBTCModel = VIPBTCAddress.objects.filter(
+                    address=address, user=user)
+                if not userBTCModel:
+                    return JsonResponse(data)
+                userBTCModel = userBTCModel[0]
+                userBTCModel.checkPaid()
+                data = {
+                    "code": "200",
+                    "data": {"paid": userBTCModel.checkPaid()}
+                }
+    except Exception as e:
+        print(e)
     return JsonResponse(data)

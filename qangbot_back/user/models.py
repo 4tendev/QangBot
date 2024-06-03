@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.core.cache import cache
 
 import pyotp
 import redis
+import requests
 
 from datetime import datetime, timedelta
 
@@ -31,9 +33,6 @@ class CustomUserManager(BaseUserManager):
 
 class VIP:
     price = 0.0025
-
-
-
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -85,4 +84,36 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
+
+class VIPBTCAddress(models.Model):
+    address = models.CharField(unique=True, max_length=100)
+    user = models.ForeignKey(User, related_name="VIPBTCAddresses",
+                             on_delete=models.PROTECT, blank=True, null=True)
+    paid = models.BooleanField(default=False)
+
+    def checkPaid(self):
+        address = self.address   
+        if self.paid :
+            return True   
+        if VIPBTCAddress.objects.filter(id=self.id, paid=False) and not cache.get(address) :
+            response = requests.get(
+                f"https://mempool.space/api/address/{address}")
+            cache.set(address,1,timeout=300)
+            if response.status_code == 200:
+                totalRecieved = response.json(
+                )["chain_stats"]["funded_txo_sum"]
+                if totalRecieved > VIP.price * 100_000_000:
+                    self.paid = True
+                    self.save()
+                    self.user.updateVIPTime()
+                    return True
+                
+    def depositAddress(user) :
+        address = VIPBTCAddress.objects.filter(paid =False ,user=user )
+        if address : 
+            return address[0].address
+        address = VIPBTCAddress.objects.filter(paid =False ,user__isnull=True  )[0]
+        address.user=user
+        address.save()
+        return address.address
 
