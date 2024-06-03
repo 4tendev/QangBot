@@ -325,7 +325,8 @@ def updateVIP(request):
                 data = {
                     "code": "200",
                     "data": {
-                        "address": VIPBTCAddress.depositAddress(user)
+                        "address": VIPBTCAddress.depositAddress(user),
+                        "price" : User.VIPPRICE
                     }
                 }
             case "POST":

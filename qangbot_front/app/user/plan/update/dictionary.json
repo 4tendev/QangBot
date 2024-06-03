@@ -1,0 +1,9 @@
+{
+    "year" : {"en" : "1 Year VIP Plan" , "fa" :"یک سال پلن VIP"}
+    ,"scan" : {"en" : "Please scan the QR code below to make the payment." , "fa" :"برای پرداخت QR کد را اسکن کنید."}
+    ,"address" : {"en" : "Receiving Address : " , "fa" :"آدرس دریافت : "}
+    ,"amount" : {"en" : "Amount : " , "fa" :" مقدار : "}
+    ,"dismiss" : {"en" : "Dismiss" , "fa" :"انصراف"}
+
+
+}
