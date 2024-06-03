@@ -9,6 +9,7 @@ import { addGrids, getBot } from "@/GlobalStates/Slices/botSlice";
 import { newAlert } from "@/GlobalStates/Slices/alert/Slice";
 import { TabType } from "./page";
 import Link from "next/link";
+import VIPRequired from "../../VIPRequired";
 
 const AddGrids = (props: {
   botID: number;
@@ -36,30 +37,38 @@ const AddGrids = (props: {
     });
     setCreating(false);
   }
-
   return (
     <div className="py-2">
       <h5 className="text-xl text-warning px-3">{dictionary.notice[lang]}</h5>
       <p className="px-5 mb-2">
         {dictionary.check[lang]}
-        <Link className="link block link-error my-1" href={gridbot?.contract.url}>
+        <Link
+          className="link block link-error my-1"
+          href={gridbot?.contract.url}
+        >
           {dictionary.contractInfo[lang]}
         </Link>
       </p>
-      <GridForm
-        creationLimit={null}
-        reviewMode={reviewMode}
-        setReviewMode={setReviewMode}
-        grids={grids}
-        setGrids={setGrids}
-      />
+      {gridbot.gridsCreationLimit == null || gridbot.gridsCreationLimit > 0 ? (
+        <GridForm
+          creationLimit={gridbot.gridsCreationLimit}
+          reviewMode={reviewMode}
+          setReviewMode={setReviewMode}
+          grids={grids}
+          setGrids={setGrids}
+        />
+      ) : (
+        <VIPRequired />
+      )}
 
       {reviewMode && (
         <>
           {grids && (
             <div className="mt-1">
-             {dictionary.firstOrder[lang]}
-              {grids[0].nextPosition === 1 ? dictionary.sell[lang] : dictionary.buy[lang]}
+              {dictionary.firstOrder[lang]}
+              {grids[0].nextPosition === 1
+                ? dictionary.sell[lang]
+                : dictionary.buy[lang]}
             </div>
           )}
           <div>

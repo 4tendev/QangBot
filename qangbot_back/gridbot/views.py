@@ -38,7 +38,8 @@ def getBotData(gridtBot: GridBot):
         "interval": gridtBot.interval,
         "lastheck": int((datetime.datetime.now() - gridtBot.lastTimeCheck).total_seconds()) if gridtBot.lastTimeCheck else 0,
         "accountName": gridtBot.account.name,
-        "grids": [getGridData(grid) for grid in gridtBot.Grids.all()]
+        "grids": [getGridData(grid) for grid in gridtBot.Grids.all()],
+        "gridsCreationLimit" : gridtBot.gridCreationLimit()
     }
 
 

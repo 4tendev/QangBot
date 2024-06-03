@@ -104,8 +104,8 @@
         "fa": "ساخت رایگان گرید بات"
     },
     "vipRequired": {
-        "en": "To create more bots you need to become VIP.",
-        "fa": "برای ساخت بات جدید باید VIP شوید."
+        "en": "To create more you need to become VIP.",
+        "fa": "برای ساخت بیشتر باید VIP شوید."
     },
 
     "becomeVIP": {

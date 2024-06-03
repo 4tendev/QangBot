@@ -21,4 +21,5 @@ export interface Bot {
   interval: number;
   accountName: string;
   grids: Grid[];
+  gridsCreationLimit: number;
 }
