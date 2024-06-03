@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import  Transaction, Account ,Asset ,Strategy,AssetValue  ,CoinexFutureAccount ,History ,Participant ,ParticipantBTCAddress 
+from .models import Transaction, Account, Asset, Strategy, AssetValue, CoinexFutureAccount, History, Participant, ParticipantBTCAddress
 
 admin.site.register(Account)
 admin.site.register(Transaction)
