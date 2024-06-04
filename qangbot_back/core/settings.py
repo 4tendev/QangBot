@@ -150,7 +150,7 @@ USE_TZ = False
 
 STATIC_URL = 'static/'
 
-STATIC_URL = f'https://static.{DOMAIN}/statics/' if DOMAIN != "127.0.0.1" else 'static/'
+STATIC_URL = f'https://static{DOMAIN}/statics/' if DOMAIN != "127.0.0.1" else 'static/'
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_COOKIE_NAME = 'SESSIONID'
 
