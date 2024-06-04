@@ -337,7 +337,7 @@ class CoinexAccount(models.Model):
             if positions["data"] :
                 for position in positions["data"]:
                     if position["market"] == market :
-                        return float(position["amount"] )
+                        return (1 if position["side"] ==1 else -1)* float(position["amount"] )
             return 0
         except Exception as e:
             print(result)
