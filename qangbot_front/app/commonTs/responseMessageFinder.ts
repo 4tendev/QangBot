@@ -8,7 +8,7 @@ export default function responseMessage(
   switch (code) {
     case "500":
       return dictionary["500"][lang];
-    case "429" :
+    case "429":
       return dictionary["429"][lang];
   }
   try {

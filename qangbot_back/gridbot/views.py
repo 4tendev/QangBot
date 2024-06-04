@@ -40,7 +40,7 @@ def getBotData(gridtBot: GridBot):
         "accountName": gridtBot.account.name,
         "grids": [getGridData(grid) for grid in gridtBot.Grids.all()],
         "position": gridtBot.position,
-        "gridsCreationLimit" : gridtBot.gridCreationLimit()
+        "gridsCreationLimit": gridtBot.gridCreationLimit()
     }
 
 
@@ -463,4 +463,3 @@ def grid(request, gridID):
     except:
         return JsonResponse(serverErrorResponse)
     return JsonResponse(data)
-
