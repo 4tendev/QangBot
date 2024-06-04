@@ -15,7 +15,6 @@
         "en": "State",
         "fa": "وضعیت"
     },
-    
     "lastheck": {
         "en": "Last Check",
         "fa": "آخرین چک"
@@ -36,9 +35,17 @@
         "en": "Action",
         "fa": "کنترل"
     },
-    "interval": {
-        "en": "Interval",
-        "fa": "دوره"
+    "position": {
+        "en": "Position size",
+        "fa": "حجم پوزیشن"
+    },
+    "long": {
+        "en": "Long",
+        "fa": "خرید"
+    },
+    "short": {
+        "en": "Short",
+        "fa": "فروش"
     },
     "resume": {
         "en": "Resume",
@@ -52,7 +59,6 @@
         "en": "Bot Resumed",
         "fa": "شروع مجدد بات"
     },
-
     "stop": {
         "en": "Stop",
         "fa": "توقف"

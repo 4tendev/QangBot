@@ -13,6 +13,7 @@ export interface Contract {
 }
 export interface Bot {
   name: string;
+  position: number;
   id: number;
   contract: Contract;
   lastheck: number;
