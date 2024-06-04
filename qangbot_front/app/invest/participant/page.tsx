@@ -23,7 +23,7 @@ const Page = () => {
   return (
     <div>
       <div className="flex justify-center md:justify-start alert  rounded-none h-12 md:ps-11 md:text-start absolute top-[80px] p-0  w-full left-0">
-        <div className="w-full font-bold flex justify-center md:me-80">
+        <div className="w-full font-bold  flex justify-center md:me-80">
           <button className="">
             {dictionary.currentShare[lang]}
             {shareValue?.toLocaleString() ?? (
@@ -37,7 +37,7 @@ const Page = () => {
         <Deposit />
       </div>
       {shareValue && shareValue > 0 ? (
-        <div className="w-full fixed  left-0 md:top-20 md:mt-3 md:start-1/2 bottom-0 md:flex gap-3 md:ps-5">
+        <div className="w-full fixed h-fit left-0 md:top-20 md:mt-3 md:start-1/2 bottom-0 md:flex gap-3 md:ps-5">
           <Link
             href={"/invest"}
             className="w-1/2 md:w-24 md:btn-xs md:rounded btn btn-neutral rounded-none"
@@ -49,7 +49,7 @@ const Page = () => {
           </button>
         </div>
       ) : (
-        <div className="w-full fixed  left-0 md:top-20 md:mt-3 md:left-1/2 bottom-0 md:flex gap-3">
+        <div className="w-full  fixed  left-0 md:top-20 md:mt-3 md:left-1/2 bottom-0 md:flex gap-3">
           <Link
             href={"/invest"}
             className="w-full md:w-24 md:btn-xs md:rounded btn btn-neutral rounded-none"
