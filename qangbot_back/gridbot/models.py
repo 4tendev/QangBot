@@ -16,6 +16,7 @@ class GridBot(models.Model):
     updated = models.DateTimeField(auto_now=True)
     interval = models.IntegerField(default=60)
     lastTimeCheck=models.DateTimeField(blank=True, null=True , auto_now=False, auto_now_add=False)
+    position=models.FloatField(default=0)
     account_model = models.ForeignKey(
         ContentType, on_delete=models.PROTECT, related_name="GridBots")
     account_id = models.IntegerField()
@@ -80,7 +81,12 @@ class GridBot(models.Model):
                 self.save()
                 return self
         return False
-
+    
+    def updatePositionValue(self):
+        account = self.account
+        position= account.getPositionValue(self.contract)
+        if not position == None :
+            GridBot.objects.filter(id=self.id).update(position=position)
 
 class ActiveProxyManager(models.Manager):
     def get_queryset(self):
@@ -321,6 +327,23 @@ class CoinexAccount(models.Model):
                 e) + f" CoinexAccount with id {self.id} Failed to in connetion cancelAllOrders")
         return False
 
+    def getPositionValue(self, contract) :
+        result = " "
+        try:
+            market = contract.apiIdentifier
+            positions = self.robot.query_position_pending(market=market)
+            if not positions["code"] == 0 :
+                return None
+            if positions["data"] :
+                for position in positions["data"]:
+                    if position["market"] == market :
+                        return float(position["amount"] )
+            return 0
+        except Exception as e:
+            print(result)
+            print(
+                str(e) + f" CoinexAccount with id {self.id} Failed to in connetion getPositionValue")
+        return None   
     def closePosition(self, contract):
         result = " "
         try:
@@ -399,3 +422,5 @@ class Contract (models.Model):
 
     def __str__(self):
         return self.name
+
+    

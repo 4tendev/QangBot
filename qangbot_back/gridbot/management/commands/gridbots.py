@@ -50,6 +50,7 @@ class Command(BaseCommand):
                     cache.set(gridBOTkey, 1, timeout=gridBot.interval)
                     gridBot.checkOpenGrids()
                     gridBot.makeOrders()
+                    gridBot.updatePositionValue()
                     GridBot.objects.filter(id=gridBot.id).update(
                         lastTimeCheck=datetime.datetime.now())
                 GridBot.cachWorkerWorking()

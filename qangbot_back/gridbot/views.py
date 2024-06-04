@@ -39,6 +39,7 @@ def getBotData(gridtBot: GridBot):
         "lastheck": int((datetime.datetime.now() - gridtBot.lastTimeCheck).total_seconds()) if gridtBot.lastTimeCheck else 0,
         "accountName": gridtBot.account.name,
         "grids": [getGridData(grid) for grid in gridtBot.Grids.all()],
+        "position": gridtBot.position,
         "gridsCreationLimit" : gridtBot.gridCreationLimit()
     }
 
@@ -462,3 +463,4 @@ def grid(request, gridID):
     except:
         return JsonResponse(serverErrorResponse)
     return JsonResponse(data)
+
