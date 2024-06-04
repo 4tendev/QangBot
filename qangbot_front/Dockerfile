@@ -22,8 +22,8 @@ RUN echo "NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}" > .env.local
 
 RUN npm run build
 
-# Expose the application's port (Next.js default is 3000)
-EXPOSE 3000
+# Expose the application's port (Next.js default is 3000) 
+EXPOSE 3000 
 
 # Start the Next.js application
 CMD ["npm", "start"]

@@ -13,7 +13,7 @@ def create_default_exchange():
             "name": "BTCUSDT",
             "url": "https://www.coinex.com/en/futures/marketinfo/info?market=BTCUSDT",
             "apiIdentifier": "BTCUSDT"
-        },
+        }, 
         {
             "name": "BTCUSD",
             "url": "https://www.coinex.com/en/futures/marketinfo/info?market=BTCUSD",

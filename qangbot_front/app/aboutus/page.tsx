@@ -11,7 +11,7 @@ const Page = () => {
     <div className="flex flex-col gap-3 mx-auto max-w-5xl px-6 sm:px-11 pb-10">
       <div className="flex max-[500px]:flex-col items-center ">
         <div className="w-1/2 max-[500px]:w-full pt-5">
-          {dictionary.intro[lang]}
+          {dictionary.intro[lang]} 
         </div>
         <Image
           alt="Us"
