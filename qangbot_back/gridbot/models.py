@@ -75,8 +75,9 @@ class GridBot(models.Model):
     def stop(self):
         account = self.account
         if account.cancelAllOrders(self.contract):
+            self.Grids.all().update(is_active=False)
             if account.closePosition(self.contract):
-                self.Grids.all().update(is_active=False)
+                self.position = 0
                 self.status = False
                 self.save()
                 return self
