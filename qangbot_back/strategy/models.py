@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from coinexlib import CoinexPerpetualApi
+from lyralib import LyraApi
 from core.settings import DEFAULT_PROXY_USERNAME, DEFAULT_PROXY_PASSWORD, DEFAULT_PROXY_URL
 from django.core import signing
 from django.core.cache import cache
@@ -121,6 +122,55 @@ class CoinexFutureAccount(models.Model):
             return None
 
 
+class LyraAccount(models.Model):
+    sessionPrivateKey = models.CharField(max_length=255)
+    smart_Contract_Wallet_Address = models.CharField(max_length=255)
+    subAccountID=models.IntegerField()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.smart_Contract_Wallet_Address:
+            proxy = {
+                'https': f'http://{DEFAULT_PROXY_USERNAME}:{ DEFAULT_PROXY_PASSWORD}@{DEFAULT_PROXY_URL}'
+            }
+            if self.id:
+                self.client = LyraApi(signing.loads(
+                    self.smart_Contract_Wallet_Address), signing.loads(self.sessionPrivateKey), proxy)
+            else:
+                self.client = LyraApi(
+                    self.smart_Contract_Wallet_Address, self.sessionPrivateKey, proxy)
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.sessionPrivateKey = signing.dumps(self.sessionPrivateKey)
+            self.smart_Contract_Wallet_Address = signing.dumps(self.smart_Contract_Wallet_Address)
+        super().save(*args, **kwargs)
+
+    def USDValue(self):
+        response = " "
+        try:
+            totalUSD = 0
+            accountID=self.subAccountID
+            response = self.client.subAccount(accountID)
+            if response["result"]['subaccount_id'] == accountID:
+                for collateral in response["result"]["collaterals"]:
+                    from strategy.models import Asset
+                    asset = Asset.objects.filter(strSymbol=collateral['asset_name'])
+                    if not asset:
+                        continue
+                    asset = asset[0]
+                    totalAsset = float(collateral['amount'])
+                    totalUSD += (totalAsset * asset.USDRate())
+                totalUSD+=float(response["result"]["positions_value"])
+            else:
+                print(response)
+                print(" USDValue Lyra  no Result")
+                return None
+            return round(totalUSD, 2)
+        except Exception as e:
+            print(response)
+            print(str(e) + " USDValue Lyra ")
+            return None
+
+
 class Account(models.Model):
     account_model = models.ForeignKey(
         ContentType, on_delete=models.PROTECT, related_name="Accounts")
@@ -209,7 +259,7 @@ class ParticipantBTCAddress(models.Model):
         "ParticipantBTCAddress"), on_delete=models.PROTECT)
 
     def __str__(self):
-        return (self.user.email if self.user else "" )+ self.address
+        return (self.user.email if self.user else "") + self.address
 
     def createParticipantBTCAddress(user: User):
         unUsedparticipantBTCAddress = ParticipantBTCAddress.objects.filter(
@@ -234,12 +284,12 @@ class ParticipantBTCAddress(models.Model):
         btcAddress = self.address
         txsResponse = cache.get(btcAddress)
         if not txsResponse:
-                response = requests.get(
-                    f"https://mempool.space/api/address/{btcAddress}/txs/chain").json()
-                txsResponse = [
-                    {"result": sum([(out["value"] if out["scriptpubkey_address"] == btcAddress else 0)for out in tx["vout"]]), "hash": tx["txid"]} for tx in response
-                ]
-                cache.set(btcAddress, txsResponse, timeout=600)
+            response = requests.get(
+                f"https://mempool.space/api/address/{btcAddress}/txs/chain").json()
+            txsResponse = [
+                {"result": sum([(out["value"] if out["scriptpubkey_address"] == btcAddress else 0)for out in tx["vout"]]), "hash": tx["txid"]} for tx in response
+            ]
+            cache.set(btcAddress, txsResponse, timeout=600)
         if txsResponse:
             for tx in txsResponse:
                 if tx["result"] > 0:
@@ -253,7 +303,7 @@ class ParticipantBTCAddress(models.Model):
 
 class Transaction(models.Model):
     txHash = models.CharField(unique=True, max_length=255)
-    created=models.DateField(auto_now_add=True)
+    created = models.DateField(auto_now_add=True)
     assetValue = models.ManyToManyField(
         AssetValue, related_name="Transactions")
     address = models.ForeignKey(
@@ -262,4 +312,4 @@ class Transaction(models.Model):
         Participant, related_name="Transactions")
 
     def __str__(self):
-        return str( self.txHash)[-5:-1]
+        return str(self.txHash)[-5:-1]
