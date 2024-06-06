@@ -3,12 +3,11 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from coinexlib import CoinexPerpetualApi
 from lyralib import LyraApi
-from core.settings import DEFAULT_PROXY_USERNAME, DEFAULT_PROXY_PASSWORD, DEFAULT_PROXY_URL
+from core.settings import PROXY
 from django.core import signing
 from django.core.cache import cache
 from user.models import User
 import requests
-from django.core.cache import cache
 
 
 def getHistoryDate(history):
@@ -27,9 +26,7 @@ def asstUSDRate(name):
     if cachedRate:
         return float(cachedRate)
     rate = 0
-    api = CoinexPerpetualApi("", "", {
-        'https': f'http://{DEFAULT_PROXY_USERNAME}:{ DEFAULT_PROXY_PASSWORD}@{DEFAULT_PROXY_URL}'
-    })
+    api = CoinexPerpetualApi("", "", PROXY)
     match name:
         case "BTC":
             response = api.get_market_state(market="BTCUSD")
@@ -82,13 +79,11 @@ class CoinexFutureAccount(models.Model):
         super().__init__(*args, **kwargs)
         if self.access_ID:
             if self.id:
-                self.robot = CoinexPerpetualApi(signing.loads(self.access_ID), signing.loads(self.secret_key), {
-                    'https': f'http://{DEFAULT_PROXY_USERNAME}:{ DEFAULT_PROXY_PASSWORD}@{DEFAULT_PROXY_URL}'
-                })
+                self.robot = CoinexPerpetualApi(signing.loads(
+                    self.access_ID), signing.loads(self.secret_key), PROXY)
             else:
-                self.robot = CoinexPerpetualApi(self.access_ID, self.secret_key, {
-                    'https': f'http://{DEFAULT_PROXY_USERNAME}:{ DEFAULT_PROXY_PASSWORD}@{DEFAULT_PROXY_URL}'
-                })
+                self.robot = CoinexPerpetualApi(
+                    self.access_ID, self.secret_key, PROXY)
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -125,41 +120,42 @@ class CoinexFutureAccount(models.Model):
 class LyraAccount(models.Model):
     sessionPrivateKey = models.CharField(max_length=255)
     smart_Contract_Wallet_Address = models.CharField(max_length=255)
-    subAccountID=models.IntegerField()
+    subAccountID = models.IntegerField()
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.smart_Contract_Wallet_Address:
-            proxy = {
-                'https': f'http://{DEFAULT_PROXY_USERNAME}:{ DEFAULT_PROXY_PASSWORD}@{DEFAULT_PROXY_URL}'
-            }
             if self.id:
                 self.client = LyraApi(signing.loads(
-                    self.smart_Contract_Wallet_Address), signing.loads(self.sessionPrivateKey), proxy)
+                    self.smart_Contract_Wallet_Address), signing.loads(self.sessionPrivateKey), PROXY)
             else:
                 self.client = LyraApi(
-                    self.smart_Contract_Wallet_Address, self.sessionPrivateKey, proxy)
+                    self.smart_Contract_Wallet_Address, self.sessionPrivateKey, PROXY)
+
     def save(self, *args, **kwargs):
         if not self.pk:
             self.sessionPrivateKey = signing.dumps(self.sessionPrivateKey)
-            self.smart_Contract_Wallet_Address = signing.dumps(self.smart_Contract_Wallet_Address)
+            self.smart_Contract_Wallet_Address = signing.dumps(
+                self.smart_Contract_Wallet_Address)
         super().save(*args, **kwargs)
 
     def USDValue(self):
         response = " "
         try:
             totalUSD = 0
-            accountID=self.subAccountID
+            accountID = self.subAccountID
             response = self.client.subAccount(accountID)
             if response["result"]['subaccount_id'] == accountID:
                 for collateral in response["result"]["collaterals"]:
                     from strategy.models import Asset
-                    asset = Asset.objects.filter(strSymbol=collateral['asset_name'])
+                    asset = Asset.objects.filter(
+                        strSymbol=collateral['asset_name'])
                     if not asset:
                         continue
                     asset = asset[0]
                     totalAsset = float(collateral['amount'])
                     totalUSD += (totalAsset * asset.USDRate())
-                totalUSD+=float(response["result"]["positions_value"])
+                totalUSD += float(response["result"]["positions_value"])
             else:
                 print(response)
                 print(" USDValue Lyra  no Result")

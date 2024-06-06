@@ -3,11 +3,12 @@ from user.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from coinexlib import CoinexPerpetualApi
-from core.settings import DEFAULT_PROXY_USERNAME, DEFAULT_PROXY_PASSWORD, DEFAULT_PROXY_URL, NONE_VIP_CREATION_LIMIT, NONE_VIP_GRIDS_CREATION_LIMIT
+from core.settings import PROXY, NONE_VIP_CREATION_LIMIT, NONE_VIP_GRIDS_CREATION_LIMIT
 from .forms import CreateCoinexAccountForm
 from django.core import signing
 
 from django.core.cache import cache
+
 
 class GridBot(models.Model):
     name = models.CharField(max_length=50)
@@ -15,8 +16,9 @@ class GridBot(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     interval = models.IntegerField(default=60)
-    lastTimeCheck=models.DateTimeField(blank=True, null=True , auto_now=False, auto_now_add=False)
-    position=models.FloatField(default=0)
+    lastTimeCheck = models.DateTimeField(
+        blank=True, null=True, auto_now=False, auto_now_add=False)
+    position = models.FloatField(default=0)
     account_model = models.ForeignKey(
         ContentType, on_delete=models.PROTECT, related_name="GridBots")
     account_id = models.IntegerField()
@@ -28,14 +30,14 @@ class GridBot(models.Model):
     noneVIPCreationLimit = int(NONE_VIP_CREATION_LIMIT)
     noneVIPGridsCreationLimit = int(NONE_VIP_GRIDS_CREATION_LIMIT)
 
-    workerCachName="GridBotWorking"
-    workerCachTime=350
+    workerCachName = "GridBotWorking"
+    workerCachTime = 350
 
     def cachWorkerWorking():
-        cache.set(GridBot.workerCachName, 1, timeout=GridBot.workerCachTime)  
+        cache.set(GridBot.workerCachName, 1, timeout=GridBot.workerCachTime)
 
     def checkWorkerWorking():
-        return cache.get(GridBot.workerCachName)  
+        return cache.get(GridBot.workerCachName)
 
     def removeAllGrids(self) -> bool:
         if self.account.cancelAllOrders(self.contract):
@@ -82,12 +84,13 @@ class GridBot(models.Model):
                 self.save()
                 return self
         return False
-    
+
     def updatePositionValue(self):
         account = self.account
-        position= account.getPositionValue(self.contract)
-        if not position == None :
+        position = account.getPositionValue(self.contract)
+        if not position == None:
             GridBot.objects.filter(id=self.id).update(position=position)
+
 
 class ActiveProxyManager(models.Manager):
     def get_queryset(self):
@@ -149,18 +152,17 @@ class Grid(models.Model):
             if not self.order or self.order.cancelOrder():
                 grid.update(status=3)
         return Grid.objects.get(id=self.id)
-    
-    def resume( self,nextPosition  ) :
-        grid = Grid.objects.filter(id=self.id, status=3)
-        if grid :
-            grid.update(nextPosition =nextPosition ,status=0)
-        return Grid.objects.get(id=self.id)
-    
-    def  delete( self  ) :
-        grid = Grid.objects.filter(id=self.id, status=3)
-        if grid :
-            grid.update(is_active=False)
 
+    def resume(self, nextPosition):
+        grid = Grid.objects.filter(id=self.id, status=3)
+        if grid:
+            grid.update(nextPosition=nextPosition, status=0)
+        return Grid.objects.get(id=self.id)
+
+    def delete(self):
+        grid = Grid.objects.filter(id=self.id, status=3)
+        if grid:
+            grid.update(is_active=False)
 
 
 class Order(models.Model):
@@ -218,22 +220,19 @@ class CoinexAccount(models.Model):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if self.access_ID :
+        if self.access_ID:
             if self.id:
-                self.robot = CoinexPerpetualApi(signing.loads(self.access_ID), signing.loads(self.secret_key), {
-                    'https': f'http://{DEFAULT_PROXY_USERNAME}:{ DEFAULT_PROXY_PASSWORD}@{DEFAULT_PROXY_URL}'
-                })
+                self.robot = CoinexPerpetualApi(signing.loads(
+                    self.access_ID), signing.loads(self.secret_key), PROXY)
             else:
-                self.robot = CoinexPerpetualApi(self.access_ID, self.secret_key, {
-                    'https': f'http://{DEFAULT_PROXY_USERNAME}:{ DEFAULT_PROXY_PASSWORD}@{DEFAULT_PROXY_URL}'
-                })
+                self.robot = CoinexPerpetualApi(
+                    self.access_ID, self.secret_key, PROXY)
 
     def save(self, *args, **kwargs):
         if not self.pk:
             self.access_ID = signing.dumps(self.access_ID)
             self.secret_key = signing.dumps(self.secret_key)
         super().save(*args, **kwargs)
-
 
     def cancelOrder(self, orderID, contract):
         market = contract.apiIdentifier
@@ -328,23 +327,24 @@ class CoinexAccount(models.Model):
                 e) + f" CoinexAccount with id {self.id} Failed to in connetion cancelAllOrders")
         return False
 
-    def getPositionValue(self, contract) :
+    def getPositionValue(self, contract):
         result = " "
         try:
             market = contract.apiIdentifier
             positions = self.robot.query_position_pending(market=market)
-            if not positions["code"] == 0 :
+            if not positions["code"] == 0:
                 return None
-            if positions["data"] :
+            if positions["data"]:
                 for position in positions["data"]:
-                    if position["market"] == market :
-                        return (1 if position["side"] ==2 else -1)* float(position["amount"] )
+                    if position["market"] == market:
+                        return (1 if position["side"] == 2 else -1) * float(position["amount"])
             return 0
         except Exception as e:
             print(result)
             print(
                 str(e) + f" CoinexAccount with id {self.id} Failed to in connetion getPositionValue")
-        return None   
+        return None
+
     def closePosition(self, contract):
         result = " "
         try:
@@ -423,5 +423,3 @@ class Contract (models.Model):
 
     def __str__(self):
         return self.name
-
-    
