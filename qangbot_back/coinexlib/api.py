@@ -15,8 +15,8 @@ class CoinexPerpetualApi(object):
     POSITION_TYPE_ISOLATED = 1
     POSITION_TYPE_CROSS_MARGIN = 2
 
-    def __init__(self, access_id, secret_key, logger=None):
-        self.request_client = RequestClient(access_id, secret_key, logger)
+    def __init__(self, access_id, secret_key, proxy=None, logger=None):
+        self.request_client = RequestClient(access_id, secret_key, proxy, logger)
 
     # System API
     def ping(self):

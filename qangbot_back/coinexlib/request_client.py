@@ -17,7 +17,7 @@ class RequestClient(object):
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36'
     }
 
-    def __init__(self, access_id, secret_key,proxy, logger=None, debug=False):
+    def __init__(self, access_id, secret_key,proxy=None, logger=None,):
         self.access_id = access_id
         self.secret_key = secret_key
         self.headers = self.__headers
