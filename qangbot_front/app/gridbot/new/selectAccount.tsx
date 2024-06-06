@@ -115,7 +115,9 @@ const SelectAccount = (props: {
             : props.setAccountID(0);
         }}
         value={account}
-        className={"select select-bordered w-full " + (!account ?"select-warning" : " ") }
+        className={
+          "select select-bordered w-full " + (!account ? "select-warning" : " ")
+        }
       >
         <option value={""} className="my-1 border-2">
           {dictionary["createAccount"][lang]}
@@ -131,7 +133,7 @@ const SelectAccount = (props: {
         ))}
       </select>
       {account ? null : (
-        <div className=" mt-2">
+        <div className=" mt-2 sm:px-5">
           <UseFormTemplate form={form} action={createAccount} />
         </div>
       )}
