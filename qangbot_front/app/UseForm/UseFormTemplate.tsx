@@ -79,21 +79,25 @@ const UseFormTemplate = (props: {
   }
 
   return (
-    <div className=" w-full ">
+    <div className=" w-full  h-full">
+     
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={`card-body  p-0 w-full`}
+        className={`card-body h-full  justify-between  p-0 w-full pb-14 sm:pb-0`}
       >
+          <div className="overflow-auto sm:px-0 px-5">
         {form.inputs.map((input, index) => (
           <div key={index} className="my-1">
             {inputSelector(input)}
           </div>
         ))}
         {responseMessage ? responseMessage : null}
+       
+        </div>
         <button
           type="submit"
           disabled={onSubmitMode ?? true}
-          className="btn shadow-md btn-primary my-1  "
+          className="btn grow w-screen  sm:w-full left-0 fixed bottom-0 sm:static shadow-md btn-primary mt-1 sm:rounded rounded-none  "
         >
           {onSubmitMode ? (
             <>

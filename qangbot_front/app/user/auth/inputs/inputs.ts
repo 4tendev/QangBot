@@ -40,8 +40,6 @@ export function trustedDeviceInput(lang: Language): Input {
   };
 }
 
-
-
 export function emailInput(lang: Language): Input {
   return {
     type: "text",
@@ -74,9 +72,9 @@ export function emailCodeInput(lang: Language): Input {
 }
 
 export function repeatPasswordInput(lang: Language): Input {
-  const repeatPasswordInput =passwordInput(lang)
-  repeatPasswordInput.name = "repeatPassword"
-  repeatPasswordInput.placeHolder =dictionary["repeat"][lang]
+  const repeatPasswordInput = passwordInput(lang);
+  repeatPasswordInput.name = "repeatPassword";
+  repeatPasswordInput.placeHolder = dictionary["repeat"][lang];
   return repeatPasswordInput;
 }
 export function newPasswordInput(lang: Language): Input {
