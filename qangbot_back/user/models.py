@@ -54,11 +54,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.TOTP = pyotp.TOTP(self.TOTPKey) if self.TOTPKey else None
         self.TOTPredisKey = str(self.id) + "TOTP"
 
+
     def canPassTotp(self, code):
         TOTP = self.TOTP
         if TOTP != None:
             if not code:
-                return None
+                return False
             if not self.TOTP.verify(otp=code, valid_window=1):
                 return False
         return True

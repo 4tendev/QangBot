@@ -27,9 +27,18 @@ class ResetPasswordForm(forms.Form):
     newPassword = forms.CharField(max_length=100, min_length=8, required=False)
     emailCode = emailCodeField
 
+
 class ChangePasswordForm(forms.Form):
     password = passwordField
     newPassword = forms.CharField(max_length=100, min_length=8, required=False)
 
+
 class CheckPaidForm(forms.Form):
-    address=forms.CharField( required=True)
+    address = forms.CharField(required=True)
+
+
+class TOTPUpdateForm(forms.Form):
+    TOTPKey=forms.CharField(required=True)
+    TOTPCode = forms.CharField(required=True)
+    currentTOTPCode = forms.CharField(required=False)
+    emailCode = forms.CharField(required=True)
