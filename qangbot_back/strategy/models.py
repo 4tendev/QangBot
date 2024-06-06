@@ -96,6 +96,7 @@ class CoinexFutureAccount(models.Model):
         try:
             totalUSD = 0
             response = self.robot.query_account()
+            print(response)
             if response["code"] == 0:
                 for accountAsset in response["data"]:
                     from strategy.models import Asset
@@ -107,12 +108,10 @@ class CoinexFutureAccount(models.Model):
                         response["data"][accountAsset]['margin']) + float(response["data"][accountAsset]['profit_unreal'])
                     totalUSD += (totalAsset * asset.USDRate())
             else:
-                print(response)
                 print(" get_assets Coinex  unknown CODE")
                 return None
             return round(totalUSD, 2)
         except Exception as e:
-            print(response)
             print(str(e) + " get_assets Coinex ")
             return None
 
@@ -145,6 +144,7 @@ class LyraAccount(models.Model):
             totalUSD = 0
             accountID = self.subAccountID
             response = self.client.subAccount(accountID)
+            print(response)
             if response["result"]['subaccount_id'] == accountID:
                 for collateral in response["result"]["collaterals"]:
                     from strategy.models import Asset
@@ -157,12 +157,10 @@ class LyraAccount(models.Model):
                     totalUSD += (totalAsset * asset.USDRate())
                 totalUSD += float(response["result"]["positions_value"])
             else:
-                print(response)
                 print(" USDValue Lyra  no Result")
                 return None
             return round(totalUSD, 2)
         except Exception as e:
-            print(response)
             print(str(e) + " USDValue Lyra ")
             return None
 
