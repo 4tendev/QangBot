@@ -5,9 +5,10 @@ from django.contrib.auth import login, authenticate, logout, update_session_auth
 
 from django_ratelimit.decorators import ratelimit
 
-from .forms import LoginForm, RegisterForm, ResetPasswordForm, ChangePasswordForm, CheckPaidForm
+from .forms import LoginForm, RegisterForm, ResetPasswordForm, ChangePasswordForm, CheckPaidForm, TOTPUpdateForm
 from .models import User, VIPBTCAddress
 from .EmailOTP import createCode, checkCode
+import pyotp
 
 
 def emailInput(group, request):
@@ -84,16 +85,17 @@ def auth(request):
                 password = form.cleaned_data.get("password")
                 trustedDevice = form.cleaned_data.get("trustedDevice") or False
                 emailCode = form.cleaned_data.get("emailCode") or False
-
-                if getattr(request, 'limited', False):
-                    user = User.objects.filter(
-                        email=email
-                    )
-                    data = {"code": "400",
-                            "message": "Cant authurize"
-                            }
-                    if not user:
-                        return JsonResponse(data)
+                user = User.objects.filter(
+                    email=email
+                )
+                if not user:
+                    return JsonResponse(data)
+                totpCheckPass = user[0].canPassTotp(totpCode)
+                if not totpCheckPass:
+                    responseCode, responseMessage = (
+                        "4006", "TOTP REQUIRED") if totpCode == "" else ("4007", "TOTP Wrong")
+                    return JsonResponse({"code": responseCode, "message": responseMessage})
+                if getattr(request, 'limited', False) and not totpCode:
                     VERIFY_FOR_LOGIN = "LOGIN"
                     if not emailCode:
 
@@ -123,10 +125,7 @@ def auth(request):
                 user = authenticate(email=email, password=password)
                 if user is None:
                     return JsonResponse(data)
-                totpCheckPass = user.canPassTotp(totpCode)
-                if not totpCheckPass:
-                    responseCode, responseMessage = "4006", "TOTP REQUIRED" if totpCheckPass == None else "4007", "TOTP Wrong"
-                    return JsonResponse({"code": responseCode, "message": responseMessage})
+
                 login(request, user)
                 if not trustedDevice:
                     request.session.set_expiry(0)
@@ -357,6 +356,94 @@ def updateVIP(request):
                 }
     except Exception as e:
         print("You may need add btc addresses so they can update their plan")
+        print(e)
+        data = {"code": "500"}
+    return JsonResponse(data)
+
+
+def updateTOTP(request):
+    user = request.user
+    data = {
+        "code": "400",
+        "message": "User Unknown",
+    }
+    if not user.is_authenticated:
+        return JsonResponse(data)
+    try:
+        data = {
+            "code": "405",
+            "message": "Method not Allowed"
+        }
+        method = request.method
+        VERIFY_FOR_TOTP = "TOTP_VERIFICATION"
+        match method:
+            case "GET":
+                data = {
+                    "code": "500",
+                    "message": "Server Error"
+                }
+                timeRemaining = createCode(
+                    user.email, VERIFY_FOR_TOTP)
+                if timeRemaining:
+                    data = {
+                        "code": "200",
+                        "data": {"timeRemaining": timeRemaining, },
+                        "message": "Code Sent"
+                    }
+            case "POST":
+                form_data = json.loads(request.body)
+                form = TOTPUpdateForm(form_data)
+                data = {
+                    "code": "400",
+                    "meesage": "Invalid inputs"
+                }
+                if not form.is_valid():
+                    return JsonResponse(data)
+                currentTOTPCode = form.cleaned_data.get("currentTOTPCode")
+                if user.canPassTotp(currentTOTPCode) == False:
+                    data = {
+                        "code": "401",
+                        "meesage": "Invalid current totp Code"
+                    }
+                    return JsonResponse(data)
+                TOTPCode = form.cleaned_data.get("TOTPCode")
+                TOTPKey = form.cleaned_data.get("TOTPKey")
+                emailCode = form.cleaned_data.get("emailCode")
+                totp = pyotp.TOTP(TOTPKey)
+                data = {
+                    "code": "400"
+                }
+                if not totp.verify(otp=TOTPCode, valid_window=1):
+                    data = {
+                        "code": "402",
+                        "message": "Invalid New totp Code"
+                    }
+                    return JsonResponse(data)
+                isCodeAcceptable = checkCode(
+                    user.email, VERIFY_FOR_TOTP, emailCode)
+                if isCodeAcceptable:
+                    user.TOTPKey = TOTPKey
+                    user.save()
+                    data = {
+                        "code": "200",
+                        "message": "TOTP Updated",
+                        "data": userData(user)
+
+                    }
+                elif isCodeAcceptable == None:
+                    timeRemaining = createCode(
+                        user.email, VERIFY_FOR_TOTP)
+                    data = {
+                        "code": "403",
+                        "message": "Email Code Sent",
+                        "data": {"timeRemaining": timeRemaining}
+                    }
+                else:
+                    data = {
+                        "code": "404",
+                        "message": "Wrong Email Code",
+                    }
+    except Exception as e:
         print(e)
         data = {"code": "500"}
     return JsonResponse(data)
