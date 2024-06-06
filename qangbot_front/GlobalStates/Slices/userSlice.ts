@@ -35,12 +35,12 @@ export const userSlice = createSlice({
     isKnown: (user) => user.isKnown,
     isVIP : (user) => user.isVIP,
     vipExpiration : (user) => user.vipExpiration,
-
+    totpActivated :  (user) => user.totpActivated,
   },
 });
 
 export const { newUserState } =
   userSlice.actions;
 
-export const { isKnown ,isVIP , vipExpiration} = userSlice.selectors;
+export const { isKnown ,isVIP , vipExpiration , totpActivated} = userSlice.selectors;
 
