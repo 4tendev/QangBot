@@ -28,17 +28,22 @@ def vip(request):
     })
 
 
-def userData(user):
+unKnownUserData = {
+    "totpActivated": None,
+    "isKnown": False,
+    "isVIP": False,
+    "vipExpiration":  None
+}
+
+
+def userData(user: User):
     return {
 
         "isKnown": True,
         "isVIP": user.isVIP(),
-        "vipExpiration":  user.vipExpiration.date() if user.vipExpiration else None
-    } if user.is_authenticated else {
-        "isKnown": False,
-        "isVIP": False,
-        "vipExpiration":  None
-    }
+        "vipExpiration":  user.vipExpiration.date() if user.vipExpiration else None,
+        "totpActivated": user.TOTPActivated(),
+    } if user.is_authenticated else unKnownUserData
 
 
 @ratelimit(key=emailInput, method=['PATCH'], block=False, rate='45/d')
@@ -133,7 +138,8 @@ def auth(request):
             case "DELETE":
                 logout(request)
                 data = {
-                    "code": "200"
+                    "code": "200",
+                    "data": unKnownUserData
                 }
             case "POST":
                 VERIFY_FOR_REGISTER = "REGISTERATION"
@@ -326,7 +332,7 @@ def updateVIP(request):
                     "code": "200",
                     "data": {
                         "address": VIPBTCAddress.depositAddress(user),
-                        "price" : User.VIPPRICE
+                        "price": User.VIPPRICE
                     }
                 }
             case "POST":
@@ -352,5 +358,5 @@ def updateVIP(request):
     except Exception as e:
         print("You may need add btc addresses so they can update their plan")
         print(e)
-        data={"code" : "500"}
+        data = {"code": "500"}
     return JsonResponse(data)

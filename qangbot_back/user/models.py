@@ -70,6 +70,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     def isRecentlyRemovedTOTP(self):
         return True if redis_client.get(self.TOTPredisKey) else False
 
+    def TOTPActivated(self):
+        return self.TOTPKey != None
+
     def updateVIPTime(self, days=370):
         now = datetime.now()
         if self.validVIPTime == None or now > self.validVIPTime:
@@ -92,13 +95,13 @@ class VIPBTCAddress(models.Model):
     paid = models.BooleanField(default=False)
 
     def checkPaid(self):
-        address = self.address   
-        if self.paid :
-            return True   
-        if VIPBTCAddress.objects.filter(id=self.id, paid=False) and not cache.get(address) :
+        address = self.address
+        if self.paid:
+            return True
+        if VIPBTCAddress.objects.filter(id=self.id, paid=False) and not cache.get(address):
             response = requests.get(
                 f"https://mempool.space/api/address/{address}")
-            cache.set(address,1,timeout=300)
+            cache.set(address, 1, timeout=300)
             if response.status_code == 200:
                 totalRecieved = response.json(
                 )["chain_stats"]["funded_txo_sum"]
@@ -107,13 +110,13 @@ class VIPBTCAddress(models.Model):
                     self.save()
                     self.user.updateVIPTime()
                     return True
-                
-    def depositAddress(user) :
-        address = VIPBTCAddress.objects.filter(paid =False ,user=user )
-        if address : 
+
+    def depositAddress(user):
+        address = VIPBTCAddress.objects.filter(paid=False, user=user)
+        if address:
             return address[0].address
-        address = VIPBTCAddress.objects.filter(paid =False ,user__isnull=True  )[0]
-        address.user=user
+        address = VIPBTCAddress.objects.filter(
+            paid=False, user__isnull=True)[0]
+        address.user = user
         address.save()
         return address.address
-
