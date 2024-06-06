@@ -11,16 +11,21 @@ import Lougout from "./Logout/Lougout";
 import ProfileImage from "../ProfileImage";
 import TextSVG from "./TextSVG";
 
-import {menuList} from "@/app/user/UserMenu"
+import { TOTPSVG, menuList } from "@/app/user/UserMenu";
+import { totpActivated } from "@/GlobalStates/Slices/userSlice";
 
 export default function UserProfile() {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef  = useRef<HTMLUListElement | null>(null);
+  const dropdownRef = useRef<HTMLUListElement | null>(null);
   const lang = useAppSelector(language).lang;
+  const isTOTPActivated = useAppSelector(totpActivated);
 
   useEffect(() => {
-    const handleClickOutside = (event : MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node )) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -37,11 +42,18 @@ export default function UserProfile() {
   };
   const liClassName = "h-13 w-full flex items-center";
 
-
   return (
     <div className="dropdown dropdown-end ">
-      <div className="h-full flex items-center "  >
-        <ProfileImage onClick={()=> setIsOpen(true)}/>
+      <div className="h-full flex items-center relative">
+        <ProfileImage onClick={() => setIsOpen(true)} />
+        <div
+          className={
+            "absolute top-0 right-0 " +
+            (isTOTPActivated ? "test-success" : "text-error")
+          }
+        >
+          {TOTPSVG}
+        </div>
       </div>
 
       {isOpen && (
@@ -57,12 +69,11 @@ export default function UserProfile() {
                 className="w-full h-full"
                 href={item.href}
               >
-                <TextSVG  svg={item.svg} text={ item.text} />
-
+                <TextSVG svg={item.svg} text={item.text} />
               </Link>
             </li>
           ))}
-          <li className={liClassName} >
+          <li className={liClassName}>
             <Lougout />
           </li>
         </ul>
