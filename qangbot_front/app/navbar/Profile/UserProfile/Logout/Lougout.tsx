@@ -4,7 +4,7 @@ import { fetchapi } from "@/commonTsBrowser/fetchAPI";
 import { useAppSelector, useAppDispatch } from "@/GlobalStates/hooks";
 import { language } from "@/GlobalStates/Slices/languageSlice";
 import dictionary from "./dictionary.json";
-import { newUserState } from "@/GlobalStates/Slices/userSlice";
+import { newUserState  } from "@/GlobalStates/Slices/userSlice";
 import {
   newAlert,
   serverErrorAlert,
@@ -22,7 +22,7 @@ const Lougout = () => {
       try {
         const response = await fetchapi("/user/", "DELETE");
         if (response.code == "200") {
-          setGlobalState(newUserState({isKnown:false ,isVIP:false,vipExpiration:undefined}));
+          setGlobalState(newUserState(response.data));
           setGlobalState(
             newAlert({
               message: dictionary.logedout[lang],

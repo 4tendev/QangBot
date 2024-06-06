@@ -5,14 +5,16 @@ import  { createSlice } from "@reduxjs/toolkit";
 export interface UserSliceState {
     isKnown: boolean | undefined;
     isVIP : boolean | undefined ; 
-    vipExpiration : string | undefined
+    vipExpiration : string | undefined ;
+    totpActivated : boolean | undefined ;
 
 }
 
 const initialState: UserSliceState = {
     isKnown: undefined,
     isVIP : undefined,
-    vipExpiration : undefined
+    totpActivated :undefined,
+    vipExpiration : undefined,
 };
 
 export const userSlice = createSlice({
