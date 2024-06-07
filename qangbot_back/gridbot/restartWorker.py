@@ -29,7 +29,7 @@ def getDeploymentID(API_TOKEN, SERVICE_ID):
         }
         response = requests.post(API_ENDPOINT, json={
                                  "query": graphql_query, "variables": variables}, headers=headers)
-
+        print(response)
         if response.status_code == 200:
             data = response.json()
             print(data)
