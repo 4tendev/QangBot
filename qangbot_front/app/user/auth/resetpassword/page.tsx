@@ -23,7 +23,7 @@ import {
 } from "@/GlobalStates/Slices/alert/Slice";
 import { language } from "@/GlobalStates/Slices/languageSlice";
 import { useState } from "react";
-import EmailVerificationModal from "@/app/user/EmailVerification/EmailVerificationModal";
+import EmailVerificationModal from "@/app/user/EmailVerification/EmailVerificationModalV2";
 import Alert from "@/app/components/Alert/Alert";
 
 const Page = () => {

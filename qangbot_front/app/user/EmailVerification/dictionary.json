@@ -23,4 +23,9 @@
         "en": "Verify",
         "fa": "تایید"
     }
+    ,
+    "emailCode": {
+        "en": "Email Code",
+        "fa": "کد تایید ایمیل"
+    }
 }
