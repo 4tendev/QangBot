@@ -90,7 +90,8 @@ def auth(request):
                 )
                 if not user:
                     return JsonResponse(data)
-                totpCheckPass = user[0].canPassTotp(totpCode)
+                user=user[0]
+                totpCheckPass = user.canPassTotp(totpCode)
                 if not totpCheckPass:
                     responseCode, responseMessage = (
                         "4006", "TOTP REQUIRED") if totpCode == "" else ("4007", "TOTP Wrong")
