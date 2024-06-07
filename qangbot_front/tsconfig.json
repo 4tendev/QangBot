@@ -24,3 +24,4 @@
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/navbar/Profile/UserProfile/UserProfile.tsx", "app/strategy/Chart.tsx", "app/user/totp/update"],
   "exclude": ["node_modules"]
 }
+ 
