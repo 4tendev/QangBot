@@ -1,5 +1,4 @@
 {
-  
     "verification": {
         "en": "TOTP Verification.",
         "fa": "تایید رمز زمانی"
@@ -8,8 +7,6 @@
         "en": "TOTP Code",
         "fa": "رمز زمانی"
     },
-
-
     "dismiss": {
         "en": "Dismiss",
         "fa": "منصرف شدم"
@@ -17,5 +14,13 @@
     "verify": {
         "en": "Verify",
         "fa": "تایید"
+    },
+    "required": {
+        "en": "Required",
+        "fa": "لازم"
+    },
+    "6digit": {
+        "en": "6 Digit",
+        "fa": "6 رقمی"
     }
 }

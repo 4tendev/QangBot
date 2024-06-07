@@ -41,11 +41,11 @@ const VerificationModal = (props: {
 
   async function tryWithVerificationCode() {
     if (!emailCode) {
-      setResponse("Required");
+      setResponse(dictionary.required[lang]);
       return;
     }
     if (emailCode && emailCode.length !== 6) {
-      setResponse("Only 6 DIGIT");
+      setResponse(dictionary["6digit"][lang]);
       return;
     }
     setFetching(true);

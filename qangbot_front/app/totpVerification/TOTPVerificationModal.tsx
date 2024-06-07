@@ -25,11 +25,11 @@ const VerificationModal = (props: {
 
   async function tryWithVerificationCode() {
     if (!totpCode) {
-      setResponse("Required");
+      setResponse(dictionary.required[lang]);
       return;
     }
     if (totpCode && totpCode.length !== 6) {
-      setResponse("Only 6 DIGIT");
+      setResponse(dictionary["6digit"][lang]);
       return;
     }
     setFetching(true);

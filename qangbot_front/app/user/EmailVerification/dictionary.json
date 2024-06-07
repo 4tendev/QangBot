@@ -28,4 +28,14 @@
         "en": "Email Code",
         "fa": "کد تایید ایمیل"
     }
+    ,
+    "required": {
+        "en": "Required",
+        "fa": "لازم"
+    }
+    ,
+    "6digit": {
+        "en": "6 Digit",
+        "fa": "6 رقمی"
+    }
 }
