@@ -6,7 +6,8 @@
     ,"deposit" : {"en" : "Deposit BTC To invest" , "fa" :"واریز بیت کوین برای سرمایه گذاری"}
     ,"equivalentShare" : {"en" : "Equivalent Share Value" , "fa" :"ارزش معادل سهم"}
     ,"fee" : {"en" : "Fee : 20$ + 1.2% Share/Year" , "fa" :"کارمزد 20دلار + 1.2% سال/سهم"}
-
+    
     ,"BTC" : {"en" : "BTC" , "fa" :"بیت کوین"}
+    ,"totpActivate" : {"en" : "Activate the Time Password to Invest" , "fa" :"فعال کردن رمززمانی برای سرمایه گذاری"}
 
 }

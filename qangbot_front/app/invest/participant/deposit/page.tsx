@@ -6,6 +6,8 @@ import dictionary from "./dictionary.json";
 import { useAppSelector } from "@/GlobalStates/hooks";
 import { language } from "@/GlobalStates/Slices/languageSlice";
 import Loading from "@/app/loading";
+import { totpActivated } from "@/GlobalStates/Slices/userSlice";
+import Link from "next/link";
 
 type Transaction = {
   txHash: string;
@@ -23,6 +25,7 @@ const Page = () => {
     undefined | DepositAddress
   >(undefined);
   const lang = useAppSelector(language).lang;
+  const isTOTPActivated = useAppSelector(totpActivated);
 
   function URI(depositAddress: DepositAddress) {
     return `bitcoin:${depositAddress.address}?label=Share`;
@@ -50,24 +53,20 @@ const Page = () => {
         <div className="text-accent text-xl font-bold my-1 text-center">
           {dictionary.deposit[lang]}
         </div>
+        {isTOTPActivated ? <>
         <div>
-          <small className="block">
+          <small className="block">{dictionary.convertProcess[lang]}</small>
 
-           {dictionary.convertProcess[lang]}
-          </small>
-           
           <small>{dictionary.processTime[lang]}</small>
           <small className="block">
-            <small className="text-lg text-info">
-            {dictionary.fee[lang]}
-            </small>
+            <small className="text-lg text-info">{dictionary.fee[lang]}</small>
           </small>
         </div>
+      
         <div className="bg-white p-3 m-2 my-3 w-fit mx-auto">
           <QRCode size={200} value={URI(depositAddress)} />
         </div>
         <div className="relative w-full p-0">
-         
           <small> {dictionary.address[lang]}</small>
           <button
             onClick={copyToClipboard}
@@ -88,7 +87,7 @@ const Page = () => {
               <path d="M208 0H332.1c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9V336c0 26.5-21.5 48-48 48H208c-26.5 0-48-21.5-48-48V48c0-26.5 21.5-48 48-48zM48 128h80v64H64V448H256V416h64v48c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V176c0-26.5 21.5-48 48-48z" />
             </svg>
           </button>
-        </div>
+        </div></>: <Link className="btn btn-success btn-sm text-xs" href={"/user/totp"}>{dictionary.totpActivate[lang]} </Link>  }
         {depositAddress.transactions.length > 0 && (
           <>
             <div className="text-start w-full text-xl">

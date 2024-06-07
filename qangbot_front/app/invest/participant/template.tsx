@@ -1,5 +1,4 @@
 "use client";
-import { botInfo, getBot } from "@/GlobalStates/Slices/botSlice";
 import { isKnown } from "@/GlobalStates/Slices/userSlice";
 import { useAppSelector } from "@/GlobalStates/hooks";
 import Loading from "@/app/loading";
