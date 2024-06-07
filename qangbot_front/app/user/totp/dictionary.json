@@ -1,0 +1,9 @@
+{
+    "authenticatorApp" : {"en" : "      Please set up an Authenticator App on your mobile device (like Google Authenticator) and use the Activate button to protect your account." , "fa" :"یک نرم افزار رمززمانی مانند(Google Authenticator) روی گوشی داشته باشید و روی فعال سازی کلیک کنید."}
+,    "notProtected" : {"en" : "Your account is not protected by a Time-Password." , "fa" :"اکانت شما با رمز زمانی مراقبت نشده است."},
+    "protected" : {"en" : "Your account is  protected by a Time-Password." , "fa" :"اکانت شما با رمز زمانی مراقبت شده است."},
+
+    "change" : {"en" : "Change" , "fa" :"تغییر"},
+    "activate" : {"en" : "Activate" , "fa" :"فعال کردن"}
+
+}

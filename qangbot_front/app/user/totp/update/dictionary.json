@@ -1,0 +1,64 @@
+{
+    "required": {
+        "en": "Required",
+        "fa": "لازم"
+    },
+    "sixDigit": {
+        "en": "6 Digit",
+        "fa": "6 رقمی"
+    },
+    "copy": {
+        "en": "to copy the secret Key",
+        "fa": "را تا کد لازم کپی شود."
+    },
+    "touch": {
+        "en": "Or touch",
+        "fa": "یا لمس کنید "
+    },
+    "scan": {
+        "en": "Please Scan QR code with your Authenticator App",
+        "fa": " توسط یک برنامه رمز زمانی کد QR را اسکن کنید"
+    },
+    "here": {
+        "en": "HERE",
+        "fa": "اینجا"
+    },
+    "402": {
+        "en": "Invalid Scanned TOTP Code",
+        "fa": "رمز اسکن شده صحیح نیست"
+    },
+    "401": {
+        "en": "Invalid current TOTP Code",
+        "fa": "رمز زمانی حال حاضر صحیح نیست"
+    },
+    "403": {
+        "en": "ََA New Email Sent for Email Verification",
+        "fa": "ایمیل جدید برای تایدد ایمیل ارسال شد"
+    },
+    "404": {
+        "en": "Email Code Is not currect",
+        "fa": "کد تایید ایمبل صحیح نیست"
+    }
+    ,
+    "scannedTOTP": {
+        "en": "Scanned Time Password",
+        "fa": "کد تایید اسکن شده"
+    },    "currentTOTP": {
+        "en": "Current Time Password",
+        "fa": "کد تایید حال حاضر "
+    }
+    ,
+    "update": {
+        "en": "Update",
+        "fa": "بروزرسانی"
+    }
+    ,
+    "emailCodeSent": {
+        "en": "Email Verification Code Sent.",
+        "fa": ".کدتایید ایمیل ارسال شد"
+    }    ,
+    "totpUpdated": {
+        "en": "Totp Updated.",
+        "fa": "رمز زمانی بروز شد"
+    }
+}
