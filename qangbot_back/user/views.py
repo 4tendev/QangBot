@@ -95,7 +95,7 @@ def auth(request):
                     responseCode, responseMessage = (
                         "4006", "TOTP REQUIRED") if totpCode == "" else ("4007", "TOTP Wrong")
                     return JsonResponse({"code": responseCode, "message": responseMessage})
-                if getattr(request, 'limited', False) and not totpCode:
+                if getattr(request, 'limited', False) and not user.TOTPActivated():
                     VERIFY_FOR_LOGIN = "LOGIN"
                     if not emailCode:
 
