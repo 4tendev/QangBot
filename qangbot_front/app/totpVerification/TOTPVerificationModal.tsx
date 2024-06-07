@@ -12,16 +12,23 @@ const VerificationModal = (props: {
   const data = props.data;
   const action = props.action;
   const lang = props.lang;
-  const [totpCode, settotpCode] = useState<number | "">("");
+  const [totpCode, settotpCode] = useState("");
   const [response, setResponse] = useState("");
   const [fetching, setFetching] = useState(false);
+
+  function changeInput(event: any) {
+    settotpCode(event.target.value);
+    if (event.target.value.length === 6) {
+      setResponse("");
+    }
+  }
 
   async function tryWithVerificationCode() {
     if (!totpCode) {
       setResponse("Required");
       return;
     }
-    if (totpCode && (totpCode < 99999 || totpCode > 999999)) {
+    if (totpCode && totpCode.length !== 6) {
       setResponse("Only 6 DIGIT");
       return;
     }
@@ -46,7 +53,7 @@ const VerificationModal = (props: {
         <div className="flex flex-col gap-3 w-full">
           <input
             value={totpCode}
-            onChange={(event) => settotpCode(Number(event.target.value))}
+            onChange={changeInput}
             onKeyDown={(event) => {
               if (event.key === "Enter") {
                 tryWithVerificationCode();
