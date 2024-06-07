@@ -1,0 +1,21 @@
+{
+  
+    "verification": {
+        "en": "TOTP Verification.",
+        "fa": "تایید رمز زمانی"
+    },
+    "totpCode": {
+        "en": "TOTP Code",
+        "fa": "رمز زمانی"
+    },
+
+
+    "dismiss": {
+        "en": "Dismiss",
+        "fa": "منصرف شدم"
+    },
+    "verify": {
+        "en": "Verify",
+        "fa": "تایید"
+    }
+}

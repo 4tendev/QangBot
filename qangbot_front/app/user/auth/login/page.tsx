@@ -23,6 +23,7 @@ import {
 import { language } from "@/GlobalStates/Slices/languageSlice";
 import { useState } from "react";
 import EmailVerificationModal from "@/app/user/EmailVerification/EmailVerificationModal";
+import TOTPlVerificationModal from "@/app/totpVerification/TOTPVerificationModal"
 import Alert from "@/app/components/Alert/Alert";
 
 const Page = () => {
@@ -60,6 +61,25 @@ const Page = () => {
           case "400":
               setModalVerification(undefined);
               break;
+          case "4007" :
+            return (
+              <Alert
+                alert={{
+                  message: responseMessageFinder(dictionary, lang, code),
+                  mode: "warning",
+                }}
+              />
+            );
+          case "4006" :
+            setModalVerification(
+              <TOTPlVerificationModal
+                key={Math.random()}
+                action={login}
+                data={data}
+                lang={lang}
+              />
+            );
+            return;            
           case "429":
             setModalVerification(
               <EmailVerificationModal
