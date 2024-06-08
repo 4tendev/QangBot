@@ -10,15 +10,6 @@ from user.models import User
 import requests
 
 
-def getHistoryDate(history):
-    return {
-        "id": history.id,
-        "btcROI": history.btcROI,
-        "ethROI": history.ethROI,
-        "usdROI": history.usdROI,
-        "date":  history.date
-    }
-
 
 def asstUSDRate(name):
     cachName = name + "asstUSDRate"
@@ -174,7 +165,25 @@ class Account(models.Model):
     def USDValue(self):
         return self.account.USDValue()
 
+class History(models.Model):
+    btcROI = models.IntegerField()
+    usdROI = models.IntegerField()
+    ethROI = models.IntegerField()
+    date = models.DateField(auto_now=False, auto_now_add=False)
+    strategy = models.ForeignKey(
+        "strategy.Strategy", related_name="Histories", on_delete=models.PROTECT)
 
+    def __str__(self):
+        return str(self.usdROI)+" " + str(self.date)
+
+def getHistoryDate(history :History):
+    return {
+        "id": history.id,
+        "btcROI": history.btcROI,
+        "ethROI": history.ethROI,
+        "usdROI": history.usdROI,
+        "date":  history.date
+    }
 class Strategy(models.Model):
     name = models.CharField(max_length=50)
     baseAssetValues = models.ManyToManyField(
@@ -224,16 +233,7 @@ class Strategy(models.Model):
             return None
 
 
-class History(models.Model):
-    btcROI = models.IntegerField()
-    usdROI = models.IntegerField()
-    ethROI = models.IntegerField()
-    date = models.DateField(auto_now=False, auto_now_add=False)
-    strategy = models.ForeignKey(
-        Strategy, related_name="Histories", on_delete=models.PROTECT)
 
-    def __str__(self):
-        return str(self.usdROI)+" " + str(self.date)
 
 
 class Participant(models.Model):
@@ -307,3 +307,14 @@ class Transaction(models.Model):
 
     def __str__(self):
         return str(self.txHash)[-5:-1]
+
+
+class Withdraw (models.Model):
+    BTCAddress = models.CharField(max_length=100)
+    user = models.ForeignKey(
+        User, related_name="Withdraws", on_delete=models.PROTECT)
+    status = models.BooleanField(null=True, blank=True)
+    fee = models.ForeignKey(AssetValue, blank=True,
+                            null=True, on_delete=models.PROTECT)
+    amount = models.ForeignKey(
+        AssetValue, blank=True, null=True, related_name="Withdraws", on_delete=models.PROTECT)

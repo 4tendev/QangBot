@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Transaction, Account, Asset, Strategy, AssetValue, CoinexFutureAccount, History, Participant, ParticipantBTCAddress,LyraAccount
+from .models import Transaction, Account, Asset, Strategy, AssetValue, CoinexFutureAccount, History, Participant, ParticipantBTCAddress,LyraAccount,Withdraw
 
 admin.site.register(Account)
 admin.site.register(Transaction)
@@ -11,3 +11,4 @@ admin.site.register(Strategy)
 admin.site.register(AssetValue)
 admin.site.register(LyraAccount)
 admin.site.register(ParticipantBTCAddress)
+admin.site.register(Withdraw)
