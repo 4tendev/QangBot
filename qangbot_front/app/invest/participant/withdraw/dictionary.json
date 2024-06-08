@@ -1,0 +1,30 @@
+{
+    "401": {
+        "en": "Wrong Toto Code",
+        "fa": "رمززمانی نامعتبر"
+    },
+    "200": {
+        "en": "Submited !",
+        "fa": "ثبت شد"
+    },
+    "btcAddress": {
+        "en": "BTC Address",
+        "fa": "آدرس بیت کوین"
+    },
+    "submit": {
+        "en": "Submit",
+        "fa": "ثبت"
+    },
+    "laswWithdraws": {
+        "en": "Last Withdraws",
+        "fa": "آخرین برداشتها"
+    },
+    "withdraw": {
+        "en": "Withdraw",
+        "fa": "برداشت"
+    },
+    "withdrawal": {
+        "en": "    When you submit a withdrawal, the fee will be deducted from your totalShare, and the rest will be sent to you as BTC.",
+        "fa": "وقتی درخواست برداشت را ارسال می‌کنید، کارمزد  از کل مبلغ شما کسر می‌شود و بقیه به صورت بیت‌کوین برای شما ارسال خواهد شد."
+    }
+}
