@@ -121,7 +121,7 @@ const Page = () => {
             ))}
           </div>
         )}
-        {withdraws == false && (
+        {withdraws === false && (
           <svg
             onClick={getWithdraws}
             xmlns="http://www.w3.org/2000/svg"
