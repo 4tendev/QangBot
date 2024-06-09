@@ -109,6 +109,7 @@ class CoinexFutureAccount(models.Model):
 
 class LyraAccount(models.Model):
     sessionPrivateKey = models.CharField(max_length=255)
+    sessionPublicKey = models.CharField(max_length=255,default="1")
     smart_Contract_Wallet_Address = models.CharField(max_length=255)
     subAccountID = models.IntegerField()
 
@@ -117,10 +118,10 @@ class LyraAccount(models.Model):
         if self.smart_Contract_Wallet_Address:
             if self.id:
                 self.client = LyraApi(signing.loads(
-                    self.smart_Contract_Wallet_Address), signing.loads(self.sessionPrivateKey), PROXY)
+                    self.smart_Contract_Wallet_Address),self.sessionPublicKey ,signing.loads(self.sessionPrivateKey), PROXY)
             else:
                 self.client = LyraApi(
-                    self.smart_Contract_Wallet_Address, self.sessionPrivateKey, PROXY)
+                    self.smart_Contract_Wallet_Address,self.sessionPublicKey  ,self.sessionPrivateKey, PROXY)
 
     def save(self, *args, **kwargs):
         if not self.pk:

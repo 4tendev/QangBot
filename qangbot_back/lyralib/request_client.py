@@ -18,7 +18,8 @@ class RequestClient(object):
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36'
     }
 
-    def __init__(self,smart_Contract_Wallet_Address ,sessionPrivateKey,proxy =None,  logger=None,):
+    def __init__(self, smart_Contract_Wallet_Address  , sessionPublicKey ,sessionPrivateKey,proxy =None,  logger=None,):
+        self.sessionPublicKey =sessionPublicKey
         self.sessionPrivateKey = sessionPrivateKey
         self.smart_Contract_Wallet_Address = smart_Contract_Wallet_Address
         self.headers = self.__headers
