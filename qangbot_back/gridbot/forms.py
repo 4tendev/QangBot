@@ -10,9 +10,10 @@ class CreateBotForm(forms.Form):
 
 
 class CreateCoinexAccountForm(forms.Form):
-    access_ID = forms.CharField(max_length=50, required=True)
-    secret_key = forms.CharField(max_length=50, required=True)
+    access_ID = forms.CharField(max_length=100, required=True)
+    secret_key = forms.CharField(max_length=100, required=True)
     name = forms.CharField(max_length=20, required=True)
+
 
 
 class BotActions(forms.Form):
