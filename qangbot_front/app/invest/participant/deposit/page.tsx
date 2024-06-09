@@ -87,6 +87,7 @@ const Page = () => {
   };
 
   useEffect(() => {
+    fetchMempool()
     const intervalId = setInterval(fetchMempool, 120000);
     return () => {
       clearInterval(intervalId);
@@ -94,6 +95,7 @@ const Page = () => {
   }, [depositAddress]);
   useEffect(() => {
     getDepositAddress();
+    
 
     return () => {};
   }, []);
