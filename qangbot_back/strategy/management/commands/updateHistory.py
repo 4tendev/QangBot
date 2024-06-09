@@ -1,8 +1,7 @@
 from django.core.management.base import BaseCommand
 import time
-from strategy.models import Strategy, asstUSDRate, History 
+from strategy.models import Strategy, asstUSDRate, History
 from django.utils import timezone
-
 
 
 def getHistoryDate(history: History):
@@ -23,7 +22,8 @@ class Command(BaseCommand):
             if strategies:
                 for strategy in strategies:
                     currentUSDValue = strategy.currentUSDValue()
-                    Strategy.objects.filter(id=strategy.id).update(lastUSDCheck=int(currentUSDValue))
+                    Strategy.objects.filter(id=strategy.id).update(
+                        lastUSDCheck=int(currentUSDValue))
 
                     currentETHValue = currentUSDValue / asstUSDRate("ETH")
                     time.sleep(5)
@@ -51,9 +51,9 @@ class Command(BaseCommand):
                     else:
                         History.objects.create(
                             ethROI=ETHROI, date=today_date, btcROI=BTCROI, usdROI=USDROI, strategy=strategy)
-                    
-                    strategy.cachHistory()
 
+                    strategy.cachHistory()
+            print("OK History script")
         except Exception as e:
             print(e)
-        print("OK STRATEGT script")
+
