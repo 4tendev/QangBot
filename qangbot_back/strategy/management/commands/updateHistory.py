@@ -1,8 +1,7 @@
 from django.core.management.base import BaseCommand
 import time
-from strategy.models import Strategy, asstUSDRate, History ,ParticipantBTCAddress
+from strategy.models import Strategy, asstUSDRate, History 
 from django.utils import timezone
-from django.core.cache import cache
 
 
 
