@@ -109,7 +109,7 @@ class CoinexFutureAccount(models.Model):
 
 class LyraAccount(models.Model):
     sessionPrivateKey = models.CharField(max_length=255)
-    sessionPublicKey = models.CharField(max_length=255,default="1")
+    sessionPublicKey = models.CharField(max_length=255)
     smart_Contract_Wallet_Address = models.CharField(max_length=255)
     subAccountID = models.IntegerField()
 
