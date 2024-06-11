@@ -92,8 +92,7 @@ def withdraw(request):
         return JsonResponse(data)
 
     method = request.method
-    match method:
-        case "GET":
+    if  method == "GET" :
             data = {
                 "data": [],
                 "code": "200"
@@ -104,7 +103,7 @@ def withdraw(request):
                     data["data"].append(
                         withdrawData(withdraw)
                     )
-        case "POST":
+    elif  method == "POST" :
             participants = user.Participants.all()
             if not participants:
 

@@ -57,8 +57,9 @@ def auth(request):
             "message": "Method not Allowed"
         }
         method = request.method
-        match method:
-            case "GET":
+
+        if method == "GET" :
+
                 user = request.user
                 data = {
                     "code": "401",
@@ -71,7 +72,7 @@ def auth(request):
                         "message": "known User",
                         "data": userData(user)
                     }
-            case "PATCH":
+        elif  method == "PATCH" :
                 form_data = json.loads(request.body)
                 form = LoginForm(form_data)
                 data = {
@@ -135,13 +136,13 @@ def auth(request):
                     "message": "Successfully authurized",
                     "data": userData(user)
                 }
-            case "DELETE":
+        elif  method == "DELETE" :
                 logout(request)
                 data = {
                     "code": "200",
                     "data": unKnownUserData
                 }
-            case "POST":
+        elif  method == "POST" :
                 VERIFY_FOR_REGISTER = "REGISTERATION"
                 form_data = json.loads(request.body)
                 form = RegisterForm(form_data)
@@ -162,8 +163,8 @@ def auth(request):
                         return JsonResponse(data)
                     emailCode = form.cleaned_data.get(
                         "emailCode")
-                    match len(emailCode):
-                        case  0:
+                    lecCode=len(emailCode)
+                    if lecCode == 0 :
                             data = {
                                 "code": "500",
                                 "message": "Server Error"
@@ -176,7 +177,7 @@ def auth(request):
                                     "data": {"timeRemaining": timeRemaining, },
                                     "message": "Code Sent"
                                 }
-                        case  6:
+                    elif lecCode == 6:
                             isCodeAcceptable = checkCode(
                                 email, VERIFY_FOR_REGISTER, emailCode)
                             if isCodeAcceptable:
@@ -201,7 +202,7 @@ def auth(request):
                                     "code": "4004",
                                     "message": "Wrong VERIFICATION Code"
                                 }
-            case "OPTIONS":
+        elif  method == "OPTIONS" :                        
                 RESET_PASSWROD = "ResetPassword"
                 form_data = json.loads(request.body)
                 form = ResetPasswordForm(form_data)
@@ -265,7 +266,7 @@ def auth(request):
                             "code": "4004",
                             "message": "Wrong VERIFICATION Code"
                         }
-            case "PUT":
+        elif  method == "PUT" :        
                 if getattr(request, 'limited', False):
                     data = {
                         "code": "429",
@@ -326,8 +327,9 @@ def updateVIP(request):
             "message": "Method not Allowed"
         }
         method = request.method
-        match method:
-            case "GET":
+
+        if method == "GET" :
+
                 data = {
                     "code": "200",
                     "data": {
@@ -335,7 +337,7 @@ def updateVIP(request):
                         "price": User.VIPPRICE
                     }
                 }
-            case "POST":
+        elif  method == "POST" :
                 form_data = json.loads(request.body)
                 form = CheckPaidForm(form_data)
                 data = {
@@ -377,8 +379,8 @@ def updateTOTP(request):
         }
         method = request.method
         VERIFY_FOR_TOTP = "TOTP_VERIFICATION"
-        match method:
-            case "GET":
+        if  method == "GET" :
+
                 data = {
                     "code": "500",
                     "message": "Server Error"
@@ -391,7 +393,7 @@ def updateTOTP(request):
                         "data": {"timeRemaining": timeRemaining, },
                         "message": "Code Sent"
                     }
-            case "POST":
+        elif  method == "POST" :            
                 form_data = json.loads(request.body)
                 form = TOTPUpdateForm(form_data)
                 data = {

@@ -18,20 +18,20 @@ def asstUSDRate(name):
         return float(cachedRate)
     rate = 0
     api = CoinexPerpetualApi("", "", PROXY)
-    match name:
-        case "BTC":
+    if name=="BTC":
+
             response = api.get_market_state(market="BTCUSD")
             if response["code"] == 0:
                 rate = float(response["data"]['ticker']["index_price"])
-        case "USD":
+    elif name=="USD":                
             rate = 1
-        case "USDC":
+    elif name=="USDC":
             rate = 1
-        case "ETH":
+    elif name=="ETH":
             response = api.get_market_state(market="ETHUSD")
             if response["code"] == 0:
                 rate = float(response["data"]['ticker']["index_price"])
-        case "USDT":
+    elif name=="USDT":
             rate = 1
     cache.set(cachName, rate, timeout=120)
     return rate

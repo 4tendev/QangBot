@@ -59,8 +59,8 @@ def gridbots(request):
                 }
             )
         method = request.method
-        match method:
-            case "GET":
+        if method == "GET":
+
                 botsData = []
                 gridBots = GridBot.objects.filter(user=user)
                 if gridBots:
@@ -76,7 +76,7 @@ def gridbots(request):
                         "canCreateBot": GridBot.canCreate(user)
                     }
                 }
-            case "POST":
+        elif method =="POST" :
                 form_data = json.loads(request.body)
                 form = CreateBotForm(form_data)
                 data = {
@@ -118,8 +118,7 @@ def gridbots(request):
 def exchanges(request):
     try:
         method = request.method
-        match method:
-            case "GET":
+        if method =="GET" :
 
                 data = {
                     "code": "200",
@@ -168,8 +167,7 @@ def accounts(request, exchangeName):
             )
         exchange = exchange[0]
         method = request.method
-        match method:
-            case "GET":
+        if method =="GET" :
                 data = {
                     "code": "200",
                     "data": {"accounts": [
@@ -189,7 +187,7 @@ def accounts(request, exchangeName):
                                 "name": account.name,
                             }
                         )
-            case "POST":
+        elif method =="POST" :
                 form_data = json.loads(request.body)
                 form = exchange.account_model.model_class().form(form_data)
                 data = {
@@ -236,8 +234,7 @@ def contracts(request, exchangeName):
             )
         exchange = exchange[0]
         method = request.method
-        match method:
-            case "GET":
+        if method =="GET" :
                 data = {
                     "code": "200",
                     "data": {"contracts": [
@@ -291,13 +288,13 @@ def gridbot(request, id):
                 }
             )
         gridBot = gridBot[0]
-        match request.method:
-            case "GET":
+        method= request.method
+        if method =="GET":
                 data = {
                     "code": "200",
                     "data": getBotData(gridBot)
                 }
-            case "OPTIONS":
+        elif method =="OPTIONS":    
                 form_data = json.loads(request.body)
                 form = BotActions(form_data)
                 data = {
@@ -306,8 +303,8 @@ def gridbot(request, id):
                 }
                 if not form.is_valid():
                     return JsonResponse(data)
-                match form.cleaned_data.get("action"):
-                    case "stop":
+                action = form.cleaned_data.get("action")
+                if action == "stop":
                         gridBot = GridBot.stop(gridBot)
                         if gridBot:
                             data = {
@@ -320,7 +317,7 @@ def gridbot(request, id):
                                 "message": "Server Error"
                             }
 
-                    case "resume":
+                elif action == "resume":
                         gridBot.status = True
                         gridBot.save()
                         data = {
@@ -362,14 +359,14 @@ def grids(request, botID):
             "code": "200",
                     "data": []
         }
-        match request.method:
-            case "GET":
+        method=request.method
+        if method=="GET" :
                 if grids:
                     for grid in grids:
                         data["data"].append(
                             getGridData(grid)
                         )
-            case "POST":
+        elif method=="POST" :
                 form_data = json.loads(request.body)
                 form = CreateGridsForm(form_data)
                 data = {
@@ -387,7 +384,7 @@ def grids(request, botID):
                 data = {"code": "200", "data": []}
                 for grid in grids:
                     data["data"].append(getGridData(grid))
-            case "DELETE":
+        elif method=="DELETE" :
                 if not gridbot.removeAllGrids():
                     data = serverErrorResponse
     except Exception as e:
@@ -420,13 +417,14 @@ def grid(request, gridID):
                 data
             )
         grid = grid[0]
-        match request.method:
-            case "GET":
+        method= request.method
+        if method == "GET":
+
                 data = {
                     "code": "200",
                     "data": getGridData(grid)
                 }
-            case "OPTIONS":
+        elif method== "OPTIONS":
                 form_data = json.loads(request.body)
                 form = GridActions(form_data)
                 data = {
@@ -435,26 +433,27 @@ def grid(request, gridID):
                 }
                 if not form.is_valid():
                     return JsonResponse(data)
-                match form.cleaned_data.get("action"):
-                    case "pause":
+                action= form.cleaned_data.get("action")
+                if action ==  "pause":
+
                         grid = grid.pause()
                         data = {
                             "code": "200",
                             "data":  getGridData(grid)
                         }
-                    case "resumeSell":
+                elif action ==  "resumeSell":
                         grid = grid.resume(1)
                         data = {
                             "code": "200",
                             "data":  getGridData(grid)
                         }
-                    case "resumeBuy":
+                elif action == "resumeBuy":
                         grid = grid.resume(2)
                         data = {
                             "code": "200",
                             "data":  getGridData(grid)
                         }
-            case "DELETE":
+        elif method== "DELETE":
                 grid.delete()
                 data = {
                     "code": "200",
