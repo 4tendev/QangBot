@@ -3,11 +3,14 @@ from user.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from coinexlib import CoinexPerpetualApi
+from aevolib import AevoApi
+
 from core.settings import PROXY, NONE_VIP_CREATION_LIMIT, NONE_VIP_GRIDS_CREATION_LIMIT
-from .forms import CreateCoinexAccountForm
+from .forms import CreateCoinexAccountForm, CreateAveoAccountForm
 from django.core import signing
 
 from django.core.cache import cache
+import requests
 
 
 class GridBot(models.Model):
@@ -208,6 +211,15 @@ class Exchange(models.Model):
     def __str__(self):
         return self.name
 
+class Contract (models.Model):
+    exchange = models.ForeignKey(
+        Exchange, related_name="Contracts", on_delete=models.PROTECT)
+    name = models.CharField(max_length=50)
+    url = models.URLField(max_length=200)
+    apiIdentifier = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
 
 class CoinexAccount(models.Model):
 
@@ -368,7 +380,7 @@ class CoinexAccount(models.Model):
                 str(e) + f" CoinexAccount with id {self.id} Failed to in connetion closePosition")
         return False
 
-    def createOrder(self, price, position, order_size, contract):
+    def createOrder(self, price, position, order_size, contract :Contract):
         market = contract.apiIdentifier
         robot = self.robot
         robot.ORDER_DIRECTION_SELL if position == 1 else robot.ORDER_DIRECTION_BUY
@@ -414,12 +426,203 @@ class CoinexAccount(models.Model):
         return ["access_ID", "secret_key"]
 
 
-class Contract (models.Model):
-    exchange = models.ForeignKey(
-        Exchange, related_name="Contracts", on_delete=models.PROTECT)
-    name = models.CharField(max_length=50)
-    url = models.URLField(max_length=200)
-    apiIdentifier = models.CharField(max_length=50)
+class AevoAccount(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    address=models.CharField(max_length=200)
+    API_Key = models.CharField(max_length=200)
+    API_Secret = models.CharField(max_length=200)
+    Signing_Key = models.CharField(max_length=200)
+    user = models.ForeignKey(User, related_name=(
+        "AevoAccounts"), on_delete=models.PROTECT)
+    form = CreateAveoAccountForm
 
-    def __str__(self):
-        return self.name
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.API_Key:
+            if self.id:
+                self.client = AevoApi(signing.loads(
+                    self.API_Key), signing.loads(self.API_Secret), signing.loads(self.Signing_Key), PROXY)
+            else:
+                self.client = AevoApi(
+                    self.API_Key, self.API_Secret, self.Signing_Key, PROXY)
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.API_Key = signing.dumps(self.API_Key)
+            self.API_Secret = signing.dumps(self.API_Secret)
+            self.Signing_Key = signing.dumps(self.Signing_Key)
+
+        super().save(*args, **kwargs)
+
+    def getSecretFieldsName():
+        return ["API_Key", "API_Secret", "Signing_Key"]
+
+    def checkAccount(self):
+        try:
+            response = self.client.account()
+            print(response)
+            if response["account"] ==self.address :
+                return True
+            return False
+        except Exception as e:
+            print(str(e) + " checkAccount AevoAccount ")
+            return False
+
+    def getPendingOrdersID(self, bot :GridBot):
+        result = "getPendingOrdersID"
+        try:
+            instrument = str(bot.contract.apiIdentifier)
+            openOrdersKeys = []
+            totalGrids = bot.Grids.filter(status=1).count()
+            if totalGrids > 0:
+                orderes = self.client.allOpenOrders()
+                if len(orderes) > 0:
+                    for order in orderes:
+                        if instrument == order["instrument_id"] and order['order_status'] == 'opened':
+                            openOrdersKeys.append(order["order_id"])
+            return openOrdersKeys
+        except Exception as e:
+            print(result)
+            print(
+                str(e) + f" AevoAccount with id {self.id} Failed to getPendingOrdersID")
+            return None
+
+    def cancelOrder(self, orderID, contract:Contract):
+        try:
+            response = self.client.cancelOrder(order_id=orderID)
+            print(response)
+            if response["order_id"] == orderID and response["order_status"] == 'cancelled':
+                return True
+            else:
+                print(
+                    "AevoAccount check data response status do acordingly cancelOrder  ")
+                return None
+        except Exception as e:
+            if response["error"] == "ORDER_DOES_NOT_EXIST":
+                return True
+            print(
+                f"An unexpected error occurred: {e} AevoAccount with id {self.id} Failed to checkOrder connection"
+            )
+            return None
+
+    def isOrderFinished(self, orderID, contract:Contract):
+
+        try:
+            order = self.client.order(orderID)
+            print(order)
+
+            if order["order_status"] == "filled":
+                return True
+            elif order["order_status"] == "cancelled":
+                print(str(orderID) + " FALSE cancel")
+                return False
+            elif order["order_status"] in ["opened", "partial"] :
+                return None
+            else:
+                print(
+                    "AevoAccount heck data response status do acordingly isOrderFinished ")
+                return None
+        except Exception as e:
+            print(
+                str(e) + f" AevoAccount with id {self.id} Failed to isOrderFinished")
+            return None
+
+    def cancelAllOrders(self, contract):
+        result = " "
+        try:
+            instrument_name= contract.name
+
+            market = self.client.market(instrument_name)
+            asset= market["asset"]
+            instrument_type=market["instrument_type"]
+            result = self.client.cancelOrders(instrument_type,asset)
+            if result["success"] == True:
+                return True
+            else:
+                print(result)
+                print(" UNKNOWN CODE ACT ACORDINGLY ")
+                print(
+                    str(e) + f" AevoAccount with id {self.id}  cancelAllOrders")
+        except Exception as e:
+            if result["error"] =="NO_ORDERS_TO_CANCEL":
+                return True
+            print(result)
+            print(str(
+                e) + f" AevoAccount with id {self.id} Failed to in connetion cancelAllOrders")
+        return False
+    
+    def getPositionValue(self, contract :Contract):
+        result = " "
+        try:
+            instrument_id = contract.apiIdentifier
+            positions = self.client.positions()["positions"]
+            if len(positions) >0 :
+                for position in positions:
+                    if position["instrument_id"] == str(instrument_id):
+                        return (1 if position["side"] == 'buy' else -1) * float(position["amount"])
+            return 0
+        except Exception as e:
+            print(result)
+            print(
+                str(e) + f" AevoAccount with id {self.id} Failed to in connetion getPositionValue")
+        return None
+    
+ 
+    
+    def createOrder(self, price, position, order_size, contract : Contract):
+        instrument = contract.apiIdentifier
+        client = self.client
+        is_buy = False if position == 1 else True
+        try:
+            result = client.createOrder(
+                instrument,
+                is_buy,
+                order_size,
+                price,
+                self.address
+            )
+            print(result)
+            if result["order_id"] :
+                order = Order.objects.create(
+                    exactCreationtResponse=result, contract=contract, orderID=result["order_id"])
+                return order
+            else:
+                print(
+                    f" AevoAccount with id {self.id} UNKNOW response ACT ACORDINGLY")
+                return None
+        except Exception as e:
+            print(
+                str(e) + f" CoinexAccount with id {self.id} Failed to in connetion createOrder")
+            return None
+   
+   
+    def closePosition(self, contract :Contract):
+        result = " "
+        try:
+            instrument = contract.apiIdentifier
+            positionAmount= self.getPositionValue(contract)
+            if positionAmount != 0:
+                is_buy = False if positionAmount > 0 else True
+                amount=abs(positionAmount) 
+                client = self.client
+                price = round(float(client.market(contract.name)["mark_price"] ) * (1.05 if is_buy else 0.95 ) , 6 ) 
+                result = client.createOrder(
+                    instrument,
+                    is_buy,
+                    amount,
+                    price,
+                    self.address
+                )  
+                print(result)  
+                if float (result ['filled'] )    ==   amount :   
+                    return True
+                else :
+                    client.cancelOrder(result["order_id"])
+            else:
+                return True
+        except Exception as e:
+            print(result)
+            print(
+                str(e) + f" CoinexAccount with id {self.id} Failed to in connetion closePosition")
+        return False   
+
