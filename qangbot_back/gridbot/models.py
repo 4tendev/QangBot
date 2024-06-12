@@ -223,7 +223,7 @@ class Contract (models.Model):
 class CoinexAccount(models.Model):
 
     name = models.CharField(max_length=50, unique=True)
-    ExchangeID=models.CharField(max_length=200 , null=True ,blank=True)
+    exchangeID=models.CharField(max_length=200 , null=True ,blank=True)
     access_ID = models.CharField(max_length=200)
     secret_key = models.CharField(max_length=200)
     user = models.ForeignKey(User, related_name=(
@@ -428,7 +428,7 @@ class CoinexAccount(models.Model):
 
 class AevoAccount(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    ExchangeID=models.CharField(max_length=200 , null=True ,blank=True)
+    exchangeID=models.CharField(max_length=200 , null=True ,blank=True)
     API_Key = models.CharField(max_length=200)
     API_Secret = models.CharField(max_length=200)
     Signing_Key = models.CharField(max_length=200)
@@ -461,10 +461,10 @@ class AevoAccount(models.Model):
         try:
             response = self.client.account()
             if response["account"]  :
-                if not self.ExchangeID :
+                if not self.exchangeID :
                     return response["account"]
                 else :
-                    return response["account"] if response["account"] ==self.ExchangeID else False
+                    return response["account"] if response["account"] ==self.exchangeID else False
             return False
         except Exception as e:
             print(str(e) + " checkAccount AevoAccount ")
@@ -582,7 +582,7 @@ class AevoAccount(models.Model):
                 is_buy,
                 order_size,
                 price,
-                self.ExchangeID
+                self.exchangeID
             )
             print(result)
             if result["order_id"] :
@@ -614,7 +614,7 @@ class AevoAccount(models.Model):
                     is_buy,
                     amount,
                     price,
-                    self.ExchangeID
+                    self.exchangeID
                 )  
                 print(result)  
                 if float (result ['filled'] )    ==   amount :   
