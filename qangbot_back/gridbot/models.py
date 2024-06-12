@@ -221,7 +221,7 @@ class Contract (models.Model):
         return self.name
 
 class CoinexAccount(models.Model):
-
+    account_id=models.CharField(max_length=200 , null=True ,blank=True)
     name = models.CharField(max_length=50, unique=True)
     access_ID = models.CharField(max_length=200)
     secret_key = models.CharField(max_length=200)
@@ -427,7 +427,7 @@ class CoinexAccount(models.Model):
 
 class AevoAccount(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    exchangeID=models.CharField(max_length=200 , null=True ,blank=True)
+    account_id=models.CharField(max_length=200 , null=True ,blank=True)
     API_Key = models.CharField(max_length=200)
     API_Secret = models.CharField(max_length=200)
     Signing_Key = models.CharField(max_length=200)
@@ -460,10 +460,10 @@ class AevoAccount(models.Model):
         try:
             response = self.client.account()
             if response["account"]  :
-                if not self.exchangeID :
+                if not self.account_id :
                     return response["account"]
                 else :
-                    return response["account"] if response["account"] ==self.exchangeID else False
+                    return response["account"] if response["account"] ==self.account_id else False
             return False
         except Exception as e:
             print(str(e) + " checkAccount AevoAccount ")
@@ -581,7 +581,7 @@ class AevoAccount(models.Model):
                 is_buy,
                 order_size,
                 price,
-                self.exchangeID
+                self.account_id
             )
             print(result)
             if result["order_id"] :
@@ -613,7 +613,7 @@ class AevoAccount(models.Model):
                     is_buy,
                     amount,
                     price,
-                    self.exchangeID
+                    self.account_id
                 )  
                 print(result)  
                 if float (result ['filled'] )    ==   amount :   
