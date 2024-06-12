@@ -26,7 +26,8 @@ class AevoApi(object):
     
     def cancelOrder(self ,order_id) :
         path =f"/orders/{order_id}"
-        return self.request_client.delete(path, None )  
+        params = { "order_id" :order_id   }
+        return self.request_client.delete(path, params )  
       
     def order(self ,order_id) :
         path =f"/orders/{order_id}"
