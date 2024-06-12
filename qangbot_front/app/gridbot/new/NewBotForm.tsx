@@ -104,6 +104,7 @@ const Page = (props: { exchanges: Exchange[] }) => {
         {exchangeName ? (
           <>
             <SelectAccount
+            key={exchangeName}
               exchangeName={exchangeName}
               setAccountID={setAccountID}
             />
