@@ -1,17 +1,7 @@
 from django.core.management.base import BaseCommand
-import time ,json
+import time 
 from strategy.models import Strategy, asstUSDRate, History
 from django.utils import timezone
-
-
-def getHistoryDate(history: History):
-    return {
-        "id": history.id,
-        "btcROI": history.btcROI,
-        "ethROI": history.ethROI,
-        "usdROI": history.usdROI,
-        "date":  history.date
-    }
 
 
 
@@ -19,18 +9,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         time.sleep(1)
         try:
-            strateg = Strategy.objects.all()[0]
-            with open('strategy/management/commands/data.json') as f:
-                json_data = json.load(f)
-                for item in json_data:
-                    History.objects.get_or_create(
-                        btcROI=item['btcROI'],
-                        usdROI=item['usdROI'],
-                        ethROI=item['ethROI'],
-                        date=item['date'],
-                        strategy=strateg
-                    )
-                 
+                   
             strategies = Strategy.objects.all()
             if strategies:
                 for strategy in strategies:
