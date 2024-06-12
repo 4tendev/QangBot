@@ -425,7 +425,7 @@ class CoinexAccount(models.Model):
         return ["access_ID", "secret_key"]
 
 
-class AevoAccount(models.Model):
+class Aevo_Account(models.Model):
     name = models.CharField(max_length=50, unique=True)
     account_id=models.CharField(max_length=200 , null=True ,blank=True)
     API_Key = models.CharField(max_length=200)
