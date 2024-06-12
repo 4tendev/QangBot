@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Grid , GridBot , CoinexAccount , Order  ,Contract  ,Aevo_Account
+from .models import Grid , GridBot , CoinexAccount , Order  ,Contract  ,AevoAccount
 
 class GridBotAdmin(admin.ModelAdmin):
     list_display = ("name","status","created","updated")
@@ -18,7 +18,7 @@ class ContractAdmin(admin.ModelAdmin):
 class CoinexAccountAdmin(admin.ModelAdmin):
     list_display = ("name","user")    
 
-admin.site.register(Aevo_Account )
+admin.site.register(AevoAccount )
 
 admin.site.register(Grid ,GridAdmin)
 admin.site.register(GridBot ,GridBotAdmin)

@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 import time
-from gridbot.models import GridBot, Exchange, ContentType, CoinexAccount, Contract ,Aevo_Account
+from gridbot.models import GridBot, Exchange, ContentType, CoinexAccount, Contract ,AevoAccount
 from django.core.cache import cache
 import datetime
 
@@ -30,7 +30,7 @@ def create_default_exchange():
         Contract.objects.get_or_create(
             exchange=coinexFutureExchange[0], url=contract["url"], name=contract["name"], apiIdentifier=contract["apiIdentifier"])
     aevoExchange = Exchange.objects.get_or_create(
-        name="Aevo", account_model=ContentType.objects.get_for_model(Aevo_Account))
+        name="Aevo", account_model=ContentType.objects.get_for_model(AevoAccount))
     aevoContracts =[
         {
             "name": "BTC-PERP",
