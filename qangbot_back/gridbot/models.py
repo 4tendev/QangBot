@@ -223,7 +223,6 @@ class Contract (models.Model):
 class CoinexAccount(models.Model):
 
     name = models.CharField(max_length=50, unique=True)
-    exchangeID=models.CharField(max_length=200 , null=True ,blank=True)
     access_ID = models.CharField(max_length=200)
     secret_key = models.CharField(max_length=200)
     user = models.ForeignKey(User, related_name=(
