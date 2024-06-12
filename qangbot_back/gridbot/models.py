@@ -10,7 +10,6 @@ from .forms import CreateCoinexAccountForm, CreateAveoAccountForm
 from django.core import signing
 
 from django.core.cache import cache
-import requests
 
 
 class GridBot(models.Model):
@@ -461,7 +460,6 @@ class AevoAccount(models.Model):
     def checkAccount(self):
         try:
             response = self.client.account()
-            print(response)
             if response["account"]  :
                 if not self.ExchangeID :
                     return response["account"]
@@ -480,6 +478,7 @@ class AevoAccount(models.Model):
             totalGrids = bot.Grids.filter(status=1).count()
             if totalGrids > 0:
                 orderes = self.client.allOpenOrders()
+                print(orderes)
                 if len(orderes) > 0:
                     for order in orderes:
                         if instrument == order["instrument_id"] and order['order_status'] == 'opened':
@@ -505,7 +504,7 @@ class AevoAccount(models.Model):
             if response["error"] == "ORDER_DOES_NOT_EXIST":
                 return True
             print(
-                f"An unexpected error occurred: {e} AevoAccount with id {self.id} Failed to checkOrder connection"
+                f"An unexpected error occurred: {e} AevoAccount with id {self.id} Failed to cancelOrder connection"
             )
             return None
 
@@ -609,7 +608,7 @@ class AevoAccount(models.Model):
                 is_buy = False if positionAmount > 0 else True
                 amount=abs(positionAmount) 
                 client = self.client
-                price = round(float(client.market(contract.name)["mark_price"] ) * (1.05 if is_buy else 0.95 ) , 6 ) 
+                price = round(float(client.market(contract.name)["mark_price"] ) * (1.05 if is_buy else 0.95 ) , 2 ) 
                 result = client.createOrder(
                     instrument,
                     is_buy,

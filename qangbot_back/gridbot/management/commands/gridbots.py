@@ -30,7 +30,7 @@ def create_default_exchange():
         Contract.objects.get_or_create(
             exchange=coinexFutureExchange[0], url=contract["url"], name=contract["name"], apiIdentifier=contract["apiIdentifier"])
     aevoExchange = Exchange.objects.get_or_create(
-        name="Aevo Perptual", account_model=ContentType.objects.get_for_model(AevoAccount))
+        name="Aevo", account_model=ContentType.objects.get_for_model(AevoAccount))
     aevoContracts =[
         {
             "name": "BTC-PERP",
