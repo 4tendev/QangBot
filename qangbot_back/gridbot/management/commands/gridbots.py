@@ -42,14 +42,14 @@ def create_default_exchange():
             "name": "BTC-PERP",
             "url": "https://app.aevo.xyz/perpetual/btc",
             "apiIdentifier": 3396,
-            "sizeDeciminal" : 6,
-            "priceDeciminal" : 2
+            "sizeDeciminal" : 3,
+            "priceDeciminal" : 1
         },
         {
             "name": "ETH-PERP",
             "url": "https://app.aevo.xyz/perpetual/eth",
             "apiIdentifier": 1,
-            "sizeDeciminal" : 6,
+            "sizeDeciminal" : 2,
             "priceDeciminal" : 2
         }
 
