@@ -73,9 +73,9 @@ class Command(BaseCommand):
                     gridBOTkey = f"GridBot{gridBot.id}"
                     if cache.get(gridBOTkey):
                         continue
+                    cache.set(gridBOTkey, 1, timeout=gridBot.interval)
                     if not gridBot.account.checkAccount():
                         continue
-                    cache.set(gridBOTkey, 1, timeout=gridBot.interval)
                     gridBot.checkOpenGrids()
                     gridBot.makeOrders()
                     gridBot.updatePositionValue()
