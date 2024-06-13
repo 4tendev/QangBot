@@ -12,41 +12,51 @@ def create_default_exchange():
         {
             "name": "BTCUSDT",
             "url": "https://www.coinex.com/en/futures/marketinfo/info?market=BTCUSDT",
-            "apiIdentifier": "BTCUSDT"
+            "apiIdentifier": "BTCUSDT",
+            "sizeDeciminal" : 4,
+            "priceDeciminal" : 2
         }, 
         {
             "name": "BTCUSD",
             "url": "https://www.coinex.com/en/futures/marketinfo/info?market=BTCUSD",
-            "apiIdentifier": "BTCUSD"
+            "apiIdentifier": "BTCUSD",
+            "sizeDeciminal" : 0,
+            "priceDeciminal" : 2
         },
         {
             "name": "ETHUSD",
             "url": "https://www.coinex.com/en/futures/marketinfo/info?market=ETHUSD",
-            "apiIdentifier": "ETHUSD"
+            "apiIdentifier": "ETHUSD",
+            "sizeDeciminal" : 0,
+            "priceDeciminal" : 2
         }
 
     ]
     for contract in CoinexFutureContracts:
         Contract.objects.get_or_create(
-            exchange=coinexFutureExchange[0], url=contract["url"], name=contract["name"], apiIdentifier=contract["apiIdentifier"])
+            exchange=coinexFutureExchange[0], url=contract["url"], name=contract["name"], apiIdentifier=contract["apiIdentifier"],priceDeciminal=contract["priceDeciminal"] , sizeDeciminal=contract["sizeDeciminal"] )
     aevoExchange = Exchange.objects.get_or_create(
         name="Aevo", account_model=ContentType.objects.get_for_model(AevoAccount))
     aevoContracts =[
         {
             "name": "BTC-PERP",
             "url": "https://app.aevo.xyz/perpetual/btc",
-            "apiIdentifier": 3396
+            "apiIdentifier": 3396,
+            "sizeDeciminal" : 6,
+            "priceDeciminal" : 2
         },
         {
             "name": "ETH-PERP",
             "url": "https://app.aevo.xyz/perpetual/eth",
-            "apiIdentifier": 1
+            "apiIdentifier": 1,
+            "sizeDeciminal" : 6,
+            "priceDeciminal" : 2
         }
 
     ]
     for contract in aevoContracts:
         Contract.objects.get_or_create(
-            exchange=aevoExchange[0], url=contract["url"], name=contract["name"], apiIdentifier=contract["apiIdentifier"])
+            exchange=aevoExchange[0], url=contract["url"], name=contract["name"], apiIdentifier=contract["apiIdentifier"]   ,priceDeciminal=contract["priceDeciminal"] , sizeDeciminal=contract["sizeDeciminal"] )
 
 
 class Command(BaseCommand):
