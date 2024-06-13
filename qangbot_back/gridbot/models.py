@@ -168,8 +168,8 @@ class Grid(models.Model):
 
 
 class Order(models.Model):
-    exactCreationtResponse = models.TextField(unique=True)
-    orderID = models.CharField(max_length=50)
+    exactCreationtResponse = models.TextField()
+    orderID = models.CharField(max_length=255 , unique=True)
     executed = models.BooleanField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -384,6 +384,7 @@ class CoinexAccount(models.Model):
         robot = self.robot
         robot.ORDER_DIRECTION_SELL if position == 1 else robot.ORDER_DIRECTION_BUY
         try:
+            response=None
             result = robot.put_limit_order(
                 market,
                 position,
@@ -392,6 +393,7 @@ class CoinexAccount(models.Model):
             )
             print(result)
             if result["code"] == 0:
+                response=False
                 order = Order.objects.create(
                     exactCreationtResponse=result, contract=contract, orderID=result["data"]["order_id"])
                 return order
@@ -408,7 +410,7 @@ class CoinexAccount(models.Model):
         except Exception as e:
             print(
                 str(e) + f" CoinexAccount with id {self.id} Failed to in connetion createOrder")
-            return None
+        return response
 
     def checkAccount(self):
         try:
@@ -572,6 +574,7 @@ class AevoAccount(models.Model):
  
     
     def createOrder(self, price, position, order_size, contract : Contract):
+        response=None
         instrument = contract.apiIdentifier
         client = self.client
         is_buy = False if position == 1 else True
@@ -585,6 +588,7 @@ class AevoAccount(models.Model):
             )
             print(result)
             if result["order_id"] :
+                response=False
                 order = Order.objects.create(
                     exactCreationtResponse=result, contract=contract, orderID=result["order_id"])
                 return order
@@ -595,7 +599,7 @@ class AevoAccount(models.Model):
         except Exception as e:
             print(
                 str(e) + f" AevoAccount with id {self.id} Failed to in connetion createOrder")
-            return None
+        return response
    
    
     def closePosition(self, contract :Contract):
