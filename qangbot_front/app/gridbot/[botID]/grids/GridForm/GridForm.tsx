@@ -52,12 +52,12 @@ const GridForm = (props: {
         : Number(startPrice + (index + 1) * range);
       grids.push({
         id: index,
-        sell: gridsellPrice.toFixed(4),
-        buy: gridbuyPrice.toFixed(4),
+        sell: gridsellPrice.toFixed(6),
+        buy: gridbuyPrice.toFixed(6),
         status: 1,
         size: dynamicSize
-          ? Number((gridbuyPrice * sizeRate).toFixed(4))
-          : Number(size).toFixed(4),
+          ? Number((gridbuyPrice * sizeRate).toFixed(6))
+          : Number(size).toFixed(6),
         nextPosition: startPosition,
       });
     }
