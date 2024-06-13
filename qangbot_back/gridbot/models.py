@@ -130,8 +130,9 @@ class Grid(models.Model):
             return
         contract = self.gridbot.contract
         price = self.sell if self.nextPosition == 1 else self.buy
+        size  = self.size
         order = self.gridbot.account.createOrder(
-            price, self.nextPosition, self.size, contract)
+            price, self.nextPosition, size, contract)
         if order:
             self.orders.add(order)
             excutedPosition = self.nextPosition
@@ -216,6 +217,8 @@ class Contract (models.Model):
     name = models.CharField(max_length=50)
     url = models.URLField(max_length=200)
     apiIdentifier = models.CharField(max_length=50)
+    sizeDeciminal=models.IntegerField(default=2)
+    priceDeciminal=models.IntegerField(default=2)
 
     def __str__(self):
         return self.name
@@ -582,8 +585,8 @@ class AevoAccount(models.Model):
             result = client.createOrder(
                 instrument,
                 is_buy,
-                order_size,
-                price,
+                round(order_size,contract.sizeDeciminal),
+                round(price,contract.priceDeciminal),
                 self.account_id
             )
             print(result)
@@ -611,7 +614,7 @@ class AevoAccount(models.Model):
                 is_buy = False if positionAmount > 0 else True
                 amount=abs(positionAmount) 
                 client = self.client
-                price = round(float(client.market(contract.name)["mark_price"] ) * (1.05 if is_buy else 0.95 ) , 2 ) 
+                price = round(float(client.market(contract.name)["mark_price"] ) * (1.05 if is_buy else 0.95 ) , contract.priceDeciminal ) 
                 result = client.createOrder(
                     instrument,
                     is_buy,
