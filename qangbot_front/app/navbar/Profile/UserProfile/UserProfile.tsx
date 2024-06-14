@@ -49,7 +49,7 @@ export default function UserProfile() {
         <div
           className={
             "absolute top-0 right-0 " +
-            (isTOTPActivated ? "test-success" : "text-error")
+            (isTOTPActivated ? " text-success" : " text-error")
           }
         >
           {TOTPSVG}
