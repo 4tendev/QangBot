@@ -4,10 +4,11 @@ import React, { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 import { useRouter } from "next/navigation";
 import dictionary from "./dictionary.json";
-import { useAppSelector } from "@/GlobalStates/hooks";
+import { useAppDispatch, useAppSelector } from "@/GlobalStates/hooks";
 import { language } from "@/GlobalStates/Slices/languageSlice";
 import { fetchapi } from "@/commonTsBrowser/fetchAPI";
 import Loading from "../../loading";
+import { serverErrorAlert } from "@/GlobalStates/Slices/alert/Slice";
 
 type Payment = {
   address: string;
@@ -17,13 +18,13 @@ type Payment = {
 const VIPPayment = () => {
   const [payment, setPayment] = useState<Payment | undefined>(undefined);
   const lang = useAppSelector(language).lang;
-
+  const dispatch =useAppDispatch()
   const router = useRouter();
 
   async function getPayment() {
     payment ??
       (await fetchapi("/user/vip/update/", "GET").then((response) => {
-        response.code == "200" && setPayment(response.data);
+        response.code == "200" ? setPayment(response.data) : dispatch(serverErrorAlert(lang))
       }));
   }
 
