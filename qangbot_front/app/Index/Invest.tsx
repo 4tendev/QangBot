@@ -6,7 +6,7 @@ import getLanguage from "@/commonTsServer/getLanguage";
 const Invest = () => {
   const lang = getLanguage().lang;
   return (
-    <div className="text-start  gap-x-2 w-full items-center justify-center flex sm:flex-col gorow px-9 my-5 pb-2">
+    <div className="text-start  gap-x-2 w-full items-center justify-center flex sm:flex-col gorow px-9 sm:pe-11 pb-2 sm:w-fit">
       <div className="">
         <h4 className="text-[22vw] md:text-[160px] font-bold py-0 text-error leading-none w-fit">
           {dictionary.risk[lang]}

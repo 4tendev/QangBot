@@ -5,3 +5,22 @@
     }
 
  }
+ .scrolling-container {
+   overflow: hidden;
+   position: relative;
+ }
+ 
+ .scrolling-content {
+   display: flex;
+   white-space: nowrap;
+   animation: scroll-left 3s linear infinite;
+ }
+ 
+ @keyframes scroll-left {
+   0% {
+     transform: translateX(100%);
+   }
+   100% {
+     transform: translateX(-40%);
+   }
+ }
