@@ -7,8 +7,8 @@ const SupportedExchanges = () => {
   const lang = getLanguage().lang;
 
   return (
-    <div className="sm:ps-11 sm:px-0 px-8 flex gap-2 flex-col py-3  ">
-      <div className="text-info text-xl">{dictionary.supportDex[lang]}</div>
+    <div className="sm:ps-11 sm:px-0  flex gap-2 flex-col py-3  ">
+      <div className="text-info text-xl px-8">{dictionary.supportDex[lang]}</div>
       <div dir="ltr" className="scrolling-container w-full">
         <div className="flex flex-wrap items-center gap-2  h-10 sm:max-w-96 scrolling-content">
           <svg
