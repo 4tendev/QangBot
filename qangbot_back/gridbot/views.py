@@ -61,51 +61,51 @@ def gridbots(request):
         method = request.method
         if method == "GET":
 
-                botsData = []
-                gridBots = GridBot.objects.filter(user=user)
-                if gridBots:
-                    for gridBot in gridBots:
-                        botsData.append(
-                            getBotData(gridBot)
+            botsData = []
+            gridBots = GridBot.objects.filter(user=user)
+            if gridBots:
+                for gridBot in gridBots:
+                    botsData.append(
+                        getBotData(gridBot)
 
-                        )
-                data = {
-                    "code": "200",
-                    "data": {
-                        "bots": botsData,
-                        "canCreateBot": GridBot.canCreate(user)
-                    }
+                    )
+            data = {
+                "code": "200",
+                "data": {
+                    "bots": botsData,
+                    "canCreateBot": GridBot.canCreate(user)
                 }
-        elif method =="POST" :
-                form_data = json.loads(request.body)
-                form = CreateBotForm(form_data)
-                data = {
-                    "code": "400",
-                    "message": "Cant authurize"
-                }
-                if not form.is_valid():
-                    return JsonResponse(data)
-                exchangeID = form.cleaned_data.get("exchangeID")
-                contractID = form.cleaned_data.get("contractID")
-                accountID = form.cleaned_data.get("accountID")
-                name = form.cleaned_data.get("name")
-                try:
-                    exchange = Exchange.objects.get(id=exchangeID)
-                    contract = exchange.Contracts.get(id=contractID)
-                    account_model = exchange.account_model
-                    account = account_model.model_class().objects.get(id=accountID, user=user)
-                    if not contract or not account:
-                        return JsonResponse({"code": "400", "message": "Invalid Inputs"})
-                except:
+            }
+        elif method == "POST":
+            form_data = json.loads(request.body)
+            form = CreateBotForm(form_data)
+            data = {
+                "code": "400",
+                "message": "Cant authurize"
+            }
+            if not form.is_valid():
+                return JsonResponse(data)
+            exchangeID = form.cleaned_data.get("exchangeID")
+            contractID = form.cleaned_data.get("contractID")
+            accountID = form.cleaned_data.get("accountID")
+            name = form.cleaned_data.get("name")
+            try:
+                exchange = Exchange.objects.get(id=exchangeID)
+                contract = exchange.Contracts.get(id=contractID)
+                account_model = exchange.account_model
+                account = account_model.model_class().objects.get(id=accountID, user=user)
+                if not contract or not account:
                     return JsonResponse({"code": "400", "message": "Invalid Inputs"})
-                gridbot = GridBot.objects.create(
-                    name=name, user=user, account_model=account_model, account_id=accountID, contract=contract)
-                data = {
-                    "code": "200",
-                    "data": {
-                        "gridbot": getBotData(gridbot)
-                    }
+            except:
+                return JsonResponse({"code": "400", "message": "Invalid Inputs"})
+            gridbot = GridBot.objects.create(
+                name=name, user=user, account_model=account_model, account_id=accountID, contract=contract)
+            data = {
+                "code": "200",
+                "data": {
+                    "gridbot": getBotData(gridbot)
                 }
+            }
     except Exception as e:
         print(e)
         data = {
@@ -118,23 +118,23 @@ def gridbots(request):
 def exchanges(request):
     try:
         method = request.method
-        if method =="GET" :
+        if method == "GET":
 
-                data = {
-                    "code": "200",
-                    "data": {"exchanges": [
+            data = {
+                "code": "200",
+                "data": {"exchanges": [
 
-                    ]}
-                }
-                exchanges = Exchange.objects.all()
-                if exchanges:
-                    for exchange in exchanges:
-                        data["data"]["exchanges"].append(
-                            {
-                                "id": exchange.id,
-                                "name": exchange.name,
-                            }
-                        )
+                ]}
+            }
+            exchanges = Exchange.objects.all()
+            if exchanges:
+                for exchange in exchanges:
+                    data["data"]["exchanges"].append(
+                        {
+                            "id": exchange.id,
+                            "name": exchange.name,
+                        }
+                    )
 
     except Exception as e:
         print(e)
@@ -167,51 +167,52 @@ def accounts(request, exchangeName):
             )
         exchange = exchange[0]
         method = request.method
-        if method =="GET" :
-                data = {
-                    "code": "200",
-                    "data": {"accounts": [
+        if method == "GET":
+            data = {
+                "code": "200",
+                "data": {"accounts": [
 
-                    ],
-                        "accountFields": exchange.getAccountSecretFiledsName()
+                ],
+                    "accountFields": exchange.getAccountSecretFiledsName()
 
 
-                    }
                 }
-                accounts = exchange.account_model.model_class().objects.filter(user=user)
-                if accounts:
-                    for account in accounts:
-                        data["data"]["accounts"].append(
-                            {
-                                "id": account.id,
-                                "name": account.name,
-                            }
-                        )
-        elif method =="POST" :
-                form_data = json.loads(request.body)
-                form = exchange.account_model.model_class().form(form_data)
-                data = {
-                    "code": "400",
-                    "message": "invalid  Input"
+            }
+            accounts = exchange.account_model.model_class().objects.filter(user=user)
+            if accounts:
+                for account in accounts:
+                    data["data"]["accounts"].append(
+                        {
+                            "id": account.id,
+                            "name": account.name,
+                        }
+                    )
+        elif method == "POST":
+            form_data = json.loads(request.body)
+            form = exchange.account_model.model_class().form(form_data)
+            data = {
+                "code": "400",
+                "message": "invalid  Input"
+            }
+            if not form.is_valid():
+                return JsonResponse(data)
+            data = {
+                "code": "4001",
+                "message": "Cant Authuraioze"
+            }
+            account = exchange.account_model.model_class()(**form.cleaned_data, user=user)
+            checkAccount = account.checkAccount()
+            if not checkAccount:
+                return JsonResponse(data)
+            account = exchange.account_model.model_class(
+            ).objects.create(**form.cleaned_data, user=user, account_id=str(checkAccount))
+            data = {
+                "code": "200",
+                "data": {
+                    "id": account.id,
+                    "name": account.name,
                 }
-                if not form.is_valid():
-                    return JsonResponse(data)
-                data = {
-                    "code": "4001",
-                    "message": "Cant Authuraioze"
-                }
-                account = exchange.account_model.model_class()(**form.cleaned_data, user=user)
-                if not account.checkAccount():
-                    return JsonResponse(data)
-                account = exchange.account_model.model_class(
-                ).objects.create(**form.cleaned_data, user=user)
-                data = {
-                    "code": "200",
-                    "data": {
-                        "id": account.id,
-                        "name": account.name,
-                    }
-                }
+            }
     except Exception as e:
         print(e)
         data = {
@@ -234,24 +235,24 @@ def contracts(request, exchangeName):
             )
         exchange = exchange[0]
         method = request.method
-        if method =="GET" :
-                data = {
-                    "code": "200",
-                    "data": {"contracts": [
+        if method == "GET":
+            data = {
+                "code": "200",
+                "data": {"contracts": [
 
-                    ]
-                    }
+                ]
                 }
-                contracts = exchange.Contracts.all()
-                if contracts:
-                    for contract in contracts:
-                        data["data"]["contracts"].append(
-                            {
-                                "id": contract.id,
-                                "name": contract.name,
-                                "url": contract.url
-                            }
-                        )
+            }
+            contracts = exchange.Contracts.all()
+            if contracts:
+                for contract in contracts:
+                    data["data"]["contracts"].append(
+                        {
+                            "id": contract.id,
+                            "name": contract.name,
+                            "url": contract.url
+                        }
+                    )
 
     except Exception as e:
         print(e)
@@ -288,42 +289,42 @@ def gridbot(request, id):
                 }
             )
         gridBot = gridBot[0]
-        method= request.method
-        if method =="GET":
+        method = request.method
+        if method == "GET":
+            data = {
+                "code": "200",
+                "data": getBotData(gridBot)
+            }
+        elif method == "OPTIONS":
+            form_data = json.loads(request.body)
+            form = BotActions(form_data)
+            data = {
+                "code": "400",
+                "message": "invalid  Input"
+            }
+            if not form.is_valid():
+                return JsonResponse(data)
+            action = form.cleaned_data.get("action")
+            if action == "stop":
+                gridBot = GridBot.stop(gridBot)
+                if gridBot:
+                    data = {
+                        "code": "200",
+                        "data": getBotData(gridBot)
+                    }
+                else:
+                    data = {
+                        "code": "500",
+                        "message": "Server Error"
+                    }
+
+            elif action == "resume":
+                gridBot.status = True
+                gridBot.save()
                 data = {
                     "code": "200",
                     "data": getBotData(gridBot)
                 }
-        elif method =="OPTIONS":    
-                form_data = json.loads(request.body)
-                form = BotActions(form_data)
-                data = {
-                    "code": "400",
-                    "message": "invalid  Input"
-                }
-                if not form.is_valid():
-                    return JsonResponse(data)
-                action = form.cleaned_data.get("action")
-                if action == "stop":
-                        gridBot = GridBot.stop(gridBot)
-                        if gridBot:
-                            data = {
-                                "code": "200",
-                                "data": getBotData(gridBot)
-                            }
-                        else:
-                            data = {
-                                "code": "500",
-                                "message": "Server Error"
-                            }
-
-                elif action == "resume":
-                        gridBot.status = True
-                        gridBot.save()
-                        data = {
-                            "code": "200",
-                            "data": getBotData(gridBot)
-                        }
     except Exception as e:
         print(e)
         return JsonResponse({
@@ -359,34 +360,34 @@ def grids(request, botID):
             "code": "200",
                     "data": []
         }
-        method=request.method
-        if method=="GET" :
-                if grids:
-                    for grid in grids:
-                        data["data"].append(
-                            getGridData(grid)
-                        )
-        elif method=="POST" :
-                form_data = json.loads(request.body)
-                form = CreateGridsForm(form_data)
-                data = {
-                    "code": "400",
-                    "message": "invalid  Input"
-                }
-                if not form.is_valid():
-                    return JsonResponse(data)
-                grids = form.cleaned_data.get("grids")
-                if not gridbot.canCreateNewGrids(len(grids)):
-                    return JsonResponse({"code": "4003"})
-                instances = [Grid(sell=grid["sell"], buy=grid["buy"], gridbot=gridbot, status=0,
-                                  nextPosition=grid["nextPosition"], size=grid["size"]) for grid in grids]
-                grids = Grid.objects.bulk_create(instances)
-                data = {"code": "200", "data": []}
+        method = request.method
+        if method == "GET":
+            if grids:
                 for grid in grids:
-                    data["data"].append(getGridData(grid))
-        elif method=="DELETE" :
-                if not gridbot.removeAllGrids():
-                    data = serverErrorResponse
+                    data["data"].append(
+                        getGridData(grid)
+                    )
+        elif method == "POST":
+            form_data = json.loads(request.body)
+            form = CreateGridsForm(form_data)
+            data = {
+                "code": "400",
+                "message": "invalid  Input"
+            }
+            if not form.is_valid():
+                return JsonResponse(data)
+            grids = form.cleaned_data.get("grids")
+            if not gridbot.canCreateNewGrids(len(grids)):
+                return JsonResponse({"code": "4003"})
+            instances = [Grid(sell=grid["sell"], buy=grid["buy"], gridbot=gridbot, status=0,
+                              nextPosition=grid["nextPosition"], size=grid["size"]) for grid in grids]
+            grids = Grid.objects.bulk_create(instances)
+            data = {"code": "200", "data": []}
+            for grid in grids:
+                data["data"].append(getGridData(grid))
+        elif method == "DELETE":
+            if not gridbot.removeAllGrids():
+                data = serverErrorResponse
     except Exception as e:
         print(e)
         return JsonResponse(serverErrorResponse)
@@ -417,48 +418,48 @@ def grid(request, gridID):
                 data
             )
         grid = grid[0]
-        method= request.method
+        method = request.method
         if method == "GET":
 
-                data = {
-                    "code": "200",
-                    "data": getGridData(grid)
-                }
-        elif method== "OPTIONS":
-                form_data = json.loads(request.body)
-                form = GridActions(form_data)
-                data = {
-                    "code": "400",
-                    "message": "invalid  Input"
-                }
-                if not form.is_valid():
-                    return JsonResponse(data)
-                action= form.cleaned_data.get("action")
-                if action ==  "pause":
+            data = {
+                "code": "200",
+                "data": getGridData(grid)
+            }
+        elif method == "OPTIONS":
+            form_data = json.loads(request.body)
+            form = GridActions(form_data)
+            data = {
+                "code": "400",
+                "message": "invalid  Input"
+            }
+            if not form.is_valid():
+                return JsonResponse(data)
+            action = form.cleaned_data.get("action")
+            if action == "pause":
 
-                        grid = grid.pause()
-                        data = {
-                            "code": "200",
-                            "data":  getGridData(grid)
-                        }
-                elif action ==  "resumeSell":
-                        grid = grid.resume(1)
-                        data = {
-                            "code": "200",
-                            "data":  getGridData(grid)
-                        }
-                elif action == "resumeBuy":
-                        grid = grid.resume(2)
-                        data = {
-                            "code": "200",
-                            "data":  getGridData(grid)
-                        }
-        elif method== "DELETE":
-                grid.delete()
+                grid = grid.pause()
                 data = {
                     "code": "200",
-                    "message":  "deleted"
+                    "data":  getGridData(grid)
                 }
+            elif action == "resumeSell":
+                grid = grid.resume(1)
+                data = {
+                    "code": "200",
+                    "data":  getGridData(grid)
+                }
+            elif action == "resumeBuy":
+                grid = grid.resume(2)
+                data = {
+                    "code": "200",
+                    "data":  getGridData(grid)
+                }
+        elif method == "DELETE":
+            grid.delete()
+            data = {
+                "code": "200",
+                "message":  "deleted"
+            }
     except:
         return JsonResponse(serverErrorResponse)
     return JsonResponse(data)
