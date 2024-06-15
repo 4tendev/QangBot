@@ -3,6 +3,7 @@ from user.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from coinexlib import CoinexPerpetualApi
+from coinexlibV2 import CoinexPerpetualApiV2
 from aevolib import AevoApi
 
 from core.settings import PROXY, NONE_VIP_CREATION_LIMIT, NONE_VIP_GRIDS_CREATION_LIMIT
@@ -130,7 +131,7 @@ class Grid(models.Model):
             return
         contract = self.gridbot.contract
         price = self.sell if self.nextPosition == 1 else self.buy
-        size  = self.size
+        size = self.size
         order = self.gridbot.account.createOrder(
             price, self.nextPosition, size, contract)
         if order:
@@ -170,7 +171,7 @@ class Grid(models.Model):
 
 class Order(models.Model):
     exactCreationtResponse = models.TextField()
-    orderID = models.CharField(max_length=255 , unique=True)
+    orderID = models.CharField(max_length=255, unique=True)
     executed = models.BooleanField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -211,20 +212,22 @@ class Exchange(models.Model):
     def __str__(self):
         return self.name
 
+
 class Contract (models.Model):
     exchange = models.ForeignKey(
         Exchange, related_name="Contracts", on_delete=models.PROTECT)
     name = models.CharField(max_length=50)
     url = models.URLField(max_length=200)
     apiIdentifier = models.CharField(max_length=50)
-    sizeDeciminal=models.IntegerField(default=2)
-    priceDeciminal=models.IntegerField(default=2)
+    sizeDeciminal = models.IntegerField(default=2)
+    priceDeciminal = models.IntegerField(default=2)
 
     def __str__(self):
         return self.name
 
+
 class CoinexAccount(models.Model):
-    account_id=models.CharField(max_length=200 , null=True ,blank=True)
+    account_id = models.CharField(max_length=200, null=True, blank=True)
     name = models.CharField(max_length=50, unique=True)
     access_ID = models.CharField(max_length=200)
     secret_key = models.CharField(max_length=200)
@@ -236,9 +239,13 @@ class CoinexAccount(models.Model):
         super().__init__(*args, **kwargs)
         if self.access_ID:
             if self.id:
+                self.client = CoinexPerpetualApiV2(signing.loads(
+                    self.access_ID), signing.loads(self.secret_key), PROXY)
                 self.robot = CoinexPerpetualApi(signing.loads(
                     self.access_ID), signing.loads(self.secret_key), PROXY)
             else:
+                self.client = CoinexPerpetualApiV2(
+                    self.access_ID, self.secret_key, PROXY)
                 self.robot = CoinexPerpetualApi(
                     self.access_ID, self.secret_key, PROXY)
 
@@ -382,12 +389,12 @@ class CoinexAccount(models.Model):
                 str(e) + f" CoinexAccount with id {self.id} Failed to in connetion closePosition")
         return False
 
-    def createOrder(self, price, position, order_size, contract :Contract):
+    def createOrder(self, price, position, order_size, contract: Contract):
         market = contract.apiIdentifier
         robot = self.robot
         robot.ORDER_DIRECTION_SELL if position == 1 else robot.ORDER_DIRECTION_BUY
         try:
-            response=None
+            response = None
             result = robot.put_limit_order(
                 market,
                 position,
@@ -396,7 +403,7 @@ class CoinexAccount(models.Model):
             )
             print(result)
             if result["code"] == 0:
-                response=False
+                response = False
                 order = Order.objects.create(
                     exactCreationtResponse=result, contract=contract, orderID=result["data"]["order_id"])
                 return order
@@ -432,7 +439,7 @@ class CoinexAccount(models.Model):
 
 class AevoAccount(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    account_id=models.CharField(max_length=200 , null=True ,blank=True)
+    account_id = models.CharField(max_length=200, null=True, blank=True)
     API_Key = models.CharField(max_length=200)
     API_Secret = models.CharField(max_length=200)
     Signing_Key = models.CharField(max_length=200)
@@ -464,17 +471,17 @@ class AevoAccount(models.Model):
     def checkAccount(self):
         try:
             response = self.client.account()
-            if response["account"]  :
-                if not self.account_id :
+            if response["account"]:
+                if not self.account_id:
                     return response["account"]
-                else :
-                    return response["account"] if response["account"] ==self.account_id else False
+                else:
+                    return response["account"] if response["account"] == self.account_id else False
             return False
         except Exception as e:
             print(str(e) + " checkAccount AevoAccount ")
             return False
 
-    def getPendingOrdersID(self, bot :GridBot):
+    def getPendingOrdersID(self, bot: GridBot):
         result = "getPendingOrdersID"
         try:
             instrument = str(bot.contract.apiIdentifier)
@@ -494,7 +501,7 @@ class AevoAccount(models.Model):
                 str(e) + f" AevoAccount with id {self.id} Failed to getPendingOrdersID")
             return None
 
-    def cancelOrder(self, orderID, contract:Contract):
+    def cancelOrder(self, orderID, contract: Contract):
         try:
             response = self.client.cancelOrder(order_id=orderID)
             print(response)
@@ -512,7 +519,7 @@ class AevoAccount(models.Model):
             )
             return None
 
-    def isOrderFinished(self, orderID, contract:Contract):
+    def isOrderFinished(self, orderID, contract: Contract):
 
         try:
             order = self.client.order(orderID)
@@ -523,7 +530,7 @@ class AevoAccount(models.Model):
             elif order["order_status"] == "cancelled":
                 print(str(orderID) + " FALSE cancel")
                 return False
-            elif order["order_status"] in ["opened", "partial"] :
+            elif order["order_status"] in ["opened", "partial"]:
                 return None
             else:
                 print(
@@ -537,12 +544,12 @@ class AevoAccount(models.Model):
     def cancelAllOrders(self, contract):
         result = " "
         try:
-            instrument_name= contract.name
+            instrument_name = contract.name
 
             market = self.client.market(instrument_name)
-            asset= market["asset"]
-            instrument_type=market["instrument_type"]
-            result = self.client.cancelOrders(instrument_type,asset)
+            asset = market["asset"]
+            instrument_type = market["instrument_type"]
+            result = self.client.cancelOrders(instrument_type, asset)
             if result["success"] == True:
                 return True
             else:
@@ -551,19 +558,19 @@ class AevoAccount(models.Model):
                 print(
                     str(e) + f" AevoAccount with id {self.id}  cancelAllOrders")
         except Exception as e:
-            if result["error"] =="NO_ORDERS_TO_CANCEL":
+            if result["error"] == "NO_ORDERS_TO_CANCEL":
                 return True
             print(result)
             print(str(
                 e) + f" AevoAccount with id {self.id} Failed to in connetion cancelAllOrders")
         return False
-    
-    def getPositionValue(self, contract :Contract):
+
+    def getPositionValue(self, contract: Contract):
         result = " "
         try:
             instrument_id = contract.apiIdentifier
             positions = self.client.positions()["positions"]
-            if len(positions) >0 :
+            if len(positions) > 0:
                 for position in positions:
                     if position["instrument_id"] == str(instrument_id):
                         return (1 if position["side"] == 'buy' else -1) * float(position["amount"])
@@ -573,11 +580,9 @@ class AevoAccount(models.Model):
             print(
                 str(e) + f" AevoAccount with id {self.id} Failed to in connetion getPositionValue")
         return None
-    
- 
-    
-    def createOrder(self, price, position, order_size, contract : Contract):
-        response=None
+
+    def createOrder(self, price, position, order_size, contract: Contract):
+        response = None
         instrument = contract.apiIdentifier
         client = self.client
         is_buy = False if position == 1 else True
@@ -585,13 +590,13 @@ class AevoAccount(models.Model):
             result = client.createOrder(
                 instrument,
                 is_buy,
-                round(order_size,contract.sizeDeciminal),
-                round(price,contract.priceDeciminal),
+                round(order_size, contract.sizeDeciminal),
+                round(price, contract.priceDeciminal),
                 self.account_id
             )
             print(result)
-            if result["order_id"] :
-                response=False
+            if result["order_id"]:
+                response = False
                 order = Order.objects.create(
                     exactCreationtResponse=result, contract=contract, orderID=result["order_id"])
                 return order
@@ -603,29 +608,29 @@ class AevoAccount(models.Model):
             print(
                 str(e) + f" AevoAccount with id {self.id} Failed to in connetion createOrder")
         return response
-   
-   
-    def closePosition(self, contract :Contract):
+
+    def closePosition(self, contract: Contract):
         result = " "
         try:
             instrument = contract.apiIdentifier
-            positionAmount= self.getPositionValue(contract)
+            positionAmount = self.getPositionValue(contract)
             if positionAmount != 0:
                 is_buy = False if positionAmount > 0 else True
-                amount=abs(positionAmount) 
+                amount = abs(positionAmount)
                 client = self.client
-                price = round(float(client.market(contract.name)["mark_price"] ) * (1.05 if is_buy else 0.95 ) , contract.priceDeciminal ) 
+                price = round(float(client.market(contract.name)[
+                              "mark_price"]) * (1.05 if is_buy else 0.95), contract.priceDeciminal)
                 result = client.createOrder(
                     instrument,
                     is_buy,
                     amount,
                     price,
                     self.account_id
-                )  
-                print(result)  
-                if float (result ['filled'] )    ==   amount :   
+                )
+                print(result)
+                if float(result['filled']) == amount:
                     return True
-                else :
+                else:
                     client.cancelOrder(result["order_id"])
             else:
                 return True
@@ -633,5 +638,4 @@ class AevoAccount(models.Model):
             print(result)
             print(
                 str(e) + f" CoinexAccount with id {self.id} Failed to in connetion closePosition")
-        return False   
-
+        return False

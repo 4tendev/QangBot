@@ -1205,5 +1205,5 @@ class CoinexPerpetualApi(object):
 if __name__ == "__main__":
     access_id = ''
     secret_key = ''
-    api = CoinexContractApi(access_id, secret_key)
+    api = CoinexPerpetualApi(access_id, secret_key)
     print(api.ping())
