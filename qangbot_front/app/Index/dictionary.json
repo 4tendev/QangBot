@@ -1,19 +1,46 @@
 {
-    "isVolatile" : {"en" : "Is Crypto Volatile?" , "fa" :"نوسان رمزارزها بالاست؟"},
-    "exploreGridBot" : {"en" : "Explore Stability!" , "fa" :"ثبات را  تجربه کنید!"},
-    "gridbenefits" : {"en" : "Grid bots are great for benefiting from the volatile market" , "fa" :"گرید باتها برای بازارهای پرنوسان عالین"},
-    "backTest" : {"en" : "Back Tests" , "fa" :"بک تست"},
-    "createFree" : {"en" : "Create Free" , "fa" :"شروع رایگان"},
-
-    "GridBot" : {"en" : "Grid Bots" , "fa" :"گرید بات"},
-    "participate" : {"en" : "Participate" , "fa" :"مشارکت"}
-
-    ,
-    "performance" : {"en" : "Performance" , "fa" :"بازدهی"}
-    ,
-    "risk" : {"en" : "Risk" , "fa" :"ریسک"}
-    ,
-    "ourway" : {"en" : "In Our Way" , "fa" :"به روش ما"}
-    ,    "supportDex" : {"en" : "We Support DEX" , "fa" :"پشتیبانی از دکس"}
-
+    "isVolatile": {
+        "en": "Is Crypto Volatile?",
+        "fa": "نوسان رمزارزها بالاست؟"
+    },
+    "exploreGridBot": {
+        "en": "Explore Stability!",
+        "fa": "ثبات را  تجربه کنید!"
+    },
+    "gridbenefits": {
+        "en": "Grid bots are great for benefiting from the volatile market",
+        "fa": "گرید باتها برای بازارهای پرنوسان عالین"
+    },
+    "backTest": {
+        "en": "Back Tests",
+        "fa": "بک تست"
+    },
+    "createFree": {
+        "en": "Create Free",
+        "fa": "شروع رایگان"
+    },
+    "GridBot": {
+        "en": "Grid Bots",
+        "fa": "گرید بات"
+    },
+    "participate": {
+        "en": "Participate",
+        "fa": "مشارکت"
+    },
+    "performance": {
+        "en": "Performance",
+        "fa": "بازدهی"
+    },
+    "risk": {
+        "en": "Risk",
+        "fa": "ریسک"
+    },
+    "ourway": {
+        "en": "In Our Way",
+        "fa": "به روش ما"
+    },
+    "supportDex": {
+        "en": "We also support DEX",
+        "fa": "پشتیبانی از دکس"
+    }
 }
