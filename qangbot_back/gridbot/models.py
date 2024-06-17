@@ -440,9 +440,9 @@ class CoinexAccount(models.Model):
 class AevoAccount(models.Model):
     name = models.CharField(max_length=50, unique=True)
     account_id = models.CharField(max_length=200, null=True, blank=True)
-    API_Key = models.CharField(max_length=200)
-    API_Secret = models.CharField(max_length=200)
-    Signing_Key = models.CharField(max_length=200)
+    API_Key = models.CharField(max_length=255)
+    API_Secret = models.CharField(max_length=255)
+    Signing_Key = models.CharField(max_length=255)
     user = models.ForeignKey(User, related_name=(
         "AevoAccounts"), on_delete=models.PROTECT)
     form = CreateAveoAccountForm
