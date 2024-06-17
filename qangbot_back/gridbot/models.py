@@ -11,6 +11,7 @@ from .forms import CreateCoinexAccountForm, CreateAveoAccountForm
 from django.core import signing
 
 from django.core.cache import cache
+from eth_account import Account
 
 
 class GridBot(models.Model):
@@ -470,6 +471,13 @@ class AevoAccount(models.Model):
         try:
             response = self.client.account()
             if response["account"]:
+                if not len(response["signing_keys"]) >0 :
+                    return False
+                acc = Account.from_key(signing.loads(self.Signing_Key))  if self.pk else  Account.from_key(self.Signing_Key)
+                address = acc.address
+                acceptAbleSigningKey = response["signing_keys"]
+                if not any( DicKey['signing_key'] == address for DicKey in acceptAbleSigningKey) :
+                    return False
                 if not self.account_id:
                     return response["account"]
                 else:
