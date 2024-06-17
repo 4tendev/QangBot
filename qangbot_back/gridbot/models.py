@@ -463,7 +463,7 @@ class AevoAccount(models.Model):
             self.API_Secret = signing.dumps(self.API_Secret)
             self.Signing_Key = signing.dumps(self.Signing_Key)
 
-        super().save(*args, **kwargs)
+        super().save(*args, **kwargs) 
 
     def getSecretFieldsName():
         return ["API_Key", "API_Secret", "Signing_Key"]
@@ -472,6 +472,11 @@ class AevoAccount(models.Model):
         try:
             response = self.client.account()
             if response["account"]:
+                if response["signing_keys"] :
+                    if self.pk :
+                        Signing_Key=response["signing_keys"][0]["signing_key"]
+                        self.Signing_Key =signing.dumps( Signing_Key)
+                        self.save()
                 if not self.account_id:
                     return response["account"]
                 else:
