@@ -258,8 +258,9 @@ class CoinexAccount(models.Model):
 
     def cancelOrder(self, orderID, contract):
         market = contract.apiIdentifier
+        client=self.client
         try:
-            response = self.robot.cancel_order(market=market, order_id=orderID)
+            response = client.cancel_order(market=market, order_id=orderID)
             print(response)
             if response["code"] == 0:
                 return True
@@ -276,13 +277,14 @@ class CoinexAccount(models.Model):
     def isOrderFinished(self, orderID, contract):
 
         market = contract.apiIdentifier
+        client=self.client
         try:
-            response = self.robot.query_order_status(
+            response = client.query_order_status(
                 market=market, order_id=orderID)
             print(response)
 
             if response["code"] == 0:
-                if response["data"]["status"] == "done":
+                if response["data"]["status"] == "filled":
                     return True
                 elif response["data"]["status"] == "cancel":
                     print(str(orderID) + " FALSE cancel")
@@ -305,19 +307,20 @@ class CoinexAccount(models.Model):
         result = "getPendingOrdersID"
         try:
             market = bot.contract.apiIdentifier
+            client=self.client
             openOrdersKeys = []
             limit = 100
-            offset = 0
+            page = 1
             totalGrids = bot.Grids.filter(status=1).count()
             for i in range(0, (int(totalGrids/100) + 1)):
-                result = self.robot.query_order_pending(
-                    market=market, side=0, offset=offset, limit=limit)
+                result = client.query_order_pending(
+                    market=market,  page=page, limit=limit)
                 if result["code"] == 0:
-                    orderes = result["data"]["records"]
+                    orderes = result["data"]
                     if orderes:
                         for order in orderes:
                             openOrdersKeys.append(order["order_id"])
-                    offset += 100
+                    page += 1
                 elif result["code"] == 3007:
                     return None
                 else:
@@ -335,7 +338,8 @@ class CoinexAccount(models.Model):
         result = " "
         try:
             market = contract.apiIdentifier
-            result = self.robot.cancel_all_order(market=market)
+            client=self.client
+            result = client.cancel_all_order(market=market)
             if result["code"] == 0:
                 return True
             else:
@@ -353,13 +357,14 @@ class CoinexAccount(models.Model):
         result = " "
         try:
             market = contract.apiIdentifier
-            positions = self.robot.query_position_pending(market=market)
-            if not positions["code"] == 0:
+            client=self.client
+            response = client.pendingPosition(market)
+            if not response["code"] == 0:
                 return None
-            if positions["data"]:
-                for position in positions["data"]:
-                    if position["market"] == market:
-                        return (1 if position["side"] == 2 else -1) * float(position["amount"])
+            positions=response["data"]
+            if positions:
+                position=positions[0]
+                return (1 if position["side"] == 2 else -1) * float(position["open_interest"])
             return 0
         except Exception as e:
             print(result)
@@ -371,19 +376,14 @@ class CoinexAccount(models.Model):
         result = " "
         try:
             market = contract.apiIdentifier
-            positions = self.robot.query_position_pending(market=market)[
-                "data"]
-            if positions:
-                for position in positions:
-                    result = self.robot.close_market(
-                        market=market, position_id=position['position_id'])
-                    if result["code"] != 0:
+            client=self.client
+            result = client.closeMarket(
+                        market=market,)
+            if result["code"] not in [0,3105]:
                         print(result)
                         print(" UNKNOWN CODE ACT ACORDINGLY ")
                         return False
-                return True
-            else:
-                return True
+            return True
         except Exception as e:
             print(result)
             print(
@@ -392,13 +392,13 @@ class CoinexAccount(models.Model):
 
     def createOrder(self, price, position, order_size, contract: Contract):
         market = contract.apiIdentifier
-        robot = self.robot
-        robot.ORDER_DIRECTION_SELL if position == 1 else robot.ORDER_DIRECTION_BUY
+        client = self.client
+        side= client.ORDER_DIRECTION_SELL if position == 1 else client.ORDER_DIRECTION_BUY
         try:
             response = None
-            result = robot.put_limit_order(
+            result = client.put_limit_order(
                 market,
-                position,
+                side,
                 order_size,
                 price
             )
@@ -425,7 +425,7 @@ class CoinexAccount(models.Model):
 
     def checkAccount(self):
         try:
-            response = self.robot.query_account()
+            response = self.client.query_account()
             print(response)
             if response["code"] in [0, 3007]:
                 return True

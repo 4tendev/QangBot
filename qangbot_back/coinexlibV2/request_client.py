@@ -32,29 +32,29 @@ class RequestClient(object):
 
     @staticmethod
     def get_sign(method, path, params, timestamp, secret_key):
-        str_params = "?" + '&'.join(['='.join([str(k), str(v)])
-                                     for k, v in params.items()]) if params else ""
-        prepared_str = method + path + str_params+timestamp
+        prepared_str = f"{method}{path}{json.dumps(params)}{timestamp}" if params else f"{method}{path}{timestamp}"
         signed_str = hmac.new(bytes(secret_key, 'latin-1'), msg=bytes(
             prepared_str, 'latin-1'), digestmod=hashlib.sha256).hexdigest().lower()
         return signed_str
 
     def set_authorization(self,  method, path, params, headers):
         timestamp = str(int(time.time() * 1000))
+
         headers['X-COINEX-KEY'] = self.access_id
         headers['X-COINEX-SIGN'] = self.get_sign(
             method, path, params, timestamp, self.secret_key)
         headers["X-COINEX-TIMESTAMP"] = timestamp
 
     def get(self, path, params=None, sign=True):
+        path = path+ ("?" + '&'.join(['='.join([str(k), str(v)])
+                                         for k, v in params.items()]) if params else "")
         url = self.host + path
-        params = params or {}
         headers = copy.copy(self.headers)
         if sign:
-            self.set_authorization("GET", path, params, headers)
+            self.set_authorization("GET", path, {}, headers)
         try:
             response = self.http_client.get(
-                url, params=params, headers=headers, timeout=5)
+                url, headers=headers, timeout=5)
             # self.logger.info(response.request.url)
             if response.status_code == requests.codes.ok:
                 return response.json()
@@ -79,6 +79,7 @@ class RequestClient(object):
         headers = copy.copy(self.headers)
         self.set_authorization("POST", path, data, headers)
         try:
+            data = json.dumps(data) if data else {}
             response = self.http_client.post(
                 url, data=data, headers=headers, timeout=10)
             # self.logger.info(response.request.url)
