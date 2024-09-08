@@ -97,13 +97,13 @@ class CoinexFutureAccount(models.Model):
                 for asset in response["data"]:
                     from strategy.models import Asset
                     strSymbol =asset['ccy']
-                    asset = Asset.objects.filter(strSymbol=strSymbol)
+                    assets = Asset.objects.filter(strSymbol=strSymbol)
                     if not asset:
                         continue
-                    asset = asset[0]
+                    availibleAsset = assets[0]
                     totalAsset = float(asset['available']) + float(
-                       asset['margin']) + float( asset['unrealized_pnl']) + float( asset['frozen'])
-                    totalUSD += (totalAsset * asset.USDRate())
+                       (asset['margin'])) + float( (asset['unrealized_pnl'])) + float( asset['frozen'])
+                    totalUSD += (totalAsset * availibleAsset.USDRate())
             else:
                 print(" get_assets Coinex  unknown CODE")
                 return None
