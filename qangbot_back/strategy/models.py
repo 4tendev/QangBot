@@ -2,13 +2,14 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from coinexlib import CoinexPerpetualApi
+from coinexlibV2 import CoinexPerpetualApiV2
+
 from lyralib import LyraApi
 from core.settings import PROXY
 from django.core import signing
 from django.core.cache import cache
 from user.models import User
 import requests
-
 
 
 def asstUSDRate(name):
@@ -18,21 +19,21 @@ def asstUSDRate(name):
         return float(cachedRate)
     rate = 0
     api = CoinexPerpetualApi("", "", PROXY)
-    if name=="BTC":
+    if name == "BTC":
 
-            response = api.get_market_state(market="BTCUSD")
-            if response["code"] == 0:
-                rate = float(response["data"]['ticker']["index_price"])
-    elif name=="USD":                
-            rate = 1
-    elif name=="USDC":
-            rate = 1
-    elif name=="ETH":
-            response = api.get_market_state(market="ETHUSD")
-            if response["code"] == 0:
-                rate = float(response["data"]['ticker']["index_price"])
-    elif name=="USDT":
-            rate = 1
+        response = api.get_market_state(market="BTCUSD")
+        if response["code"] == 0:
+            rate = float(response["data"]['ticker']["index_price"])
+    elif name == "USD":
+        rate = 1
+    elif name == "USDC":
+        rate = 1
+    elif name == "ETH":
+        response = api.get_market_state(market="ETHUSD")
+        if response["code"] == 0:
+            rate = float(response["data"]['ticker']["index_price"])
+    elif name == "USDT":
+        rate = 1
     cache.set(cachName, rate, timeout=120)
     return rate
 
@@ -70,9 +71,13 @@ class CoinexFutureAccount(models.Model):
         super().__init__(*args, **kwargs)
         if self.access_ID:
             if self.id:
+                self.client = CoinexPerpetualApiV2(signing.loads(
+                    self.access_ID), signing.loads(self.secret_key), PROXY)
                 self.robot = CoinexPerpetualApi(signing.loads(
                     self.access_ID), signing.loads(self.secret_key), PROXY)
             else:
+                self.client = CoinexPerpetualApiV2(
+                    self.access_ID, self.secret_key, PROXY)                
                 self.robot = CoinexPerpetualApi(
                     self.access_ID, self.secret_key, PROXY)
 
@@ -86,17 +91,18 @@ class CoinexFutureAccount(models.Model):
         response = " "
         try:
             totalUSD = 0
-            response = self.robot.query_account()
+            response = self.client.query_account()
             print(response)
             if response["code"] == 0:
-                for accountAsset in response["data"]:
+                for asset in response["data"]:
                     from strategy.models import Asset
-                    asset = Asset.objects.filter(strSymbol=accountAsset)
+                    strSymbol =asset['ccy']
+                    asset = Asset.objects.filter(strSymbol=strSymbol)
                     if not asset:
                         continue
                     asset = asset[0]
-                    totalAsset = float(response["data"][accountAsset]['balance_total']) + float(
-                        response["data"][accountAsset]['margin']) + float(response["data"][accountAsset]['profit_unreal'])
+                    totalAsset = float(asset['available']) + float(
+                       asset['margin']) + float( asset['unrealized_pnl']) + float( asset['frozen'])
                     totalUSD += (totalAsset * asset.USDRate())
             else:
                 print(" get_assets Coinex  unknown CODE")
@@ -118,10 +124,10 @@ class LyraAccount(models.Model):
         if self.smart_Contract_Wallet_Address:
             if self.id:
                 self.client = LyraApi(signing.loads(
-                    self.smart_Contract_Wallet_Address),self.sessionPublicKey ,signing.loads(self.sessionPrivateKey), PROXY)
+                    self.smart_Contract_Wallet_Address), self.sessionPublicKey, signing.loads(self.sessionPrivateKey), PROXY)
             else:
                 self.client = LyraApi(
-                    self.smart_Contract_Wallet_Address,self.sessionPublicKey  ,self.sessionPrivateKey, PROXY)
+                    self.smart_Contract_Wallet_Address, self.sessionPublicKey, self.sessionPrivateKey, PROXY)
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -166,6 +172,7 @@ class Account(models.Model):
     def USDValue(self):
         return self.account.USDValue()
 
+
 class History(models.Model):
     btcROI = models.IntegerField()
     usdROI = models.IntegerField()
@@ -177,7 +184,8 @@ class History(models.Model):
     def __str__(self):
         return str(self.usdROI)+" " + str(self.date)
 
-def getHistoryDate(history :History):
+
+def getHistoryDate(history: History):
     return {
         "id": history.id,
         "btcROI": history.btcROI,
@@ -185,6 +193,8 @@ def getHistoryDate(history :History):
         "usdROI": history.usdROI,
         "date":  history.date
     }
+
+
 class Strategy(models.Model):
     name = models.CharField(max_length=50)
     baseAssetValues = models.ManyToManyField(
@@ -232,9 +242,6 @@ class Strategy(models.Model):
             print(e)
             print("get Caching Failed")
             return None
-
-
-
 
 
 class Participant(models.Model):
@@ -319,3 +326,6 @@ class Withdraw (models.Model):
                             null=True, on_delete=models.PROTECT)
     amount = models.ForeignKey(
         AssetValue, blank=True, null=True, related_name="Withdraws", on_delete=models.PROTECT)
+
+
+
