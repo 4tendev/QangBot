@@ -1,13 +1,6 @@
 "use client";
 import dictionary from "./dictionary.json";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-} from "recharts";
+import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import { useEffect, useMemo, useState } from "react";
 import { History } from "./types";
 import { useAppSelector } from "@/GlobalStates/hooks";
@@ -131,7 +124,10 @@ const Chart = (props: { data: History[] }) => {
                 className="input input-xs input-bordered  border-4"
               />
             </div>
-            <small className="text-xs">{dictionary.selectedDays[lang]}{data.length}</small>
+            <small className="text-xs">
+              {dictionary.selectedDays[lang]}
+              {data.length}
+            </small>
           </div>
         </div>
       </div>
@@ -148,7 +144,7 @@ const Chart = (props: { data: History[] }) => {
             bottom: 0,
           }}
         >
-          <XAxis  dataKey="date" tickMargin={3} />
+          <XAxis dataKey="date" tickMargin={3} />
           <YAxis
             tickMargin={15}
             orientation={"left"}
