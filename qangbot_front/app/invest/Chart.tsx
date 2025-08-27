@@ -80,11 +80,22 @@ const Chart = (props: { data: History[] }) => {
     setMaxDrawDownUSD(maxDDUSD);
   }
 
+ function calculateAPY(
+  initialAmount: number,
+  returnedAmount: number,
+  daysHeld: number
+): number {
+
+
+  const apy = Math.pow(returnedAmount / initialAmount, 365 / daysHeld) - 1;
+  return apy * 100; // Returns APY in percentage
+}
+
   useMemo(() => {
     setmaxDD();
     setAPY(
-      Number(((365 * (data?.at(-1)?.usdROI ?? 1)) / data.length).toFixed(2))
-    );
+      Number(calculateAPY(100 ,((data?.at(-1)?.usdROI ?? 100 )+100 ) ,data.length).toFixed(2) ))
+
   }, [ednDate, startDate]);
 
   useEffect(() => {
