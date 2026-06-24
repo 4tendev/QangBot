@@ -47,7 +47,7 @@ class Command(BaseCommand):
 
                     strategy.cachHistory()
             for partisipent in Participant.objects.all() :
-                share= partisipent.strategy.currentAssetValues *partisipent.share
+                share= float(partisipent.strategy.currentAssetValues)  * float(partisipent.share )
                 TELEGRAM_BOT.send_message(
                     partisipent.user.telegramChatID, f"ارزش پول شما در بات ترید {share}")
                 
