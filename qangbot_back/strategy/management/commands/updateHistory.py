@@ -47,9 +47,11 @@ class Command(BaseCommand):
 
                     strategy.cachHistory()
             for partisipent in Participant.objects.all() :
-                share= float(partisipent.strategy.currentAssetValues)  * float(partisipent.share )
+                assetVallue = partisipent.strategy.currentAssetValues 
+                share = partisipent.share 
+                shareValue= float(assetVallue)  * float(share )
                 TELEGRAM_BOT.send_message(
-                    partisipent.user.telegramChatID, f"ارزش پول شما در بات ترید {share}")
+                    partisipent.user.telegramChatID, f"ارزش پول شما در بات ترید {shareValue}")
                 
             print("OK History script")
         except Exception as e:
