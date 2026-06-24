@@ -47,7 +47,7 @@ class Command(BaseCommand):
 
                     strategy.cachHistory()
             for partisipent in Participant.objects.all() :
-                assetVallue = partisipent.strategy.currentAssetValues 
+                assetVallue = partisipent.strategy.lastUSDCheck 
                 share = partisipent.share 
                 shareValue= float(assetVallue)  * float(share )
                 TELEGRAM_BOT.send_message(
