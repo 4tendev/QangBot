@@ -2,7 +2,8 @@ from django.core.management.base import BaseCommand
 import time 
 from strategy.models import Strategy, asstUSDRate, History
 from django.utils import timezone
-
+from strategy.models import Participant
+from core.settings import TELEGRAM_BOT
 
 
 class Command(BaseCommand):
@@ -45,6 +46,11 @@ class Command(BaseCommand):
                             ethROI=ETHROI, date=today_date, btcROI=BTCROI, usdROI=USDROI, strategy=strategy)
 
                     strategy.cachHistory()
+            for partisipent in Participant.objects.all() :
+                share= partisipent.strategy.currentAssetValues *partisipent.share
+                TELEGRAM_BOT.send_message(
+                    partisipent.user.telegramChatID, f"ارزش پول شما در بات ترید {share}")
+                
             print("OK History script")
         except Exception as e:
             print(e)

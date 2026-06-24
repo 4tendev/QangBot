@@ -15,6 +15,7 @@ from pathlib import Path
 import os
 
 from dotenv import load_dotenv
+import telebot
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,6 +33,7 @@ INTERNAL_HOST = os.getenv("INTERNAL_HOST")
 DEFAULT_PROXY_USERNAME = os.getenv("DEFAULT_PROXY_USERNAME")
 DEFAULT_PROXY_PASSWORD = os.getenv("DEFAULT_PROXY_PASSWORD")
 DEFAULT_PROXY_URL = os.getenv("DEFAULT_PROXY_URL")
+TELEGRAM_BOT=telebot.TeleBot(os.getenv("TELEGRAM_BOT_TOKEN"))
 
 PROXY = {
     'https': f'http://{DEFAULT_PROXY_USERNAME}:{ DEFAULT_PROXY_PASSWORD}@{DEFAULT_PROXY_URL}'} if DEFAULT_PROXY_URL else None

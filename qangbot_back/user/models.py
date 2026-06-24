@@ -48,7 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     EMAIL_FIELD = 'email'
     objects = CustomUserManager()
     VIPPRICE = VIP.price
-
+    telegramChatID=models.CharField(null=True,blank=True, max_length=50)
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.TOTP = pyotp.TOTP(self.TOTPKey) if self.TOTPKey else None
